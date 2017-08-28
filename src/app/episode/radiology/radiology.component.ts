@@ -3,6 +3,9 @@ import { FormControl } from '@angular/forms';
 import { Service, Company } from './../../services/app.service';
 import { TreeTableModule, TreeNode } from 'primeng/primeng';
 import { NodeService } from './../../services/NodeService';
+import { AnimationTransitionEvent, ViewEncapsulation, ElementRef } from '@angular/core';
+import { MdDialog, MdDialogRef, MdDialogConfig} from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-radiology',
@@ -16,7 +19,7 @@ export class RadiologyComponent implements OnInit {
   displayDialog: boolean;
   dataSource: Company[];
 
-  constructor(service: Service) {
+  constructor(service: Service, private _element: ElementRef, public dialog: MdDialog, private router: Router) {
       this.orderByCtrl = new FormControl();
       this.filteredOrderBys = this.orderByCtrl.valueChanges
       .startWith(null)
@@ -29,6 +32,20 @@ export class RadiologyComponent implements OnInit {
 
   }
 
+  toggleSearch() {
+    //let dialogRef = this.dialog.open(DialogResultRadiologySearch);
+    let dialogRef = this.dialog.open(DialogResultRadiologySearch, {
+      height: '600px',
+      width: '800px',
+    });
+    //dialogRef.afterClosed().subscribe(result => {
+      //this.selectedOption = result;
+    //});
+
+
+
+
+  }
 
 priorities = [
   'Urgent',
@@ -103,5 +120,18 @@ filterOrderBy(val: string) {
   },
 ];
 
+
+}
+
+@Component({
+  selector: 'dialog-radiology-search',
+  templateUrl: './dialog-radiology-search.html',
+})
+export class DialogResultRadiologySearch {
+  dataSource: Company[];
+
+  constructor(public dialogRef: MdDialogRef<DialogResultRadiologySearch>, service: Service) {
+    this.dataSource = service.getCompanies();
+  }
 
 }

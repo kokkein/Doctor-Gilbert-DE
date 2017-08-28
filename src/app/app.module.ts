@@ -32,7 +32,7 @@ import { InventoryItemComponent } from './inventory-item/inventory-item.componen
 import { UserComponent } from './user/user.component';
 import { EpisodeComponent } from './episode/episode.component';
 import { DocumentComponent } from './episode/document/document.component';
-import { RadiologyComponent } from './episode/radiology/radiology.component';
+import { RadiologyComponent, DialogResultRadiologySearch } from './episode/radiology/radiology.component';
 import { LaboratoryComponent } from './episode/laboratory/laboratory.component';
 import { MedicationComponent } from './episode/medication/medication.component';
 import { TimelineComponent } from './episode/timeline/timeline.component';
@@ -127,7 +127,7 @@ const appRoutes: Routes = [
     LaboratoryComponent,
     MedicationComponent,
     TimelineComponent,
-    DiagnosisComponent, 
+    DiagnosisComponent, DialogResultRadiologySearch,
     VitalSignsComponent, DialogResultExampleDialog, AppointmentComponent, DepartmentComponent, InsuranceComponent, PayorComponent, MOHVisitTypeComponent, PurposeOfVisitComponent, MasterDataComponent, InventoryBrandComponent, InventoryGenericComponent, InventoryAtcComponent, InventoryCategoryComponent, InventorySubcategoryComponent, InventoryMedicationclassComponent, InventoryPregnancycategoryComponent, SpecialityComponent, DiagnosisMasterComponent
   ],
   imports: [
@@ -142,7 +142,7 @@ const appRoutes: Routes = [
     DxDataGridModule
   ],
   providers: [NodeService, CarService, EventService, MasterDataService, SpeechRecognitionService,Service, Company],
-  entryComponents: [DialogResultExampleDialog],
+  entryComponents: [DialogResultExampleDialog, DialogResultRadiologySearch],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

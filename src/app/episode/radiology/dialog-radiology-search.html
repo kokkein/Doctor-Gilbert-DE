@@ -1,0 +1,27 @@
+<h2 md-dialog-title>Delete all</h2>
+<md-dialog-content>Are you sure?</md-dialog-content>
+<md-dialog-actions>
+    <div>
+      <dx-data-grid style="display:block;"
+      id="gridContainer"
+      [dataSource]="dataSource">    
+      <dxo-selection
+      
+      mode="multiple"></dxo-selection>
+      <dxo-filter-row
+      [visible]="true"></dxo-filter-row>
+      <dxo-paging [pageSize]="10"></dxo-paging>
+      <dxo-pager 
+          [showPageSizeSelector]="true"
+          [allowedPageSizes]="[5]"
+          [showInfo]="true">
+      </dxo-pager>
+      
+      <dxi-column dataField="CompanyName"></dxi-column>
+      <dxi-column dataField="City"></dxi-column>
+      </dx-data-grid>
+
+    </div>
+
+  <button md-button md-dialog-close>Close</button>
+</md-dialog-actions>

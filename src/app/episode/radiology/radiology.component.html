@@ -4,34 +4,33 @@
       <div>
         <button md-raised-button>Save</button>
         <button md-raised-button>New</button>
+        <button md-raised-button (click)="toggleSearch()">Search</button>
       </div>
     </div>
+      <div  style="width: 100% height: 300px;">
+        <dx-data-grid style="display:block;"
+        id="gridContainer"
+        [dataSource]="dataSource">    
+        <dxo-selection
+        
+        mode="multiple"></dxo-selection>
+        <dxo-filter-row
+        [visible]="true"></dxo-filter-row>
+        <dxo-paging [pageSize]="10"></dxo-paging>
+        <dxo-pager 
+            [showPageSizeSelector]="true"
+            [allowedPageSizes]="[5]"
+            [showInfo]="true">
+        </dxo-pager>
+        
+        <dxi-column dataField="CompanyName"></dxi-column>
+        <dxi-column dataField="City"></dxi-column>
+        </dx-data-grid>
 
+      </div>
     <md-card>
       <md-card-content>
-        <div class="containerTbl">
-          <div>
-            <dx-data-grid 
-            id="gridContainer"
-            [dataSource]="dataSource">    
-            <dxo-selection
-            
-            mode="multiple"></dxo-selection>
-            <dxo-filter-row
-            [visible]="true"></dxo-filter-row>
-            <dxo-paging [pageSize]="10"></dxo-paging>
-            <dxo-pager 
-                [showPageSizeSelector]="true"
-                [allowedPageSizes]="[5, 10, 20]"
-                [showInfo]="true">
-            </dxo-pager>
-            
-            <dxi-column dataField="CompanyName"></dxi-column>
-            <dxi-column dataField="City"></dxi-column>
-            </dx-data-grid>
 
-          </div>
-        </div>
 
         <div class="container">
             <div>
