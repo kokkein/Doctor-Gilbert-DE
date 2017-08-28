@@ -1,0 +1,27 @@
+
+<div class="toolbar">
+    <div>
+        <button md-raised-button>Save</button>
+        <button md-raised-button>Edit</button>
+        <button md-raised-button>New</button>
+        <button md-raised-button>Void</button>
+    </div>
+</div>
+<section>
+  <div id='main'>
+      <article>
+        <md-list dense>
+            <h3 md-subheader>Documents</h3>
+            <md-list-item *ngFor="let document of documents">
+                <h4 md-line><a [routerLink]="[document.name]">{{document.name}}</a></h4>
+                <p md-line>{{document.edited | date}}</p>
+
+            </md-list-item>
+        </md-list>
+    </article>
+    <aside>
+        <p>New Vital</p>
+        <app-vital></app-vital>
+    </aside>
+  </div>
+  </section>

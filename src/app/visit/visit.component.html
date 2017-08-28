@@ -1,0 +1,138 @@
+<section>
+  <p>
+    {{visitdata | json}}
+  </p>
+  <form>
+    <div class="toolbar">
+      <div>
+        <button md-raised-button>Save</button>
+        <button md-raised-button>New</button>
+      </div>
+    </div>
+
+    <md-card>
+      <md-card-header>
+        <md-card-title >Visit</md-card-title>
+        <md-card-subtitle>New Visit</md-card-subtitle>
+      </md-card-header>
+      <md-card-content>
+
+        <div class="container">
+          <div> 
+            <md-input-container class="input-full-width">
+              <input mdInput placeholder="Patient" [mdAutocomplete]="reactivePatient" [formControl]="patientCtrl"  [(ngModel)]="visitdata.Patient" name="Patient">
+            </md-input-container>
+
+            <md-autocomplete #reactivePatient="mdAutocomplete" [displayWith]="displayPatientFn">
+              <md-option *ngFor="let patient of filteredPatients | async" [value]="patient">
+                <span>{{patient.name}}, </span>
+                <small><strong>NRIC:</strong>{{patient.identificationValue}}, <strong>Gender:</strong>{{patient.gender}}, <strong>D.O.B:</strong>{{patient.dob | date: 'dd/MM/yyyy'}}</small>
+              </md-option>
+            </md-autocomplete>
+          </div>
+          <div>
+              <md-radio-group>
+                <md-radio-button *ngFor="let visitType of visitTypes" [value]="visitType"  [(ngModel)]="visitdata.VisitType" name="VisitType">
+                  {{visitType}}
+                </md-radio-button>
+              </md-radio-group>
+            </div>
+        </div>
+
+        <div class="container">
+            <div>
+              <md-input-container class="input-full-width">
+                <input mdInput type="datetime-local" placeholder="Visit Date-Time"  [(ngModel)]="visitdata.VisitDateTime" name="VisitDateTime">
+              </md-input-container>
+            </div>
+            <div>
+              <md-input-container class="input-full-width">
+                <input mdInput placeholder="Department" [mdAutocomplete]="reactiveDepartment" [formControl]="departmentCtrl"  [(ngModel)]="visitdata.Department" name="Department">
+              </md-input-container>
+
+              <md-autocomplete #reactiveDepartment="mdAutocomplete" [displayWith]="displayDepartmentFn">
+                <md-option *ngFor="let department of filteredDepartments | async" [value]="department">
+                  <span>{{ department.departmentID }}</span>
+                  <span> ({{department.departmentName}}) </span>
+                </md-option>
+              </md-autocomplete>
+            </div>
+          </div>
+          <div class="container">
+            <div>
+              <md-checkbox>Cash Patient</md-checkbox>
+            </div>
+            <div>
+              <md-input-container class="input-full-width">
+                <input mdInput placeholder="Policy" [mdAutocomplete]="reactivePolicy" [formControl]="policyCtrl"  [(ngModel)]="visitdata.Policy" name="Policy">
+              </md-input-container>
+
+              <md-autocomplete #reactivePolicy="mdAutocomplete" [displayWith]="displayPolicyFn">
+                <md-option *ngFor="let policy of filteredPolicies | async" [value]="policy">
+                  <span>{{ policy.insuranceName }}, </span>
+                  <small><strong>Provider:</strong>{{ policy.providerName }}</small>
+                </md-option>
+              </md-autocomplete>
+            </div>
+            <div>
+              <md-input-container class="input-full-width">
+                <input mdInput placeholder="Payor" [mdAutocomplete]="reactivePayor" [formControl]="payorCtrl" [(ngModel)]="visitdata.Payor" name="Payor">
+              </md-input-container>
+
+              <md-autocomplete #reactivePayor="mdAutocomplete" [displayWith]="displayPayorFn">
+                <md-option *ngFor="let payor of filteredPayors | async" [value]="payor">
+                  <span>{{ payor.payorID }}</span>
+                  <span> ({{payor.payorName}}) </span>
+                </md-option>
+              </md-autocomplete>
+            </div>
+          </div>
+          <div class="container">
+            <div>
+              <md-input-container class="input-full-width">
+                <input mdInput placeholder="Visit Doctor" [mdAutocomplete]="reactiveDoctor" [formControl]="doctorCtrl"  [(ngModel)]="visitdata.Doctor" name="Doctor">
+              </md-input-container>
+
+              <md-autocomplete #reactiveDoctor="mdAutocomplete" [displayWith]="displayDoctorFn">
+                <md-option *ngFor="let doctor of filteredDoctors | async" [value]="doctor">
+                  <span>{{ doctor.userFullName }}, </span>
+                  <small><strong>Initial:</strong>{{doctor.userInitial}}, <strong>Speciality:</strong>{{doctor.specialityID}}</small>
+                </md-option>
+              </md-autocomplete>
+            </div>
+            <div>
+              <md-input-container class="input-full-width">
+                <input mdInput placeholder="Purpose of Visit" [mdAutocomplete]="reactivePurposeOfVisit" [formControl]="purposeOfVisitCtrl"  [(ngModel)]="visitdata.PurposeOfVisit" name="PurposeOfVisit">
+              </md-input-container>
+
+              <md-autocomplete #reactivePurposeOfVisit="mdAutocomplete" [displayWith]="displayPurposeOfVisitFn">
+                <md-option *ngFor="let purposeOfVisit of filteredPurposeOfVisits | async" [value]="purposeOfVisit">
+                  <span>{{ purposeOfVisit.visitPurposeID }}</span>
+                  <span> ({{purposeOfVisit.visitPurposeName}}) </span>
+                </md-option>
+              </md-autocomplete>
+            </div>
+            <div>
+              <md-input-container class="input-full-width">
+                <input mdInput placeholder="MOH Visit Type" [mdAutocomplete]="reactiveMOH" [formControl]="mohCtrl" [(ngModel)]="visitdata.MOHVisitType" name="MOHVisitType">
+              </md-input-container>
+
+              <md-autocomplete #reactiveMOH="mdAutocomplete" [displayWith]="displayMOHFn">
+                <md-option *ngFor="let moh of filteredMOHs | async" [value]="moh">
+                  <span>{{ moh.mohVisitTypeID }}</span>
+                  <span> ({{moh.mohVisitTypeName}}) </span>
+                </md-option>
+              </md-autocomplete>
+            </div>
+          </div>
+          <div class="container">
+            <div class="two">
+              <md-input-container class="input-full-width">
+                <textarea mdInput placeholder="Remark" [(ngModel)]="visitdata.Remark" name="Remark"></textarea>
+              </md-input-container>
+            </div>
+          </div>
+      </md-card-content>
+    </md-card>
+  </form>
+</section>

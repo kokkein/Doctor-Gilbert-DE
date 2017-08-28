@@ -1,0 +1,44 @@
+<md-sidenav-container fullscreen class="demo-content">
+  <md-sidenav mode="push" #start>
+    <md-nav-list>
+      <a *ngFor="let navItem of navItems"
+         md-list-item
+         (click)="start.close()"
+         [routerLink]="[navItem.route]">
+        {{navItem.name}}
+      </a>
+
+      <hr>
+    </md-nav-list>
+    <button md-button (click)="start.close()">CLOSE</button>
+  </md-sidenav>
+  <div>
+    <md-toolbar color="primary">
+      <button md-icon-button (click)="start.open()">
+        <md-icon class="md-24">menu</md-icon>
+      </button>
+      <div class="demo-toolbar">
+        <h1>Doctor G</h1>
+        <button md-button (click)="toggleFullscreen()" title="Toggle fullscreen">
+          <i class="material-icons">fullscreen</i> Fullscreen
+        </button>
+        <button md-button (click)="toggleMenu()" title="Toggle Main Menu">
+          <i class="material-icons">apps</i> Menu
+        </button>
+        <button md-button (click)="toggleMasterData()" title="Master Data">
+          <i class="material-icons">folder_special</i> Master Data
+        </button>
+
+        
+        <button md-button (click)="root.dir = (root.dir == 'rtl' ? 'ltr' : 'rtl')" title="Toggle between RTL and LTR">
+          <i class="material-icons">swap_horiz</i> {{root.dir.toUpperCase()}}
+        </button>
+      </div>
+    </md-toolbar>
+
+    <div #root="$implicit" dir="ltr" class="demo-content-inner">
+      <router-outlet></router-outlet>
+
+    </div>
+  </div>
+</md-sidenav-container>

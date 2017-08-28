@@ -1,0 +1,107 @@
+<section>
+    <md-card>
+      <md-card-header>
+        <md-card-title>Appointment</md-card-title>
+      </md-card-header>
+      <md-card-content>
+
+        {{data|json}}
+        <p-growl [(value)]="msgs" life=3000></p-growl>
+    
+        <md-select multiple="true" multiple="true" placeholder="Doctor List" name="DoctorList" class="input-full-width" >
+            <md-option *ngFor="let doctor of doctors" [value]="doctor.dgUserID">
+                {{doctor.userFullName}}
+            </md-option>
+        </md-select>
+
+    <p-schedule [height]="500" [events]="events" [header]="header" [eventLimit]="4" [editable]="true" [eventDurationEditable]="true"
+                (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)"></p-schedule>
+
+    <p-dialog header="Appointment Details" [(visible)]="dialogVisible" [responsive]="true" showEffect="fade" [modal]="false" [contentStyle]="{'overflow':'visible'}"
+        [style]="{'overflow':'visible'}" [resizable]="true" >
+        <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="event">
+            <div class="ui-grid-row">
+                <md-input-container class="input-full-width">
+                    <input mdInput placeholder="Title" id="title" [(ngModel)]="event.title" >
+                </md-input-container>
+            </div>
+            <div class="ui-grid-row">
+                <md-input-container class="input-full-width">
+                    <input mdInput (change)="onDateChanged()" type="datetime-local" [(ngModel)]="event.start" placeholder="Start" name="start">
+                </md-input-container>      
+                <md-input-container class="input-full-width">
+                    <input mdInput (change)="onDateChanged()" type="datetime-local" [(ngModel)]="event.end" placeholder="End" name="end">
+                </md-input-container>    
+                <md-input-container class="input-full-width">
+                    <input mdInput (change)="onDurationChanged()" type="number" [(ngModel)]="event.duration" placeholder="Duration(Minutes)" name="Duration">
+                </md-input-container>
+            </div>
+            <div class="ui-grid-row">
+
+                <md-select placeholder="Purpose of Visit" name="Purpose" class="input-full-width" [(ngModel)]="event.visitPurposeID">
+                    <md-option *ngFor="let Purpose of purposeOfVisits" [value]="Purpose.visitPurposeID">
+                        {{Purpose.visitPurposeName}}
+                    </md-option>
+                </md-select>
+                <md-checkbox [(ngModel)]="event.allDay" name="allday">All Day</md-checkbox>
+            </div>
+            <div class="ui-grid-row">
+              <md-input-container class="input-full-width">
+                <input mdInput placeholder="Visit Doctor" [mdAutocomplete]="reactiveDoctor" [formControl]="doctorCtrl"  [(ngModel)]="event.visitDoctorID" name="dgUserID">
+              </md-input-container>
+
+              <md-autocomplete #reactiveDoctor="mdAutocomplete" [displayWith]="displayDoctorFn">
+                <md-option *ngFor="let doctor of filteredDoctors | async" [value]="doctor">
+                  <span>{{ doctor.userFullName }}, </span>
+                  <small><strong>Initial:</strong>{{doctor.userInitial}}, <strong>Speciality:</strong>{{doctor.specialityID}}</small>
+                </md-option>
+              </md-autocomplete>
+            </div>
+
+            <div class="ui-grid-row">
+                <md-input-container class="input-half-width">
+                    <input mdInput  [(ngModel)]="event.mobile" placeholder="Mobile" name="mobile">
+                </md-input-container>
+                <md-input-container class="input-half-width">
+                    <input mdInput  [(ngModel)]="event.phone" placeholder="Phone" name="phone">
+                </md-input-container>
+                <md-input-container class="input-full-width">
+                    <input mdInput  [(ngModel)]="event.email" placeholder="Email" name="email">
+                </md-input-container>
+            </div>
+            <div class="ui-grid-row">
+
+                <md-input-container class="input-full-width">
+                <input mdInput placeholder="Patient (Registered)" [mdAutocomplete]="reactivePatient" [formControl]="patientCtrl"  [(ngModel)]="event.patientID" name="patientID">
+                </md-input-container>
+
+                <md-autocomplete #reactivePatient="mdAutocomplete" [displayWith]="displayPatientFn">
+                <md-option *ngFor="let patient of filteredPatients | async" [value]="patient">
+                    <span>{{patient.name}}, </span>
+                    <small><strong>NRIC:</strong>{{patient.identificationValue}}, <strong>Gender:</strong>{{patient.gender}}, <strong>D.O.B:</strong>{{patient.dob | date: 'dd/MM/yyyy'}}</small>
+                </md-option>
+                </md-autocomplete>
+
+            </div>
+            <div class="ui-grid-row">
+                <md-input-container class="input-full-width">
+                    <input mdInput placeholder="Description" id="Description" [(ngModel)]="event.description" name="description" >
+                </md-input-container>
+            </div>
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+                <button md-raised-button (click)="onDateChanged()" >Delete</button>
+                <button md-raised-button (click)="onDateChanged()" >Save</button>
+                <button type="button" pButton icon="fa-close" (click)="deleteEvent()" label="Delete" [disabled]="!event?.appointmentID"></button>
+                <button type="button" pButton icon="fa-check" (click)="saveEvent()" label="Save" [disabled]="!event?.start"></button>
+            </div>
+        </p-footer>
+    </p-dialog>
+
+      </md-card-content>
+    </md-card>
+</section>
+
+
+

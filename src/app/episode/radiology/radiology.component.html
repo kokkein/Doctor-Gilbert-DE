@@ -1,0 +1,173 @@
+<section>
+  <form>
+    <div class="toolbar">
+      <div>
+        <button md-raised-button>Save</button>
+        <button md-raised-button>New</button>
+      </div>
+    </div>
+
+    <md-card>
+      <md-card-content>
+        <div class="containerTbl">
+          <div>
+            <dx-data-grid 
+            id="gridContainer"
+            [dataSource]="dataSource">    
+            <dxo-selection
+            
+            mode="multiple"></dxo-selection>
+            <dxo-filter-row
+            [visible]="true"></dxo-filter-row>
+            <dxo-paging [pageSize]="10"></dxo-paging>
+            <dxo-pager 
+                [showPageSizeSelector]="true"
+                [allowedPageSizes]="[5, 10, 20]"
+                [showInfo]="true">
+            </dxo-pager>
+            
+            <dxi-column dataField="CompanyName"></dxi-column>
+            <dxi-column dataField="City"></dxi-column>
+            </dx-data-grid>
+
+          </div>
+        </div>
+
+        <div class="container">
+            <div>
+                <md-input-container class="input-full-width">
+                <input mdInput placeholder="Order By" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
+                </md-input-container>
+                <md-autocomplete #autoOrderBy="mdAutocomplete">
+                <md-option *ngFor="let orderBy of filteredOrderBys | async" [value]="orderBy">
+                    {{ orderBy }}
+                </md-option>
+                </md-autocomplete>
+            </div>
+            <div>
+                <md-input-container class="input-full-width">
+                <input mdInput placeholder="Referred By" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
+                </md-input-container>
+                <md-autocomplete #autoOrderBy="mdAutocomplete">
+                <md-option *ngFor="let orderBy of filteredOrderBys | async" [value]="orderBy">
+                    {{ orderBy }}
+                </md-option>
+                </md-autocomplete>
+            </div>
+            <div>
+                <md-input-container class="input-full-width">
+                <input mdInput placeholder="Reply To" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
+                </md-input-container>
+                <md-autocomplete #autoOrderBy="mdAutocomplete">
+                <md-option *ngFor="let orderBy of filteredOrderBys | async" [value]="orderBy">
+                    {{ orderBy }}
+                </md-option>
+                </md-autocomplete>
+            </div>
+          </div>
+          <div class="container">
+            <div>
+                <md-radio-group class="input-full-width">
+                    <md-radio-button *ngFor="let priority of priorities" [value]="priority">
+                        {{priority}}
+                    </md-radio-button>
+                </md-radio-group>
+            </div>
+            <div>
+              <md-input-container class="input-full-width">
+                <input mdInput type="datetime-local" placeholder="Requested Sample Date-Time" >
+              </md-input-container>
+            </div>
+            <div>
+                <md-input-container class="input-full-width">
+                <input mdInput placeholder="Reporting By" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
+                </md-input-container>
+                <md-autocomplete #autoOrderBy="mdAutocomplete">
+                <md-option *ngFor="let orderBy of filteredOrderBys | async" [value]="orderBy">
+                    {{ orderBy }}
+                </md-option>
+                </md-autocomplete>
+            </div>
+          </div>
+          <div class="container">
+
+              <md-input-container class="input-full-width">
+                <textarea mdInput placeholder="Remark"></textarea>
+              </md-input-container>
+
+          </div>
+      </md-card-content>
+    </md-card>
+  </form>
+
+
+  <md-list>
+    <h3 md-subheader>Records List</h3>
+    <md-list-item *ngFor="let laboratory of laboratoryRecord" >
+      <h4 md-line><i class="material-icons">timer</i> {{laboratory.id}} <strong>{{laboratory.laboratory}}</strong></h4>
+        <button md-icon-button (click)="open()">
+          <i class="material-icons">mode_edit</i>
+        </button>
+        <button md-icon-button (click)="open()">
+          <i class="material-icons">delete</i>
+        </button>
+      <p md-line>
+        <span> <b><small>Order By: </small></b>{{laboratory.orderBy}} </span>
+        <span> <b><small>Referred By: </small></b>{{laboratory.refferedBy}} </span>
+        <span> <b><small>Reply To: </small></b>{{laboratory.replyTo}} </span>
+        <span> <b><small>Reported By: </small></b>{{laboratory.reportedBy}} </span>
+      </p>
+      <p md-line>
+        <span> <b><small>Priority: </small></b>{{laboratory.orderBy}} </span>
+        <span> <b><small>Requested Sample Date-Time: </small></b>{{laboratory.refferedBy}} </span>
+      </p>
+      <p md-line>
+        <span> {{laboratory.note}} </span>
+      </p>
+      <p md-line>
+          <span>
+            <div class="tablerow">
+                <div><b>Lab item</b></div>
+                <div><b>Description</b></div>
+                <div><b>Price</b></div>
+                <div><b>Lab Group</b></div>
+            </div>
+            <div class="tablerow">
+                <div>Urine Test</div>
+                <div>Test urine color</div>
+                <div>RM 100.00</div>
+                <div>Urine Test Profile</div>
+            </div>
+            <div class="tablerow">
+                <div>Urine Test Count</div>
+                <div>Test urine Count Protein</div>
+                <div>RM 30.00</div>
+                <div>Urine Test Profile</div>
+            </div>
+          </span>
+      </p>
+      <p md-line class="pRight"> 
+        <small>
+          <span><b>Current Version: </b><i>{{laboratory.version}}</i></span>
+        </small>
+      </p>
+      <p md-line class="pRight">
+        <small>      
+          <span><b>Updated: </b><i>{{laboratory.updated | date:'medium'}}</i> </span>
+          <span>, <b>By: </b><i>{{laboratory.updatedBy}}</i></span>
+        </small>
+      </p>
+      <p md-line class="pRight">
+        <small>
+          <span><b>Created: </b><i>{{laboratory.created | date:'medium'}}</i> </span>
+          <span>, <b>By: </b><i>{{laboratory.createdBy}}</i></span>
+        </small>
+      </p>
+
+    </md-list-item>
+  </md-list>
+
+
+</section>
+
+

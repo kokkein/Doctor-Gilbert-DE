@@ -1,0 +1,266 @@
+<section>
+  <p-growl [(value)]="msgs" life=3000></p-growl>
+    <div class="toolbar">
+      <div>
+        <button md-raised-button (click)="onSave()">Save</button>
+        <button md-raised-button>New</button>
+        <button md-raised-button>Save + New</button>
+      </div>
+    </div>
+  <p>
+    {{data | json}}
+  </p>
+    <md-card>
+      <md-card-header>
+        <md-card-title>User Master</md-card-title>
+        <md-card-subtitle>New User</md-card-subtitle>
+      </md-card-header>
+      <md-card-content>
+        <md-tab-group>
+          <md-tab>
+            <template md-tab-label>
+              User information
+            </template>
+            <md-card>
+              <md-card-content>
+                  <div class="container">
+                    <div> 
+                      <md-input-container class="input-full-width">
+                        <input mdInput placeholder="Full name"  [(ngModel)]="data.userFullName" name="userFullName">
+                      </md-input-container>
+                    </div>
+                    <div>
+                      <md-select placeholder="Title" name="title" [(ngModel)]="data.titleID">
+                        <md-option *ngFor="let title of titles" [value]="title.titleID">
+                          {{title.titleName}}
+                        </md-option>
+                      </md-select>
+                    </div>
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput placeholder="Initial" [(ngModel)]="data.userInitial" name="userInitial">
+                      </md-input-container>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput placeholder="Mobile Phone" [(ngModel)]="data.mobile" name="mobile">
+                      </md-input-container>
+                    </div>
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput placeholder="Phone" [(ngModel)]="data.phone" name="phone">
+                      </md-input-container>
+                    </div>
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput type="number" placeholder="Extension" [(ngModel)]="data.extension" name="extension">
+                      </md-input-container>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput type="email" placeholder="Email" [(ngModel)]="data.email" name="email">
+                      </md-input-container>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput placeholder="User name" [(ngModel)]="data.userName" name="userName">
+                      </md-input-container>
+                    </div>
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput type="password" placeholder="Password" [(ngModel)]="data.userPassword" name="userPassword"> 
+                      </md-input-container>
+                    </div>
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput type="password" placeholder="Re-type Password">
+                      </md-input-container>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div>
+                      <md-checkbox [(ngModel)]="data.active" name="active">Active User</md-checkbox>
+                      <md-checkbox [(ngModel)]="data.administrator" name="administrator">System Adminstrator</md-checkbox>
+                    </div>
+                  </div>
+              </md-card-content>
+            </md-card>
+          </md-tab>
+          <md-tab>
+            <template md-tab-label>
+              Care Provider Information
+            </template>
+            <md-card  >
+              <md-card-content>
+                  <div class="container">
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput placeholder="Company Name" [(ngModel)]="data.companyName" name="companyName">
+                      </md-input-container>
+                    </div>
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput placeholder="Business Registration Number" [(ngModel)]="data.businessRegistrationNumber" name="businessRegistrationNumber">
+                      </md-input-container>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput placeholder="GST number" [(ngModel)]="data.gstNumber" name="gstNumber">
+                      </md-input-container>
+                    </div>
+                    <div>
+                      <md-select placeholder="Speciality" name="speciality" [(ngModel)]="data.specialityID">
+                        <md-option *ngFor="let speciality of specialities" [value]="speciality.specialityID">
+                          {{speciality.specialityName}}
+                        </md-option>
+                      </md-select>
+                    </div>
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput placeholder="Doctor Invoice Running Number" [(ngModel)]="data.doctorRunningNumber" name="doctorRunningNumber">
+                      </md-input-container>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput placeholder="Mobile Phone" [(ngModel)]="data.companyMobile" name="companyMobile">
+                      </md-input-container>
+                    </div>
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput placeholder="Phone" [(ngModel)]="data.companyPhone" name="companyPhone">
+                      </md-input-container>
+                    </div>
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput placeholder="Fax" [(ngModel)]="data.companyFax" name="companyFax">
+                      </md-input-container>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput type="email" placeholder="Email" [(ngModel)]="data.companyEmail" name="companyEmail">
+                      </md-input-container>
+                    </div>
+                  </div>
+
+                  <div class="container">
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <textarea mdInput placeholder="Address" [(ngModel)]="data.address" name="address"></textarea>
+                      </md-input-container>
+                    </div>
+                  </div>
+
+                  <div class="container">
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput placeholder="City" [(ngModel)]="data.city" name="city">
+                      </md-input-container>
+                    </div>
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput type="number" placeholder="Postal Code" [(ngModel)]="data.zipcode" name="zipcode">
+                      </md-input-container>
+                    </div>
+                    <div>
+                      <md-select placeholder="State" name="state"  [(ngModel)]="data.stateID">
+                        <md-option *ngFor="let state of states" [value]="state.stateID">
+                          {{state.stateName}}
+                        </md-option>
+                      </md-select>
+                    </div>
+                    <div>
+                      <md-select placeholder="Country" name="country" [(ngModel)]="data.countryID">
+                        <md-option *ngFor="let country of countries" [value]="country.countryID">
+                          {{country.countryName}}
+                        </md-option>
+                      </md-select>
+                    </div>
+                  </div>
+              </md-card-content>
+            </md-card>
+          </md-tab>
+          <md-tab>
+            <template md-tab-label>
+              Free Text
+            </template>
+            <md-card  >
+              <md-card-content>
+                  <div class="container">
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput placeholder="FreeText1" [(ngModel)]="data.freeText1" name="freeText1">
+                      </md-input-container>
+                    </div>
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput placeholder="FreeText2" [(ngModel)]="data.freeText2" name="freeText2">
+                      </md-input-container>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput placeholder="FreeText3" [(ngModel)]="data.freeText3" name="freeText3">
+                      </md-input-container>
+                    </div>
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput placeholder="FreeText4" [(ngModel)]="data.freeText4" name="freeText4">
+                      </md-input-container>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput placeholder="FreeText5" [(ngModel)]="data.freeText5" name="freeText5">
+                      </md-input-container>
+                    </div>
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput placeholder="FreeText6" [(ngModel)]="data.freeText6" name="freeText6">
+                      </md-input-container>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput placeholder="FreeText7" [(ngModel)]="data.freeText7" name="freeText7">
+                      </md-input-container>
+                    </div>
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput placeholder="FreeText8" [(ngModel)]="data.freeText8" name="freeText8">
+                      </md-input-container>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput placeholder="FreeText9" [(ngModel)]="data.freeText9" name="freeText9">
+                      </md-input-container>
+                    </div>
+                    <div>
+                      <md-input-container class="input-full-width">
+                        <input mdInput placeholder="FreeText10" [(ngModel)]="data.freeText10" name="freeText10">
+                      </md-input-container>
+                    </div>
+                  </div>
+              </md-card-content>
+            </md-card>
+          </md-tab>
+        </md-tab-group>
+      </md-card-content>
+    </md-card>
+</section>
