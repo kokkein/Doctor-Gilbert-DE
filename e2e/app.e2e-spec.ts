@@ -1,6 +1,6 @@
 import { DoctorGilbertPage } from './app.po';
 
-describe('Doctor-Dilbert-DEX App', () => {
+describe('Doctor-Dilbert-DE App', () => {
   let page: DoctorGilbertPage;
 
   beforeEach(() => {
