@@ -19,6 +19,8 @@ export class RadiologyComponent implements OnInit {
   displayDialog: boolean;
   dataSource: Company[];
 
+  selectedOption: string;
+
   constructor(service: Service, private _element: ElementRef, public dialog: MdDialog, private router: Router) {
       this.orderByCtrl = new FormControl();
       this.filteredOrderBys = this.orderByCtrl.valueChanges
@@ -38,12 +40,12 @@ export class RadiologyComponent implements OnInit {
       height: '600px',
       width: '800px',
     });
+    dialogRef.afterClosed().subscribe(result => {
+      this.selectedOption = result;
+    });
     //dialogRef.afterClosed().subscribe(result => {
       //this.selectedOption = result;
     //});
-
-
-
 
   }
 
@@ -53,10 +55,28 @@ priorities = [
   'Routine'
 ];
 
-laboratories = [
-  {value: '1', viewValue: 'Quantum Laboratory (Shah Alam) Sdn. Bhd.'},
-  {value: '2', viewValue: 'Wellness lab Cheras Taman Midah Sdn. Bhd'},
-  {value: '3', viewValue: 'BP Lab Sdn. Bhd.'}
+modalities = [
+  {value: '1', viewValue: 'COMPUTED TOMOGRAPHY (CT)'},
+  {value: '2', viewValue: 'MAGNETIC RESONANCE IMAGING (MRI)'},
+  {value: '3', viewValue: 'ULTRASOUND'},
+  {value: '4', viewValue: 'X-RAY'},
+  {value: '5', viewValue: 'BIOMARKERS'},
+  {value: '6', viewValue: 'POSITRON EMISSION TOMOGRAPHY (PET)'}
+];
+
+lateralities = [
+  {value: '1', viewValue: 'LEFT'},
+  {value: '2', viewValue: 'RIGHT'},
+  {value: '3', viewValue: 'BILATERAL'}
+];
+
+chronicConditions = [
+  {value: '1', viewValue: 'Diabeties Mellitius'},
+  {value: '2', viewValue: 'Hypertension'},
+  {value: '2', viewValue: 'Bronchial Asthma'},
+  {value: '2', viewValue: 'Obesity'},
+  {value: '2', viewValue: 'Epilepsy'},
+  {value: '3', viewValue: 'Others'}
 ];
 
 orderBys = [
@@ -71,7 +91,7 @@ filterOrderBy(val: string) {
 
   laboratoryRecord = [
   {
-    id: 'LAB-0003',
+    id: 'RAD-0003',
     laboratory: 'Wellness lab Cheras Taman Midah Sdn. Bhd',
     refferedBy: 'Doctor Lai from LAI Clinic',
     replyTo: '',
@@ -87,7 +107,7 @@ filterOrderBy(val: string) {
     updatedBy: 'Doctor Chin',
   },
   {
-    id: 'LAB-0004',
+    id: 'RAD-0004',
     laboratory: 'Quantum Laboratory (Shah Alam) Sdn. Bhd.',
     refferedBy: 'Doctor Lai from LAI Clinic',
     replyTo: '',
@@ -103,7 +123,7 @@ filterOrderBy(val: string) {
     updatedBy: 'Doctor Chin',
   },
   {
-    id: 'LAB-0005',
+    id: 'RAD-0005',
     laboratory: 'Wellness lab Cheras Taman Midah Sdn. Bhd',
     refferedBy: 'Doctor Lai from LAI Clinic',
     replyTo: 'Ward A',

@@ -7,94 +7,127 @@
         <button md-raised-button (click)="toggleSearch()">Search</button>
       </div>
     </div>
-      <div  style="width: 100% height: 300px;">
-        <dx-data-grid style="display:block;"
-        id="gridContainer"
-        [dataSource]="dataSource">    
-        <dxo-selection
-        
-        mode="multiple"></dxo-selection>
-        <dxo-filter-row
-        [visible]="true"></dxo-filter-row>
-        <dxo-paging [pageSize]="10"></dxo-paging>
-        <dxo-pager 
-            [showPageSizeSelector]="true"
-            [allowedPageSizes]="[5]"
-            [showInfo]="true">
-        </dxo-pager>
-        
-        <dxi-column dataField="CompanyName"></dxi-column>
-        <dxi-column dataField="City"></dxi-column>
-        </dx-data-grid>
-
-      </div>
+{{selectedOption | json}}
     <md-card>
       <md-card-content>
 
+        <div class="container">
+          <div class="two">
+            <md-select placeholder="Modality" name="modality" class="input-full-width">
+            <md-option *ngFor="let modality of modalities" [value]="modality.value">
+                {{modality.viewValue}}
+            </md-option>
+            </md-select>
+          </div>
+          <div>
+              <md-radio-group class="input-full-width">
+                  <md-radio-button *ngFor="let priority of priorities" [value]="priority">
+                      {{priority}}
+                  </md-radio-button>
+              </md-radio-group>
+          </div>
+        </div>
 
         <div class="container">
             <div>
-                <md-input-container class="input-full-width">
-                <input mdInput placeholder="Order By" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
-                </md-input-container>
-                <md-autocomplete #autoOrderBy="mdAutocomplete">
-                <md-option *ngFor="let orderBy of filteredOrderBys | async" [value]="orderBy">
-                    {{ orderBy }}
-                </md-option>
-                </md-autocomplete>
+                <md-form-field class="input-full-width">
+                  <input mdInput placeholder="Order By" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
+                  
+                  <md-autocomplete #autoOrderBy="mdAutocomplete">
+                  <md-option *ngFor="let orderBy of filteredOrderBys | async" [value]="orderBy">
+                      {{ orderBy }}
+                  </md-option>
+                  </md-autocomplete>
+                </md-form-field>
             </div>
             <div>
-                <md-input-container class="input-full-width">
-                <input mdInput placeholder="Referred By" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
-                </md-input-container>
-                <md-autocomplete #autoOrderBy="mdAutocomplete">
-                <md-option *ngFor="let orderBy of filteredOrderBys | async" [value]="orderBy">
-                    {{ orderBy }}
-                </md-option>
-                </md-autocomplete>
+                <md-form-field class="input-full-width">
+                  <input mdInput placeholder="Referred By" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
+                  
+                  <md-autocomplete #autoOrderBy="mdAutocomplete">
+                  <md-option *ngFor="let orderBy of filteredOrderBys | async" [value]="orderBy">
+                      {{ orderBy }}
+                  </md-option>
+                  </md-autocomplete>
+                </md-form-field>
             </div>
             <div>
-                <md-input-container class="input-full-width">
-                <input mdInput placeholder="Reply To" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
-                </md-input-container>
-                <md-autocomplete #autoOrderBy="mdAutocomplete">
-                <md-option *ngFor="let orderBy of filteredOrderBys | async" [value]="orderBy">
-                    {{ orderBy }}
+                <md-form-field class="input-full-width">
+                  <input mdInput placeholder="Reply To" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
+                  
+                  <md-autocomplete #autoOrderBy="mdAutocomplete">
+                  <md-option *ngFor="let orderBy of filteredOrderBys | async" [value]="orderBy">
+                      {{ orderBy }}
+                  </md-option>
+                  </md-autocomplete>
+                </md-form-field>
+            </div>
+        </div>
+        <div class="container">
+            <div>
+                <md-form-field class="input-full-width">
+                  <input mdInput placeholder="Reporting By" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
+                  
+                  <md-autocomplete #autoOrderBy="mdAutocomplete">
+                  <md-option *ngFor="let orderBy of filteredOrderBys | async" [value]="orderBy">
+                      {{ orderBy }}
+                  </md-option>
+                  </md-autocomplete>
+                </md-form-field>
+            </div>
+            <div>
+                <md-select placeholder="Laterality" name="laterality" class="input-full-width">
+                <md-option *ngFor="let laterality of lateralities" [value]="laterality.value">
+                    {{laterality.viewValue}}
                 </md-option>
-                </md-autocomplete>
+                </md-select>
+            </div>
+            <div>
+                <md-select placeholder="Chronic Condition" name="chronicCondition" multiple="true" class="input-full-width">
+                <md-option *ngFor="let chronicCondition of chronicConditions" [value]="chronicCondition.value">
+                    {{chronicCondition.viewValue}}
+                </md-option>
+                </md-select>
+            </div>
+        </div>
+        <div class="container">
+            <div>
+              <md-form-field class="input-full-width">
+                <input mdInput placeholder="Allergy"   name="Allergy">
+              </md-form-field>
+            </div>
+            <div>
+              <md-form-field class="input-full-width">
+                <input mdInput placeholder="Blood Urea Nitrogen(mmol/L)"  name="bun">
+              </md-form-field>
+            </div>
+            <div>
+              <md-form-field class="input-full-width">
+                  <input mdInput type="date" placeholder="LMP"   name="lmp">
+              </md-form-field>
             </div>
           </div>
-          <div class="container">
+        <div class="container">
             <div>
-                <md-radio-group class="input-full-width">
-                    <md-radio-button *ngFor="let priority of priorities" [value]="priority">
-                        {{priority}}
-                    </md-radio-button>
-                </md-radio-group>
+              <md-form-field class="input-full-width">
+                <input mdInput placeholder="Creatinine(umol/L)"   name="creatinine">
+              </md-form-field>
             </div>
             <div>
-              <md-input-container class="input-full-width">
-                <input mdInput type="datetime-local" placeholder="Requested Sample Date-Time" >
-              </md-input-container>
+              <md-form-field class="input-full-width">
+                <input mdInput placeholder="Special Instruction"  name="special">
+              </md-form-field>
             </div>
             <div>
-                <md-input-container class="input-full-width">
-                <input mdInput placeholder="Reporting By" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
-                </md-input-container>
-                <md-autocomplete #autoOrderBy="mdAutocomplete">
-                <md-option *ngFor="let orderBy of filteredOrderBys | async" [value]="orderBy">
-                    {{ orderBy }}
-                </md-option>
-                </md-autocomplete>
+                <md-checkbox>Pregnant</md-checkbox>
+                <md-checkbox>Breast Feeding</md-checkbox>
             </div>
           </div>
-          <div class="container">
-
-              <md-input-container class="input-full-width">
-                <textarea mdInput placeholder="Remark"></textarea>
-              </md-input-container>
-
-          </div>
+        <div class="container">
+              <md-form-field class="input-full-width">
+                <textarea mdInput placeholder="Medical Note"></textarea>
+              </md-form-field>
+        </div>
       </md-card-content>
     </md-card>
   </form>

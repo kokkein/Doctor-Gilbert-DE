@@ -7,7 +7,7 @@ import { Service, Company } from './services/app.service';
 import { CarService } from './services/carService';
 import { MdDatepickerModule } from '@angular/material'
 import { MdTableModule } from '@angular/material';
-import { CdkTableModule } from '@angular/cdk';
+import { CdkTableModule } from '@angular/cdk/table';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';

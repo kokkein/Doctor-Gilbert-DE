@@ -5,70 +5,70 @@
   </div>
 </div>
 <section>
-          <md-card>
-            <md-card-content>
-                <div class="container">
-                  <div> 
-                    <md-input-container class="input-full-width">
-                      <input mdInput placeholder="Diagnosis" [mdAutocomplete]="autoDiagnosis" [formControl]="diagnosisCtrl">
+    <md-card>
+      <md-card-content>
+          <div class="container">
+            <div> 
+              <md-input-container class="input-full-width">
+                <input mdInput placeholder="Diagnosis" [mdAutocomplete]="autoDiagnosis" [formControl]="diagnosisCtrl">
+              </md-input-container>
+              <md-autocomplete #autoDiagnosis="mdAutocomplete" [displayWith]="displayDiagnosisFn">
+                <md-option *ngFor="let diagnosis of filteredDiagnosis | async" [value]="diagnosis">
+                  <span>{{ diagnosis.diagnosisCode }}</span>
+                  <span> ({{diagnosis.diagnosisDescription}}) </span>
+                </md-option>
+              </md-autocomplete>
+            </div>
+            <div>
+              <md-input-container class="input-full-width">
+                <input mdInput placeholder="Diagnosis Description">
+              </md-input-container>
+            </div>
+          </div>
+          <div class="container">
+            <div> 
+              <md-select placeholder="Diagnosis Type" [(ngModel)]="diagnosisType" name="diagnosisType">
+                <md-option *ngFor="let dt of diagnosisTypes" [value]="dt.diagnosisTypeID">
+                  {{dt.diagnosisTypeDesc}}
+                </md-option>
+              </md-select>
+            </div>
+            <div>
+              <md-checkbox [(ngModel)]="checked">Contact Diagnosis</md-checkbox>
+            </div>
+            <div>
+              <md-checkbox [(ngModel)]="checked">Main Diagnosis</md-checkbox>
+            </div>
+            <div>
+              <md-checkbox [(ngModel)]="checked">Secondary Diagnosis</md-checkbox>
+            </div>
+          </div>
+          <div class="container">
+            <div>
+              <md-checkbox [(ngModel)]="checked">External Cause</md-checkbox>
+            </div>
+            <div>
+              <md-checkbox [(ngModel)]="checked">Chronic</md-checkbox>
+            </div>
+            <div>
+              <md-input-container class="input-full-width">
+                <input mdInput placeholder="Since">
+              </md-input-container>
+            </div>
+            <div>
+            </div>
+          </div>
+          <div class="container">
+              <div>
+                  <md-input-container class="input-full-width">
+                      <textarea mdInput placeholder="Medical Note"></textarea>
                     </md-input-container>
-                    <md-autocomplete #autoDiagnosis="mdAutocomplete" [displayWith]="displayDiagnosisFn">
-                      <md-option *ngFor="let diagnosis of filteredDiagnosis | async" [value]="diagnosis">
-                        <span>{{ diagnosis.diagnosisCode }}</span>
-                        <span> ({{diagnosis.diagnosisDescription}}) </span>
-                      </md-option>
-                    </md-autocomplete>
-                  </div>
-                  <div>
-                    <md-input-container class="input-full-width">
-                      <input mdInput placeholder="Diagnosis Description">
-                    </md-input-container>
-                  </div>
-                </div>
-                <div class="container">
-                  <div> 
-                    <md-select placeholder="Diagnosis Type" [(ngModel)]="diagnosisType" name="diagnosisType">
-                      <md-option *ngFor="let dt of diagnosisTypes" [value]="dt.diagnosisTypeID">
-                        {{dt.diagnosisTypeDesc}}
-                      </md-option>
-                    </md-select>
-                  </div>
-                  <div>
-                    <md-checkbox [(ngModel)]="checked">Contact Diagnosis</md-checkbox>
-                  </div>
-                  <div>
-                    <md-checkbox [(ngModel)]="checked">Main Diagnosis</md-checkbox>
-                  </div>
-                  <div>
-                    <md-checkbox [(ngModel)]="checked">Secondary Diagnosis</md-checkbox>
-                  </div>
-                </div>
-                <div class="container">
-                  <div>
-                    <md-checkbox [(ngModel)]="checked">External Cause</md-checkbox>
-                  </div>
-                  <div>
-                    <md-checkbox [(ngModel)]="checked">Chronic</md-checkbox>
-                  </div>
-                  <div>
-                    <md-input-container class="input-full-width">
-                      <input mdInput placeholder="Since">
-                    </md-input-container>
-                  </div>
-                  <div>
-                  </div>
-                </div>
-                <div class="container">
-                    <div>
-                        <md-input-container class="input-full-width">
-                            <textarea mdInput placeholder="Medical Note"></textarea>
-                          </md-input-container>
-                    </div>
-                </div>
+              </div>
+          </div>
 
 
-            </md-card-content>
-          </md-card>
+      </md-card-content>
+    </md-card>
 
 <md-list>
   <h3 md-subheader>Records List</h3>

@@ -4,12 +4,7 @@
       <button md-raised-button>New</button>
   </div>
 </div>
-<a (click)="addAddress()">
-    Add another address +
-  </a>
 
-  <pre>Is myForm valid?: <br>{{myForm.valid | json}}</pre>
-  <pre>form value: <br>{{myForm.value | json}}</pre>
 <section>
 
 <md-card>
@@ -20,7 +15,7 @@
             <input mdInput placeholder="Medication" [mdAutocomplete]="autoMedication" [formControl]="medicationCtrl">
           </md-input-container>
           <md-autocomplete #autoMedication="mdAutocomplete">
-            <md-option *ngFor="let medication of filteredMedications | async" [value]="medication">
+            <md-option *ngFor="let medication of filteredMedications | async" [value]="medication" (onSelectionChange)="addAddress($event)">
               {{ medication }}
             </md-option>
           </md-autocomplete>
@@ -47,8 +42,11 @@
               <md-card>
                   <md-card-content>
             <div>
-              <span>Drug Item {{i + 1}}</span>
-              <span *ngIf="myForm.controls.prescribeList.controls.length > 1" (click)="removeAddress(i)">xxx</span>
+              <span>{{address.controls["drugName"].value}}</span>
+              <button md-icon-button (click)="removeAddress(i)">
+                  <i class="material-icons">delete</i>
+              </button>
+              <!--<span *ngIf="myForm.controls.prescribeList.controls.length > 1" (click)="removeAddress(i)">Remove Item</span>-->
             </div>
             <div [formGroupName]="i">
                 <div class="container">
@@ -181,46 +179,46 @@
         <i class="material-icons">delete</i>
       </button>
     <p md-line>
-      <span> <b><small>Dosage: </small></b>{{medication.dosage}} </span>
-      <span> <b><small>UOM: </small></b>{{medication.uom}} </span>
-      <span> <b><small>Route: </small></b>{{medication.route}} </span>
-      <span> <b><small>Dosage Label: </small></b>{{medication.dosageLabel}} </span>
+      <span> <small>Dosage: </small><b>{{medication.dosage}}</b> </span>
+      <span> <small>UOM: </small><b>{{medication.uom}}</b> </span>
+      <span> <small>Route: </small><b>{{medication.route}}</b> </span>
+      <span> <small>Dosage Label: </small><b>{{medication.dosageLabel}}</b> </span>
     </p>
     <p md-line>
-      <span> <b><small>Take/Apply: </small></b>{{medication.take}} </span>
-      <span> <b><small>Time per Day: </small></b>{{medication.time}} </span>
-      <span> <b><small>Number of Day: </small></b>{{medication.numberOfDay}} </span>
-      <span> <b><small>Total Quantity: </small></b>{{medication.totalQty}} </span>
+      <span> <small>Take/Apply: </small><b>{{medication.take}}</b></span>
+      <span> <small>Time per Day: </small><b>{{medication.time}}</b></span>
+      <span> <small>Number of Day: </small><b>{{medication.numberOfDay}}</b> </span>
+      <span> <small>Total Quantity: </small><b>{{medication.totalQty}}</b> </span>
     </p>
     <p md-line>
-      <span> <b><small>Instruction #1: </small></b>{{medication.instruction1}} </span>
-      <span> <b><small>Instruction #2: </small></b>{{medication.instruction2}} </span>
-      <span> <b><small>Indication: </small></b>{{medication.indication}} </span>
+      <span> <small>Instruction #1: </small><b>{{medication.instruction1}}</b> </span>
+      <span> <small>Instruction #2: </small><b>{{medication.instruction2}}</b> </span>
+      <span> <small>Indication: </small><b>{{medication.indication}}</b> </span>
     </p>
     <p md-line>
-      <span> <b><small>Selling Price: </small></b>{{medication.price}} </span>
-      <span> <b><small>Total Price: </small></b>{{medication.totalPrice}} </span>
-      <span> <b><small>Discount Apply: </small></b>{{medication.discount}} </span>
-      <span> <b><small>Order By: </small></b>{{medication.orderBy}} </span>
+      <span> <small>Selling Price: </small><b>{{medication.price}}</b> </span>
+      <span> <small>Total Price: </small><b>{{medication.totalPrice}}</b> </span>
+      <span> <small>Discount Apply: </small><b>{{medication.discount}}</b> </span>
+      <span> <small>Order By: </small><b>{{medication.orderBy}}</b> </span>
     </p>
     <p md-line>
-      <span> {{medication.note}} </span>
+      <span> <b>{{medication.note}} </b></span>
     </p>
     <p md-line class="pRight"> 
       <small>
-        <span><b>Current Version: </b><i>{{medication.version}}</i></span>
+        <span><i>Current Version: </i><b>{{medication.version}}</b></span>
       </small>
     </p>
     <p md-line class="pRight">
       <small>      
-        <span><b>Updated: </b><i>{{medication.updated | date:'medium'}}</i> </span>
-        <span>, <b>By: </b><i>{{medication.updatedBy}}</i></span>
+        <span><i>Updated: </i><b>{{medication.updated | date:'medium'}}</b> </span>
+        <span>, <i>By: </i><b>{{medication.updatedBy}}</b></span>
       </small>
     </p>
     <p md-line class="pRight">
       <small>
-        <span><b>Created: </b><i>{{medication.created | date:'medium'}}</i> </span>
-        <span>, <b>By: </b><i>{{medication.createdBy}}</i></span>
+        <span><i>Created: </i><b>{{medication.created | date:'medium'}}</b> </span>
+        <span>, <i>By: </i><b>{{medication.createdBy}}</b></span>
       </small>
     </p>
 

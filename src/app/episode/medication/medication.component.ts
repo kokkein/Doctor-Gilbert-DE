@@ -15,7 +15,7 @@ export class MedicationComponent implements OnInit {
     filteredMedicationTemplates: any;
     orderByCtrl: FormControl;
     filteredOrderBys: any;
-
+    displayDrug;
     public myForm: FormGroup; // our form model
     
   constructor(private _fb: FormBuilder) { 
@@ -42,15 +42,17 @@ export class MedicationComponent implements OnInit {
     this.myForm = this._fb.group({
       name: ['', [Validators.required, Validators.minLength(5)]],
       prescribeList: this._fb.array([
-              this.initAddress(),
+              //this.initAddress(),
           ])
       });
   
   }
 
-  initAddress() {
+  initAddress(drugName: string) {
     // initialize our address
     return this._fb.group({
+        drugCode:[''],
+        drugName: [drugName],
         dosage: [''],
         take: [''],
         time: [''],
@@ -69,10 +71,11 @@ export class MedicationComponent implements OnInit {
     });
 }
 
-addAddress() {
+addAddress(event) {
 // add address to the list
 const control = <FormArray>this.myForm.controls['prescribeList'];
-control.push(this.initAddress());
+control.push(this.initAddress(event.source.value));
+console.log(event.source.value);
 }
 
 removeAddress(i: number) {

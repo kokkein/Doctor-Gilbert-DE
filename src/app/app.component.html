@@ -30,15 +30,14 @@
         </button>
 
         
-        <button md-button (click)="root.dir = (root.dir == 'rtl' ? 'ltr' : 'rtl')" title="Toggle between RTL and LTR">
-          <i class="material-icons">swap_horiz</i> {{root.dir.toUpperCase()}}
+        <button md-button title="Toggle between RTL and LTR">
+          <i class="material-icons">swap_horiz</i> 
         </button>
       </div>
     </md-toolbar>
 
-    <div #root="$implicit" dir="ltr" class="demo-content-inner">
+    <div class="demo-content-inner">
       <router-outlet></router-outlet>
-
     </div>
   </div>
 </md-sidenav-container>

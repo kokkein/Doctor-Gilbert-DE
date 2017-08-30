@@ -9,6 +9,7 @@ div.container
 {
     display: flex;
     margin-bottom: 5px;
+    background-color: white;
 }
 
 div.tablerow
@@ -30,13 +31,6 @@ div.container > div
     flex: 1 1 5em;
     margin-left: 5px;
     height:36px;
-    background-color: white;
-}
-div.containerTbl > div
-{
-    flex: 1 1 5em;
-    margin-left: 5px;
-    height:250px;
     background-color: white;
 }
 
@@ -79,7 +73,7 @@ div.container > div.three
 }
 
 .input-full-width {
-    width: 95%;
+    width: 100%;
 }
 
 .input-half-width {

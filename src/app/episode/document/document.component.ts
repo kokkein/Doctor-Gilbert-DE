@@ -19,7 +19,7 @@ constructor(private speechRecognitionService: SpeechRecognitionService) {
     }
 
     ngOnInit() {
-        console.log("hello")
+        
     }
 
     ngOnDestroy() {

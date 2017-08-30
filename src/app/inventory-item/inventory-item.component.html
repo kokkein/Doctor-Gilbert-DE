@@ -5,9 +5,7 @@
         <button md-raised-button>Save + New</button>
     </div>
 </div>
-  <p>
-    {{data | json}}
-  </p>
+
 <section>
   <p-growl [(value)]="msgs" life=3000></p-growl>
     <md-card>
@@ -18,14 +16,14 @@
       <md-card-content>
           <div class="container">
             <div> 
-              <md-input-container class="input-full-width">
+              <md-form-field class="input-full-width">
                 <input mdInput [(ngModel)]="data.inventoryCode" name="inventoryCode" placeholder="Code" >
-              </md-input-container>
+              </md-form-field>
             </div>
             <div>
-              <md-input-container class="input-full-width">
+              <md-form-field class="input-full-width">
                 <input mdInput [(ngModel)]="data.inventoryDescription" name="inventoryDescription" placeholder="Description" >
-              </md-input-container>
+              </md-form-field>
             </div>
             <div>
               <md-checkbox [(ngModel)]="data.active" name="active">Active</md-checkbox>
@@ -33,9 +31,9 @@
           </div>
           <div class="container">
             <div>
-              <md-input-container class="input-full-width">
+              <md-form-field class="input-full-width">
                 <input mdInput placeholder="Brand Name" [mdAutocomplete]="reactiveinventoryBrand" [formControl]="inventoryBrandCtrl" >
-              </md-input-container>
+              </md-form-field>
 
               <md-autocomplete #reactiveinventoryBrand="mdAutocomplete" [displayWith]="displayinventoryBrandFn">
                 <md-option *ngFor="let inventoryBrand of filteredinventoryBrands | async" [value]="inventoryBrand">
@@ -46,9 +44,9 @@
 
             </div>
             <div>
-              <md-input-container class="input-full-width">
+              <md-form-field class="input-full-width">
                 <input mdInput placeholder="Generic Name" [mdAutocomplete]="reactiveinventoryGeneric" [formControl]="inventoryGenericCtrl" >
-              </md-input-container>
+              </md-form-field>
 
               <md-autocomplete #reactiveinventoryGeneric="mdAutocomplete" [displayWith]="displayinventoryGenericFn">
                 <md-option *ngFor="let inventoryGeneric of filteredinventoryGenerics | async" [value]="inventoryGeneric">
@@ -59,16 +57,16 @@
 
             </div>
             <div>
-              <md-input-container class="input-full-width">
+              <md-form-field class="input-full-width">
                 <input mdInput [(ngModel)]="data.inventoryOtherName" name="inventoryOtherName" placeholder="Other Name">
-              </md-input-container>
+              </md-form-field>
             </div>
           </div>
           <div class="container">
             <div>
-              <md-input-container class="input-full-width">
+              <md-form-field class="input-full-width">
                 <input mdInput placeholder="ATC Classification" [mdAutocomplete]="reactiveinventoryATCClassification" [formControl]="inventoryATCClassificationCtrl" >
-              </md-input-container>
+              </md-form-field>
 
               <md-autocomplete #reactiveinventoryATCClassification="mdAutocomplete" [displayWith]="displayinventoryATCClassificationFn">
                 <md-option *ngFor="let inventoryATCClassification of filteredinventoryATCClassifications | async" [value]="inventoryATCClassification">
@@ -79,9 +77,9 @@
 
             </div>
             <div>
-              <md-input-container class="input-full-width">
+              <md-form-field class="input-full-width">
                 <input mdInput placeholder="Category" [mdAutocomplete]="reactiveinventoryCategory" [formControl]="inventoryCategoryCtrl" >
-              </md-input-container>
+              </md-form-field>
 
               <md-autocomplete #reactiveinventoryCategory="mdAutocomplete" [displayWith]="displayinventoryCategoryFn">
                 <md-option *ngFor="let inventoryCategory of filteredinventoryCategorys | async" [value]="inventoryCategory">
@@ -91,9 +89,9 @@
               </md-autocomplete>
             </div>
             <div>
-              <md-input-container class="input-full-width">
+              <md-form-field class="input-full-width">
                 <input mdInput placeholder="Sub Category" [mdAutocomplete]="reactiveinventorySubCategory" [formControl]="inventorySubCategoryCtrl" >
-              </md-input-container>
+              </md-form-field>
 
               <md-autocomplete #reactiveinventorySubCategory="mdAutocomplete" [displayWith]="displayinventorySubCategoryFn">
                 <md-option *ngFor="let inventorySubCategory of filteredinventorySubCategorys | async" [value]="inventorySubCategory">

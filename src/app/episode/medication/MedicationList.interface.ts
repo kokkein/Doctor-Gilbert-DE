@@ -4,6 +4,8 @@ export interface MedicationList {
 }
 
 export interface Prescription {
+    drugCode: string;  // required field
+    drugName: string;  // required field
     dosage: string;  // required field
     take: number;
     time: number;
