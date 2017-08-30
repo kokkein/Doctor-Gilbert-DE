@@ -64,3 +64,135 @@ body {
   height: 100%;
   box-sizing: border-box;
 }
+
+div.containerheader
+{
+    display: flex;
+    margin-bottom: 5px;
+    height:120px;
+    background-color: white;
+}
+
+div.container
+{
+    display: flex;
+    margin-bottom: 5px;
+    background-color: white;
+}
+
+div.tablerow
+{
+    display: flex;
+    margin-bottom: 1px;
+}
+
+div.tablerow > div
+{
+    flex: 1 1 5em;
+    margin-left: 5px;
+    height:15px;
+    background-color: white;
+}
+
+div.container > div
+{
+    flex: 1 1 5em;
+    margin-left: 5px;
+    background-color: white;
+}
+div.containerheader > div
+{
+    flex: 1 1 5em;
+    margin-left: 5px;
+    background-color: white;
+}
+
+div.patientBanner
+{
+    display: flex;
+    margin-bottom: 5px;
+    top: 40px;
+}
+
+div.patientBanner > div
+{
+    flex: 1 1 5em;
+    margin-left: 1px;
+    height:90px;
+    background-color:lightcyan;
+}
+
+div.toolbar > div
+{
+    flex: 1 1 5em;
+    margin-left: 0px;
+    height:37px;
+    background-color: lightcyan;
+}
+
+div.container > div:first-child
+{
+    margin-left: 0;
+}
+
+div.container > div.two
+{
+    flex:2 2 calc(10em + 5px); /** 10px is the missing margin of the missing box */
+}
+
+div.container > div.three
+{
+    flex:3 3 calc(15em + 10px); /** 20px is the missing margin of the two missing boxes */
+}
+
+.input-full-width {
+    width: 95%;
+}
+
+.input-half-width {
+    width: 50%;
+}
+
+span {
+    white-space: normal;
+}
+
+.pRight {
+    width:100%;
+    text-align:right;
+}
+
+/* Structure */
+.example-container {
+    display: flex;
+    flex-direction: column;
+    max-height: 500px;
+    min-width: 300px;
+  }
+  
+  .example-header {
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    padding-left: 24px;
+    font-size: 20px;
+  }
+  
+  .example-header {
+    min-height: 64px;
+    display: flex;
+    align-items: baseline;
+    padding: 8px 24px 0;
+    font-size: 20px;
+    justify-content: space-between;
+  }
+  
+  .mat-input-container {
+    font-size: 14px;
+    flex-grow: 1;
+    margin-left: 32px;
+  }
+  
+  .mat-table {
+    overflow: auto;
+  }

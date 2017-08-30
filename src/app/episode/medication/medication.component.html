@@ -39,108 +39,111 @@
         <!--addresses-->
         <div formArrayName="prescribeList">
           <div *ngFor="let address of myForm.controls.prescribeList.controls; let i=index" >
-              <md-card>
-                  <md-card-content>
-            <div>
-              <span>{{address.controls["drugName"].value}}</span>
-              <button md-icon-button (click)="removeAddress(i)">
-                  <i class="material-icons">delete</i>
-              </button>
-              <!--<span *ngIf="myForm.controls.prescribeList.controls.length > 1" (click)="removeAddress(i)">Remove Item</span>-->
-            </div>
-            <div [formGroupName]="i">
-                <div class="container">
-                    <div class="two">
-                        <md-input-container class="input-full-width">
-                            <input mdInput placeholder="Dosage" formControlName="dosage">
-                            <md-hint align="end">1 tablet(s) 1 times(s) a day for 1 days(s)</md-hint>
-                          </md-input-container>
-                    </div>
-                    <div>
-                        <md-input-container class="input-full-width">
-                          <input mdInput type="number" placeholder="Take/Apply" formControlName="take">
-                        </md-input-container>
-                      </div>
-                      <div>
-                        <md-input-container class="input-full-width">
-                          <input mdInput type="number" placeholder="Time per Day" formControlName="time">
-                        </md-input-container>
-                      </div>
-                      <div>
-                        <md-input-container class="input-full-width">
-                          <input mdInput type="number" placeholder="Number of Day" formControlName="day">
-                        </md-input-container>
+
+        <md-expansion-panel class="md-expansion-demo-width" #myPanel expanded="true">
+            <md-expansion-panel-header>
+              <mat-panel-description>
+              </mat-panel-description>
+              <mat-panel-title>
+                  {{address.controls["drugName"].value}}
+              </mat-panel-title>
+            </md-expansion-panel-header>
+              <div [formGroupName]="i">
+                  <div class="container">
+                      <div class="two">
+                          <md-input-container class="input-full-width">
+                              <input mdInput placeholder="Dosage" formControlName="dosage">
+                              <md-hint align="end">1 tablet(s) 1 times(s) a day for 1 days(s)</md-hint>
+                            </md-input-container>
                       </div>
                       <div>
                           <md-input-container class="input-full-width">
-                            <input mdInput type="number" placeholder="Total Quantity" formControlName="totalQty">
-                            <md-hint align="end">Avail Qty: 503</md-hint>
+                            <input mdInput type="number" placeholder="Take/Apply" formControlName="take">
                           </md-input-container>
-                      </div>
+                        </div>
+                        <div>
+                          <md-input-container class="input-full-width">
+                            <input mdInput type="number" placeholder="Time per Day" formControlName="time">
+                          </md-input-container>
+                        </div>
+                        <div>
+                          <md-input-container class="input-full-width">
+                            <input mdInput type="number" placeholder="Number of Day" formControlName="day">
+                          </md-input-container>
+                        </div>
+                        <div>
+                            <md-input-container class="input-full-width">
+                              <input mdInput type="number" placeholder="Total Quantity" formControlName="totalQty">
+                              <md-hint align="end">Avail Qty: 503</md-hint>
+                            </md-input-container>
+                        </div>
+                        <div>
+                            <md-select placeholder="UOM" name="uom" formControlName="uom">
+                              <md-option *ngFor="let uom of uoms" [value]="uom.value" >
+                                {{uom.viewValue}}
+                              </md-option>
+                            </md-select>
+                        </div>
+                        <div>
+                            <md-checkbox formControlName="necessary">When Necessary</md-checkbox>
+                        </div>
+                  </div>
+                  <br>
+                  <div class="container">
                       <div>
-                          <md-select placeholder="UOM" name="uom" formControlName="uom">
-                            <md-option *ngFor="let uom of uoms" [value]="uom.value" >
-                              {{uom.viewValue}}
-                            </md-option>
+                          <md-input-container class="input-full-width">
+                            <input mdInput type="number" placeholder="Selling Price" name="price" disabled="true" value="103.00" formControlName="price">
+                          </md-input-container>
+                        </div>
+                        <div>
+                            <md-input-container class="input-full-width">
+                              <input mdInput type="number" placeholder="Discount Apply (%)" formControlName="discPerc">
+                            </md-input-container>
+                        </div>
+                        <div>
+                            <md-input-container class="input-full-width">
+                              <input mdInput type="number" placeholder="Discount Apply (Amount)" formControlName="discAmt">
+                            </md-input-container>
+                        </div>
+                        <div>
+                          <md-input-container class="input-full-width">
+                            <input mdInput type="number" placeholder="Total Price" name="totalPrice" disabled="true" value="403.00" formControlName="totalPrice">
+                          </md-input-container>
+                        </div>
+                  </div>
+                  <br>
+                  <div class="container"> 
+                      <div>
+                          <md-select placeholder="Route of Adminitration" name="route" formControlName="route">
+                              <md-option *ngFor="let route of routes" [value]="route.value" >
+                                {{route.viewValue}}
+                              </md-option>
                           </md-select>
                       </div>
-                      <div>
-                          <md-checkbox formControlName="necessary">When Necessary</md-checkbox>
-                      </div>
-                </div>
-                <br>
-                <div class="container">
-                    <div>
-                        <md-input-container class="input-full-width">
-                          <input mdInput type="number" placeholder="Selling Price" name="price" disabled="true" value="103.00" formControlName="price">
-                        </md-input-container>
-                      </div>
-                      <div>
-                          <md-input-container class="input-full-width">
-                            <input mdInput type="number" placeholder="Discount Apply (%)" formControlName="discPerc">
-                          </md-input-container>
-                      </div>
-                      <div>
-                          <md-input-container class="input-full-width">
-                            <input mdInput type="number" placeholder="Discount Apply (Amount)" formControlName="discAmt">
-                          </md-input-container>
-                      </div>
-                      <div>
-                        <md-input-container class="input-full-width">
-                          <input mdInput type="number" placeholder="Total Price" name="totalPrice" disabled="true" value="403.00" formControlName="totalPrice">
-                        </md-input-container>
-                      </div>
-                </div>
-                <br>
-                <div class="container"> 
-                    <div>
-                        <md-select placeholder="Route of Adminitration" name="route" formControlName="route">
-                            <md-option *ngFor="let route of routes" [value]="route.value" >
-                              {{route.viewValue}}
-                            </md-option>
-                        </md-select>
-                    </div>
 
-                    <div>
-                      <md-input-container class="input-full-width">
-                        <input mdInput placeholder="Instruction #1" formControlName="instructionOne">
-                      </md-input-container>
+                      <div>
+                        <md-input-container class="input-full-width">
+                          <input mdInput placeholder="Instruction #1" formControlName="instructionOne">
+                        </md-input-container>
+                      </div>
+                      <div>
+                        <md-input-container class="input-full-width">
+                          <input mdInput placeholder="Instruction #2" formControlName="instructionTwo">
+                        </md-input-container>
+                      </div>
+                      <div>
+                        <md-input-container class="input-full-width">
+                          <input mdInput placeholder="Indication" formControlName="indication">
+                        </md-input-container>
+                      </div>
                     </div>
-                    <div>
-                      <md-input-container class="input-full-width">
-                        <input mdInput placeholder="Instruction #2" formControlName="instructionTwo">
-                      </md-input-container>
-                    </div>
-                    <div>
-                      <md-input-container class="input-full-width">
-                        <input mdInput placeholder="Indication" formControlName="indication">
-                      </md-input-container>
-                    </div>
-                  </div>
-            </div>
-          </md-card-content>
-        </md-card>
-        <br>
+              </div>
+            <md-action-row>
+              <button md-button (click)="removeAddress(i)">Remove</button>
+            </md-action-row>
+          </md-expansion-panel>
+
+
           </div>
         </div>
 

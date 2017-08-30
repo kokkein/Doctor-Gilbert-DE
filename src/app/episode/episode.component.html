@@ -1,24 +1,21 @@
 <section>
 
-  <div [hidden]="hide" [style.height.px]="hgh" >
-    <div class="patientBanner" (click)="togglePatientBar()">
+  <md-expansion-panel  #myPanel>
+    <md-expansion-panel-header>
+      <mat-panel-description>Outpatient - OPD-0000101027, Payment Mode: AIA Premium Patient</mat-panel-description>
+      <mat-panel-title>
+        <strong>Tan Seri. Dato Seri. Barack Obama van Orange</strong>
+        , Female
+      </mat-panel-title>
+    </md-expansion-panel-header>
+    <div class="containerheader">
+      <div>
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYNSdOcn2GYWS6XP8fS01a-bShnHGNcK3cKURyxIgEHjOZt9z4" height="80" width="80">
+      </div>
         <div>
-
           <md-list dense>
             <md-list-item>
-                  <button md-icon-button (click)="togglePatientBar()">
-                  <i class="material-icons">visibility_off</i>
-                  </button>
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYNSdOcn2GYWS6XP8fS01a-bShnHGNcK3cKURyxIgEHjOZt9z4" height="80" width="80">
-
-              <h4 md-line><strong>Tan Seri. Dato Seri. Barack Obama van Orange</strong></h4>
-              <p md-line>
-                <span>MRN0000020104, Female</span>
-              </p>
-              <p md-line>
-                <span>Outpatient - OPD-0000101027</span>
-              </p>
-              <p md-line>
+               <p md-line>
                 <span>D.O.B: 25-12-1979(36 yr 5 mth 21 d)</span>
               </p>
             </md-list-item>
@@ -56,9 +53,9 @@
             </md-list-item>
           </md-list>
         </div>
-    </div>
-  </div>
-  
+      </div>
+  </md-expansion-panel>
+
   <form>
       
     <md-card>
