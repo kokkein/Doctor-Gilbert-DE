@@ -17,9 +17,9 @@
 
         <div class="container">
           <div> 
-            <md-input-container class="input-full-width">
+            <md-form-field class="input-full-width">
               <input mdInput placeholder="Patient" [mdAutocomplete]="reactivePatient" [formControl]="patientCtrl"  [(ngModel)]="visitdata.Patient" name="Patient">
-            </md-input-container>
+            </md-form-field>
 
             <md-autocomplete #reactivePatient="mdAutocomplete" [displayWith]="displayPatientFn">
               <md-option *ngFor="let patient of filteredPatients | async" [value]="patient">
@@ -39,14 +39,14 @@
 
         <div class="container">
             <div>
-              <md-input-container class="input-full-width">
+              <md-form-field class="input-full-width">
                 <input mdInput type="datetime-local" placeholder="Visit Date-Time"  [(ngModel)]="visitdata.VisitDateTime" name="VisitDateTime">
-              </md-input-container>
+              </md-form-field>
             </div>
             <div>
-              <md-input-container class="input-full-width">
+              <md-form-field class="input-full-width">
                 <input mdInput placeholder="Department" [mdAutocomplete]="reactiveDepartment" [formControl]="departmentCtrl"  [(ngModel)]="visitdata.Department" name="Department">
-              </md-input-container>
+              </md-form-field>
 
               <md-autocomplete #reactiveDepartment="mdAutocomplete" [displayWith]="displayDepartmentFn">
                 <md-option *ngFor="let department of filteredDepartments | async" [value]="department">
@@ -61,9 +61,9 @@
               <md-checkbox>Cash Patient</md-checkbox>
             </div>
             <div>
-              <md-input-container class="input-full-width">
+              <md-form-field class="input-full-width">
                 <input mdInput placeholder="Policy" [mdAutocomplete]="reactivePolicy" [formControl]="policyCtrl"  [(ngModel)]="visitdata.Policy" name="Policy">
-              </md-input-container>
+              </md-form-field>
 
               <md-autocomplete #reactivePolicy="mdAutocomplete" [displayWith]="displayPolicyFn">
                 <md-option *ngFor="let policy of filteredPolicies | async" [value]="policy">
@@ -73,9 +73,9 @@
               </md-autocomplete>
             </div>
             <div>
-              <md-input-container class="input-full-width">
+              <md-form-field class="input-full-width">
                 <input mdInput placeholder="Payor" [mdAutocomplete]="reactivePayor" [formControl]="payorCtrl" [(ngModel)]="visitdata.Payor" name="Payor">
-              </md-input-container>
+              </md-form-field>
 
               <md-autocomplete #reactivePayor="mdAutocomplete" [displayWith]="displayPayorFn">
                 <md-option *ngFor="let payor of filteredPayors | async" [value]="payor">
@@ -87,9 +87,9 @@
           </div>
           <div class="container">
             <div>
-              <md-input-container class="input-full-width">
+              <md-form-field class="input-full-width">
                 <input mdInput placeholder="Visit Doctor" [mdAutocomplete]="reactiveDoctor" [formControl]="doctorCtrl"  [(ngModel)]="visitdata.Doctor" name="Doctor">
-              </md-input-container>
+              </md-form-field>
 
               <md-autocomplete #reactiveDoctor="mdAutocomplete" [displayWith]="displayDoctorFn">
                 <md-option *ngFor="let doctor of filteredDoctors | async" [value]="doctor">
@@ -99,9 +99,9 @@
               </md-autocomplete>
             </div>
             <div>
-              <md-input-container class="input-full-width">
+              <md-form-field class="input-full-width">
                 <input mdInput placeholder="Purpose of Visit" [mdAutocomplete]="reactivePurposeOfVisit" [formControl]="purposeOfVisitCtrl"  [(ngModel)]="visitdata.PurposeOfVisit" name="PurposeOfVisit">
-              </md-input-container>
+              </md-form-field>
 
               <md-autocomplete #reactivePurposeOfVisit="mdAutocomplete" [displayWith]="displayPurposeOfVisitFn">
                 <md-option *ngFor="let purposeOfVisit of filteredPurposeOfVisits | async" [value]="purposeOfVisit">
@@ -111,9 +111,9 @@
               </md-autocomplete>
             </div>
             <div>
-              <md-input-container class="input-full-width">
+              <md-form-field class="input-full-width">
                 <input mdInput placeholder="MOH Visit Type" [mdAutocomplete]="reactiveMOH" [formControl]="mohCtrl" [(ngModel)]="visitdata.MOHVisitType" name="MOHVisitType">
-              </md-input-container>
+              </md-form-field>
 
               <md-autocomplete #reactiveMOH="mdAutocomplete" [displayWith]="displayMOHFn">
                 <md-option *ngFor="let moh of filteredMOHs | async" [value]="moh">
@@ -125,9 +125,9 @@
           </div>
           <div class="container">
             <div class="two">
-              <md-input-container class="input-full-width">
+              <md-form-field class="input-full-width">
                 <textarea mdInput placeholder="Remark" [(ngModel)]="visitdata.Remark" name="Remark"></textarea>
-              </md-input-container>
+              </md-form-field>
             </div>
           </div>
       </md-card-content>

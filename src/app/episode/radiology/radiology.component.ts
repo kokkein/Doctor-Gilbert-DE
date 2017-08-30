@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Service, Company } from './../../services/app.service';
 import { TreeTableModule, TreeNode } from 'primeng/primeng';
 import { NodeService } from './../../services/NodeService';
 import { AnimationTransitionEvent, ViewEncapsulation, ElementRef } from '@angular/core';
-import { MdDialog, MdDialogRef, MdDialogConfig} from '@angular/material';
+import { MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
 import { Router } from '@angular/router';
+import { DxDataGridComponent } from "devextreme-angular";
 
 @Component({
   selector: 'app-radiology',
@@ -15,6 +16,8 @@ import { Router } from '@angular/router';
 export class RadiologyComponent implements OnInit {
   orderByCtrl: FormControl;
   filteredOrderBys: any;
+  
+  datad: any = {};
 
   displayDialog: boolean;
   dataSource: Company[];
@@ -39,13 +42,14 @@ export class RadiologyComponent implements OnInit {
     let dialogRef = this.dialog.open(DialogResultRadiologySearch, {
       height: '600px',
       width: '800px',
+      data: {
+        refdata: this.datad
+      }
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.selectedOption = result;
+      this.datad = result;
+      console.log(result);
     });
-    //dialogRef.afterClosed().subscribe(result => {
-      //this.selectedOption = result;
-    //});
 
   }
 
@@ -150,8 +154,14 @@ filterOrderBy(val: string) {
 export class DialogResultRadiologySearch {
   dataSource: Company[];
 
-  constructor(public dialogRef: MdDialogRef<DialogResultRadiologySearch>, service: Service) {
+  constructor(public dialogRef: MdDialogRef<DialogResultRadiologySearch>, service: Service, @Inject(MD_DIALOG_DATA) public data: any) {
     this.dataSource = service.getCompanies();
+  }
+
+  @ViewChild(DxDataGridComponent) dataGrid: DxDataGridComponent
+    
+  refresh() {
+    this.data.datad = this.dataGrid.instance.getSelectedRowKeys();
   }
 
 }

@@ -126,7 +126,7 @@ const appRoutes: Routes = [
     RadiologyComponent,
     LaboratoryComponent,
     MedicationComponent,
-    TimelineComponent,
+    TimelineComponent, 
     DiagnosisComponent, DialogResultRadiologySearch,
     VitalSignsComponent, DialogResultExampleDialog, AppointmentComponent, DepartmentComponent, InsuranceComponent, PayorComponent, MOHVisitTypeComponent, PurposeOfVisitComponent, MasterDataComponent, InventoryBrandComponent, InventoryGenericComponent, InventoryAtcComponent, InventoryCategoryComponent, InventorySubcategoryComponent, InventoryMedicationclassComponent, InventoryPregnancycategoryComponent, SpecialityComponent, DiagnosisMasterComponent
   ],

@@ -3,6 +3,19 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormArray, FormBuilder  } from '@angular/forms';
 import { MedicationList } from './MedicationList.interface';
 
+import { MdChipInputEvent, ENTER } from '@angular/material';
+
+
+export interface Person {
+  name: string;
+}
+
+export interface DemoColor {
+  name: string;
+  color: string;
+}
+
+
 @Component({
   selector: 'app-medication',
   templateUrl: './medication.component.html',
@@ -18,6 +31,14 @@ export class MedicationComponent implements OnInit {
     displayDrug;
     public myForm: FormGroup; // our form model
     
+    visible: boolean = true;
+    color: string = '';
+    selectable: boolean = true;
+    removable: boolean = true;
+    addOnBlur: boolean = true;
+    message: string = '';
+    
+
   constructor(private _fb: FormBuilder) { 
         this.medicationCtrl = new FormControl();
         this.filteredMedications = this.medicationCtrl.valueChanges
@@ -242,4 +263,46 @@ control.removeAt(i);
     return val ? this.orderBys.filter((s) => new RegExp(val, 'gi').test(s)) : this.orderBys;
   }
 
+
+
+
+  
+
+    // Enter, comma, semi-colon
+    separatorKeysCodes = [ENTER, 188, 186];
+    
+      people: Person[] = [
+        { name: 'Panadol' },
+        { name: 'Uphama' },
+        { name: 'Vitamin B-Complex' },
+        { name: 'Amoxicilin' }
+      ];
+
+    
+      displayMessage(message: string): void {
+        this.message = message;
+      }
+    
+      add(event: MdChipInputEvent): void {
+        let input = event.input;
+        let value = event.value;
+    
+        // Add our person
+        if ((value || '').trim()) {
+          this.people.push({ name: value.trim() });
+        }
+    
+        // Reset the input value
+        if (input) {
+          input.value = '';
+        }
+      }
+    
+      remove(person: Person): void {
+        let index = this.people.indexOf(person);
+    
+        if (index >= 0) {
+          this.people.splice(index, 1);
+        }
+      }
 }

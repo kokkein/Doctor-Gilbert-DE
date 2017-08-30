@@ -26,7 +26,7 @@ export class LaboratoryComponent implements OnInit {
     }
     
     ngOnInit() {
-        this.nodeService.getFilesystem().then(files => this.files = files);
+        //this.nodeService.getFilesystem().then(files => this.files = files);
     }
  
     nodeSelect(event) {

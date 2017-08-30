@@ -16,9 +16,9 @@
       <md-card-content>
         <div class="ui-g">
             <div class="ui-g-6">
-                <md-input-container class="input-full-width">
+                <md-form-field class="input-full-width">
                   <input mdInput placeholder="Insurance Policy" [(ngModel)]="data.insuranceName" name="insuranceName">
-                </md-input-container>
+                </md-form-field>
             </div>
             <div class="ui-g-6">
               <md-checkbox [(ngModel)]="data.active" name="active">Active</md-checkbox>
@@ -26,9 +26,9 @@
         </div>
         <div class="ui-g">
           <div class="ui-g-6">
-              <md-input-container class="input-full-width">
+              <md-form-field class="input-full-width">
                 <input mdInput placeholder="Payor" [mdAutocomplete]="reactivePayor" [formControl]="payorCtrl" >
-              </md-input-container>
+              </md-form-field>
 
               <md-autocomplete #reactivePayor="mdAutocomplete" [displayWith]="displayPayorFn">
                 <md-option *ngFor="let payor of filteredPayors | async" [value]="payor">

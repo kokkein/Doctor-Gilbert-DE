@@ -24,9 +24,9 @@
               <md-card-content>
                   <div class="container">
                     <div> 
-                      <md-input-container class="input-full-width">
+                      <md-form-field class="input-full-width">
                         <input mdInput placeholder="Full name" [(ngModel)]="data.name" name="name">
-                      </md-input-container>
+                      </md-form-field>
                     </div>
                     <div>
                       <md-select placeholder="Title" name="title" class="input-full-width" name="titleID" [(ngModel)]="data.titleID">
@@ -46,14 +46,14 @@
 
                   <div class="container">
                     <div>
-                      <md-input-container class="input-full-width">
+                      <md-form-field class="input-full-width">
                         <input mdInput type="date" placeholder="Date of Birth" [ngModel]="data.dob| date:'yyyy-MM-dd'" (ngModelChange)="data.dob = $event" name="dob">
-                      </md-input-container>
+                      </md-form-field>
                     </div>
                     <div>
-                      <md-input-container class="input-full-width">
+                      <md-form-field class="input-full-width">
                         <input mdInput placeholder="Identification Number" [(ngModel)]="data.identificationValue" name="identificationValue">
-                      </md-input-container>
+                      </md-form-field>
                     </div>
                     <div>
                       <md-select placeholder="Identification type" name="IDType" name="identificationTypeID" [(ngModel)]="data.identificationTypeID">
@@ -65,40 +65,40 @@
                   </div>
                   <div class="container">
                     <div>
-                      <md-input-container class="input-full-width">
+                      <md-form-field class="input-full-width">
                         <input mdInput placeholder="Mobile Phone" [(ngModel)]="data.mobile" name="mobile">
-                      </md-input-container>
+                      </md-form-field>
                     </div>
                     <div>
-                      <md-input-container class="input-full-width">
+                      <md-form-field class="input-full-width">
                         <input mdInput placeholder="Phone" [(ngModel)]="data.phone" name="phone">
-                      </md-input-container>
+                      </md-form-field>
                     </div>
                     <div>
-                      <md-input-container class="input-full-width">
+                      <md-form-field class="input-full-width">
                         <input mdInput type="email" placeholder="Email" [(ngModel)]="data.email" name="email">
-                      </md-input-container>
+                      </md-form-field>
                     </div>
                   </div>
 
                   <div class="container">
                     <div>
-                      <md-input-container class="input-full-width">
+                      <md-form-field class="input-full-width">
                         <textarea mdInput placeholder="Address" [(ngModel)]="data.address" name="address"></textarea>
-                      </md-input-container>
+                      </md-form-field>
                     </div>
                   </div>
 
                   <div class="container">
                     <div>
-                      <md-input-container class="input-full-width">
+                      <md-form-field class="input-full-width">
                         <input mdInput placeholder="City"  [(ngModel)]="data.city" name="city">
-                      </md-input-container>
+                      </md-form-field>
                     </div>
                     <div>
-                      <md-input-container class="input-full-width">
+                      <md-form-field class="input-full-width">
                         <input mdInput type="number" placeholder="Postal Code" [(ngModel)]="data.zipcode" name="zipcode">
-                      </md-input-container>
+                      </md-form-field>
                     </div>
                     <div>
                       <md-select placeholder="State" name="stateID" [(ngModel)]="data.stateID">
@@ -126,9 +126,9 @@
               <md-card-content>
                 <div class="container">
                   <div> 
-                    <md-input-container class="input-full-width">
+                    <md-form-field class="input-full-width">
                       <input mdInput placeholder="Full name" [(ngModel)]="data.patientEmergencyResources.name" name="patientEmergencyResources.name">
-                    </md-input-container>
+                    </md-form-field>
                   </div>
                   <div>
                     <md-select placeholder="Relation" name="relation" name="patientEmergencyResources.relationshipID" [(ngModel)]="data.patientEmergencyResources.relationshipID">
@@ -140,14 +140,14 @@
                 </div>
                 <div class="container">
                   <div>
-                    <md-input-container class="input-full-width">
+                    <md-form-field class="input-full-width">
                       <input mdInput type="date" placeholder="Date of Birth" [ngModel]="data.patientEmergencyResources.dob| date:'yyyy-MM-dd'" (ngModelChange)="data.patientEmergencyResources.dob = $event" name="patientEmergencyResources.dob">
-                    </md-input-container>
+                    </md-form-field>
                   </div>
                   <div>
-                    <md-input-container class="input-full-width">
+                    <md-form-field class="input-full-width">
                       <input mdInput placeholder="Identification Number" [(ngModel)]="data.patientEmergencyResources.identificationValue" name="patientEmergencyResources.identificationValue">
-                    </md-input-container>
+                    </md-form-field>
                   </div>
                   <div>
                       <md-select placeholder="Identification type" name="patientEmergencyResources.identificationTypeID" [(ngModel)]="data.patientEmergencyResources.identificationTypeID">
@@ -159,26 +159,26 @@
                 </div>
                 <div class="container">
                   <div>
-                    <md-input-container class="input-full-width">
+                    <md-form-field class="input-full-width">
                       <input mdInput placeholder="Mobile Phone" [(ngModel)]="data.patientEmergencyResources.mobile" name="patientEmergencyResources.mobile">
-                    </md-input-container>
+                    </md-form-field>
                   </div>
                   <div>
-                    <md-input-container class="input-full-width">
+                    <md-form-field class="input-full-width">
                       <input mdInput placeholder="Phone" [(ngModel)]="data.patientEmergencyResources.phone" name="patientEmergencyResources.phone">
-                    </md-input-container>
+                    </md-form-field>
                   </div>
                   <div>
-                    <md-input-container class="input-full-width">
+                    <md-form-field class="input-full-width">
                       <input mdInput type="email" placeholder="Email" [(ngModel)]="data.patientEmergencyResources.email" name="patientEmergencyResources.email">
-                    </md-input-container>
+                    </md-form-field>
                   </div>
                 </div>
                 <div class="container">
                   <div>
-                    <md-input-container class="input-full-width">
+                    <md-form-field class="input-full-width">
                       <textarea mdInput placeholder="Address" [(ngModel)]="data.patientEmergencyResources.address" name="patientEmergencyResources.address"></textarea>
-                    </md-input-container>
+                    </md-form-field>
                   </div>
                   <div>
                     <md-checkbox class="example-margin">Same as Patient's Address</md-checkbox>
@@ -186,14 +186,14 @@
                 </div>
                 <div class="container">
                   <div>
-                    <md-input-container class="input-full-width">
+                    <md-form-field class="input-full-width">
                       <input mdInput placeholder="City" [(ngModel)]="data.patientEmergencyResources.city" name="patientEmergencyResources.city">
-                    </md-input-container>
+                    </md-form-field>
                   </div>
                   <div>
-                    <md-input-container class="input-full-width">
+                    <md-form-field class="input-full-width">
                       <input mdInput type="number" placeholder="Postal Code" [(ngModel)]="data.patientEmergencyResources.zipcode" name="patientEmergencyResources.zipcode">
-                    </md-input-container>
+                    </md-form-field>
                   </div>
                   <div>
                     <md-select placeholder="State" name="patientEmergencyResources.stateID" [(ngModel)]="data.patientEmergencyResources.stateID">
@@ -221,9 +221,9 @@
               <md-card-content>
                 <div class="container">
                   <div> 
-                    <md-input-container class="input-full-width">
+                    <md-form-field class="input-full-width">
                       <input mdInput placeholder="Insurance" [mdAutocomplete]="reactiveInsurance" [formControl]="insuranceCtrl"  name="patientPolicyResources.insuranceID">
-                    </md-input-container>
+                    </md-form-field>
 
                     <md-autocomplete #reactiveInsurance="mdAutocomplete" [displayWith]="displayInsuranceFn">
                       <md-option *ngFor="let Insurance of filteredInsurances | async" [value]="Insurance">
@@ -233,9 +233,9 @@
                     </md-autocomplete>
                   </div>
                   <div>
-                    <md-input-container class="input-full-width">
+                    <md-form-field class="input-full-width">
                       <input mdInput placeholder="Payor" [mdAutocomplete]="reactiveAuto" [formControl]="payorCtrl"  name="patientPolicyResources.payorID">
-                    </md-input-container>
+                    </md-form-field>
 
                     <md-autocomplete #reactiveAuto="mdAutocomplete" [displayWith]="displayPayorFn">
                       <md-option *ngFor="let payor of filteredPayors | async" [value]="payor">
@@ -248,14 +248,14 @@
                 </div>
                 <div class="container">
                   <div>
-                    <md-input-container class="input-full-width">
+                    <md-form-field class="input-full-width">
                       <input mdInput type="date" placeholder="Start Date" [ngModel]="data.patientPolicyResources.startDate| date:'yyyy-MM-dd'" (ngModelChange)="data.patientPolicyResources.startDate = $event" name="patientPolicyResources.startDate">
-                    </md-input-container>
+                    </md-form-field>
                   </div>
                   <div>
-                    <md-input-container class="input-full-width">
+                    <md-form-field class="input-full-width">
                       <input mdInput type="date" placeholder="End date" [ngModel]="data.patientPolicyResources.endDate| date:'yyyy-MM-dd'" (ngModelChange)="data.patientPolicyResources.endDate = $event" name="patientPolicyResources.endDate">
-                    </md-input-container>
+                    </md-form-field>
                   </div>
                   <div>
                     <md-checkbox class="example-margin" [(ngModel)]="data.patientPolicyResources.active" name="patientPolicyResources.active">In-Use</md-checkbox>
@@ -263,9 +263,9 @@
                 </div>
                 <div class="container">
                   <div>
-                    <md-input-container class="input-full-width">
+                    <md-form-field class="input-full-width">
                       <textarea mdInput placeholder="Remark" [(ngModel)]="data.patientPolicyResources.remark" name="patientPolicyResources.remark"></textarea>
-                    </md-input-container>
+                    </md-form-field>
                   </div>
                 </div>
 
@@ -280,50 +280,50 @@
               <md-card-content>
                 <div class="container">
                   <div> 
-                    <md-input-container class="input-full-width">
+                    <md-form-field class="input-full-width">
                       <input mdInput placeholder="Employer" [(ngModel)]="data.patientEmployeeResources.employeeName" name="patientEmployeeResources.employeeName">
-                    </md-input-container>
+                    </md-form-field>
                   </div>
                   <div>
-                    <md-input-container class="input-full-width">
+                    <md-form-field class="input-full-width">
                       <input mdInput placeholder="Employee Reference No" [(ngModel)]="data.patientEmployeeResources.employeeReferenceNo" name="patientEmployeeResources.employeeReferenceNo">
-                    </md-input-container>
+                    </md-form-field>
                   </div>
                 </div>
                 <div class="container">
                   <div>
-                    <md-input-container class="input-full-width">
+                    <md-form-field class="input-full-width">
                       <input mdInput placeholder="Phone" [(ngModel)]="data.patientEmployeeResources.phone" name="patientEmployeeResources.phone">
-                    </md-input-container>
+                    </md-form-field>
                   </div>
                   <div>
-                    <md-input-container class="input-full-width">
+                    <md-form-field class="input-full-width">
                       <input mdInput placeholder="Fax" [(ngModel)]="data.patientEmployeeResources.fax" name="patientEmployeeResources.fax">
-                    </md-input-container>
+                    </md-form-field>
                   </div>
                   <div>
-                    <md-input-container class="input-full-width">
+                    <md-form-field class="input-full-width">
                       <input mdInput type="email" placeholder="Email" [(ngModel)]="data.patientEmployeeResources.email" name="patientEmployeeResources.email">
-                    </md-input-container>
+                    </md-form-field>
                   </div>
                 </div>
                 <div class="container">
                   <div>
-                    <md-input-container class="input-full-width">
+                    <md-form-field class="input-full-width">
                       <textarea mdInput placeholder="Address" [(ngModel)]="data.patientEmployeeResources.address" name="patientEmployeeResources.address"></textarea>
-                    </md-input-container>
+                    </md-form-field>
                   </div>
                 </div>
                 <div class="container">
                   <div>
-                    <md-input-container class="input-full-width">
+                    <md-form-field class="input-full-width">
                       <input mdInput placeholder="City" [(ngModel)]="data.patientEmployeeResources.city" name="patientEmployeeResources.city">
-                    </md-input-container>
+                    </md-form-field>
                   </div>
                   <div>
-                    <md-input-container class="input-full-width">
+                    <md-form-field class="input-full-width">
                       <input mdInput type="number" placeholder="Postal Code" [(ngModel)]="data.patientEmployeeResources.zipcode" name="patientEmployeeResources.zipcode">
-                    </md-input-container>
+                    </md-form-field>
                   </div>
                   <div>
                     <md-select placeholder="State" name="patientEmployeeResources.stateID" [(ngModel)]="data.patientEmployeeResources.stateID" >

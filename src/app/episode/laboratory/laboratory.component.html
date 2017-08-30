@@ -22,9 +22,9 @@
 
         <div class="container">
             <div>
-                <md-input-container class="input-full-width">
+                <md-form-field class="input-full-width">
                 <input mdInput placeholder="Order By" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
-                </md-input-container>
+                </md-form-field>
                 <md-autocomplete #autoOrderBy="mdAutocomplete">
                 <md-option *ngFor="let orderBy of filteredOrderBys | async" [value]="orderBy">
                     {{ orderBy }}
@@ -32,9 +32,9 @@
                 </md-autocomplete>
             </div>
             <div>
-                <md-input-container class="input-full-width">
+                <md-form-field class="input-full-width">
                 <input mdInput placeholder="Referred By" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
-                </md-input-container>
+                </md-form-field>
                 <md-autocomplete #autoOrderBy="mdAutocomplete">
                 <md-option *ngFor="let orderBy of filteredOrderBys | async" [value]="orderBy">
                     {{ orderBy }}
@@ -42,9 +42,9 @@
                 </md-autocomplete>
             </div>
             <div>
-                <md-input-container class="input-full-width">
+                <md-form-field class="input-full-width">
                 <input mdInput placeholder="Reply To" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
-                </md-input-container>
+                </md-form-field>
                 <md-autocomplete #autoOrderBy="mdAutocomplete">
                 <md-option *ngFor="let orderBy of filteredOrderBys | async" [value]="orderBy">
                     {{ orderBy }}
@@ -61,14 +61,14 @@
                 </md-radio-group>
             </div>
             <div>
-              <md-input-container class="input-full-width">
+              <md-form-field class="input-full-width">
                 <input mdInput type="datetime-local" placeholder="Requested Sample Date-Time" >
-              </md-input-container>
+              </md-form-field>
             </div>
             <div>
-                <md-input-container class="input-full-width">
+                <md-form-field class="input-full-width">
                 <input mdInput placeholder="Reporting By" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
-                </md-input-container>
+                </md-form-field>
                 <md-autocomplete #autoOrderBy="mdAutocomplete">
                 <md-option *ngFor="let orderBy of filteredOrderBys | async" [value]="orderBy">
                     {{ orderBy }}
@@ -78,9 +78,9 @@
           </div>
           <div class="container">
 
-              <md-input-container class="input-full-width">
+              <md-form-field class="input-full-width">
                 <textarea mdInput placeholder="Remark"></textarea>
-              </md-input-container>
+              </md-form-field>
 
           </div>
           <div class="container">

@@ -1,8 +1,8 @@
 <h2 md-dialog-title>Radiology Listing</h2>
 <md-dialog-content>
     <div>
-        <dx-data-grid style="display:block;"
-        id="gridContainer"
+        <dx-data-grid style="display:block;" #grid
+        id="gridContainer" 
         [dataSource]="dataSource">    
         <dxo-selection
         
@@ -21,9 +21,11 @@
         </dx-data-grid>
   
       </div>
+      
+      <button md-raised-button (click)="refresh()">refresh</button>
 </md-dialog-content>
 <md-dialog-actions>
 
 
-  <button md-button md-dialog-close>Close</button>
+  <button md-button [md-dialog-close]="data.datad">Close</button>
 </md-dialog-actions>

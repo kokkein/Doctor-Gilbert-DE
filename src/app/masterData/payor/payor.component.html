@@ -16,9 +16,9 @@
       <md-card-content>
         <div class="ui-g">
             <div class="ui-g-8">
-                <md-input-container class="input-full-width">
+                <md-form-field class="input-full-width">
                   <input mdInput placeholder="Payor Name" [(ngModel)]="data.payorName" name="payorName">
-                </md-input-container>
+                </md-form-field>
             </div>
             <div class="ui-g-4">
               <md-checkbox [(ngModel)]="data.Active" name="Active">Active</md-checkbox>
@@ -26,38 +26,38 @@
         </div>
         <div class="ui-g">
             <div class="ui-g-3">
-                <md-input-container class="input-full-width">
+                <md-form-field class="input-full-width">
                   <input mdInput placeholder="Phone" [(ngModel)]="data.phone" name="phone">
-                </md-input-container>
+                </md-form-field>
             </div>
             <div class="ui-g-3">
-                <md-input-container class="input-full-width">
+                <md-form-field class="input-full-width">
                   <input mdInput placeholder="Fax" [(ngModel)]="data.fax" name="fax">
-                </md-input-container>
+                </md-form-field>
             </div>
             <div class="ui-g-6">
-                <md-input-container class="input-full-width">
+                <md-form-field class="input-full-width">
                   <input mdInput type="email" placeholder="Email" [(ngModel)]="data.email" name="email">
-                </md-input-container>
+                </md-form-field>
             </div>
         </div>
         <div class="ui-g">
             <div class="ui-g-8">
-                <md-input-container class="input-full-width">
+                <md-form-field class="input-full-width">
                   <textarea mdInput placeholder="Address" [(ngModel)]="data.address" name="address"></textarea>
-                </md-input-container>
+                </md-form-field>
             </div>
             <div class="ui-g-4">
-                <md-input-container class="input-full-width">
+                <md-form-field class="input-full-width">
                   <input mdInput placeholder="City" [(ngModel)]="data.city" name="city">
-                </md-input-container>
+                </md-form-field>
             </div>
         </div>
         <div class="ui-g">
             <div class="ui-g-4">
-                <md-input-container class="input-full-width">
+                <md-form-field class="input-full-width">
                   <input mdInput type="number" placeholder="Postal Code" [(ngModel)]="data.zipcode" name="zipcode">
-                </md-input-container>
+                </md-form-field>
             </div>
             <div class="ui-g-4">
                 <md-select placeholder="State" name="state" [(ngModel)]="data.state" name="state">

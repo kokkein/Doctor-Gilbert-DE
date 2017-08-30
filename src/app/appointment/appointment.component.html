@@ -21,20 +21,20 @@
         [style]="{'overflow':'visible'}" [resizable]="true" >
         <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="event">
             <div class="ui-grid-row">
-                <md-input-container class="input-full-width">
+                <md-form-field class="input-full-width">
                     <input mdInput placeholder="Title" id="title" [(ngModel)]="event.title" >
-                </md-input-container>
+                </md-form-field>
             </div>
             <div class="ui-grid-row">
-                <md-input-container class="input-full-width">
+                <md-form-field class="input-full-width">
                     <input mdInput (change)="onDateChanged()" type="datetime-local" [(ngModel)]="event.start" placeholder="Start" name="start">
-                </md-input-container>      
-                <md-input-container class="input-full-width">
+                </md-form-field>      
+                <md-form-field class="input-full-width">
                     <input mdInput (change)="onDateChanged()" type="datetime-local" [(ngModel)]="event.end" placeholder="End" name="end">
-                </md-input-container>    
-                <md-input-container class="input-full-width">
+                </md-form-field>    
+                <md-form-field class="input-full-width">
                     <input mdInput (change)="onDurationChanged()" type="number" [(ngModel)]="event.duration" placeholder="Duration(Minutes)" name="Duration">
-                </md-input-container>
+                </md-form-field>
             </div>
             <div class="ui-grid-row">
 
@@ -46,9 +46,9 @@
                 <md-checkbox [(ngModel)]="event.allDay" name="allday">All Day</md-checkbox>
             </div>
             <div class="ui-grid-row">
-              <md-input-container class="input-full-width">
+              <md-form-field class="input-full-width">
                 <input mdInput placeholder="Visit Doctor" [mdAutocomplete]="reactiveDoctor" [formControl]="doctorCtrl"  [(ngModel)]="event.visitDoctorID" name="dgUserID">
-              </md-input-container>
+              </md-form-field>
 
               <md-autocomplete #reactiveDoctor="mdAutocomplete" [displayWith]="displayDoctorFn">
                 <md-option *ngFor="let doctor of filteredDoctors | async" [value]="doctor">
@@ -59,21 +59,21 @@
             </div>
 
             <div class="ui-grid-row">
-                <md-input-container class="input-half-width">
+                <md-form-field class="input-half-width">
                     <input mdInput  [(ngModel)]="event.mobile" placeholder="Mobile" name="mobile">
-                </md-input-container>
-                <md-input-container class="input-half-width">
+                </md-form-field>
+                <md-form-field class="input-half-width">
                     <input mdInput  [(ngModel)]="event.phone" placeholder="Phone" name="phone">
-                </md-input-container>
-                <md-input-container class="input-full-width">
+                </md-form-field>
+                <md-form-field class="input-full-width">
                     <input mdInput  [(ngModel)]="event.email" placeholder="Email" name="email">
-                </md-input-container>
+                </md-form-field>
             </div>
             <div class="ui-grid-row">
 
-                <md-input-container class="input-full-width">
+                <md-form-field class="input-full-width">
                 <input mdInput placeholder="Patient (Registered)" [mdAutocomplete]="reactivePatient" [formControl]="patientCtrl"  [(ngModel)]="event.patientID" name="patientID">
-                </md-input-container>
+                </md-form-field>
 
                 <md-autocomplete #reactivePatient="mdAutocomplete" [displayWith]="displayPatientFn">
                 <md-option *ngFor="let patient of filteredPatients | async" [value]="patient">
@@ -84,9 +84,9 @@
 
             </div>
             <div class="ui-grid-row">
-                <md-input-container class="input-full-width">
+                <md-form-field class="input-full-width">
                     <input mdInput placeholder="Description" id="Description" [(ngModel)]="event.description" name="description" >
-                </md-input-container>
+                </md-form-field>
             </div>
         </div>
         <p-footer>

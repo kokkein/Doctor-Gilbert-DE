@@ -9,9 +9,9 @@
       <md-card-content>
           <div class="container">
             <div> 
-              <md-input-container class="input-full-width">
+              <md-form-field class="input-full-width">
                 <input mdInput placeholder="Diagnosis" [mdAutocomplete]="autoDiagnosis" [formControl]="diagnosisCtrl">
-              </md-input-container>
+              </md-form-field>
               <md-autocomplete #autoDiagnosis="mdAutocomplete" [displayWith]="displayDiagnosisFn">
                 <md-option *ngFor="let diagnosis of filteredDiagnosis | async" [value]="diagnosis">
                   <span>{{ diagnosis.diagnosisCode }}</span>
@@ -20,9 +20,9 @@
               </md-autocomplete>
             </div>
             <div>
-              <md-input-container class="input-full-width">
+              <md-form-field class="input-full-width">
                 <input mdInput placeholder="Diagnosis Description">
-              </md-input-container>
+              </md-form-field>
             </div>
           </div>
           <div class="container">
@@ -51,18 +51,18 @@
               <md-checkbox [(ngModel)]="checked">Chronic</md-checkbox>
             </div>
             <div>
-              <md-input-container class="input-full-width">
+              <md-form-field class="input-full-width">
                 <input mdInput placeholder="Since">
-              </md-input-container>
+              </md-form-field>
             </div>
             <div>
             </div>
           </div>
           <div class="container">
               <div>
-                  <md-input-container class="input-full-width">
+                  <md-form-field class="input-full-width">
                       <textarea mdInput placeholder="Medical Note"></textarea>
-                    </md-input-container>
+                    </md-form-field>
               </div>
           </div>
 

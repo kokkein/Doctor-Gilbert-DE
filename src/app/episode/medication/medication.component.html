@@ -5,15 +5,30 @@
   </div>
 </div>
 
+<md-form-field class="input-full-width">
+    <md-chip-list mdPrefix #chipList1>
+      <md-chip *ngFor="let person of people" [selectable]="selectable"
+               [removable]="removable" (remove)="remove(person)">
+        {{person.name}}
+        <md-icon mdChipRemove *ngIf="removable">cancel</md-icon>
+      </md-chip>
+    </md-chip-list>
+    <input mdInput placeholder="New Contributor..."
+           [mdChipInputFor]="chipList1"
+           [mdChipInputSeparatorKeyCodes]="separatorKeysCodes"
+           [mdChipInputAddOnBlur]="addOnBlur"
+           (mdChipInputTokenEnd)="add($event)" />
+  </md-form-field>
+
 <section>
 
 <md-card>
   <md-card-content>
       <div class="container">
         <div class="two"> 
-          <md-input-container class="input-full-width">
+          <md-form-field class="input-full-width">
             <input mdInput placeholder="Medication" [mdAutocomplete]="autoMedication" [formControl]="medicationCtrl">
-          </md-input-container>
+          </md-form-field>
           <md-autocomplete #autoMedication="mdAutocomplete">
             <md-option *ngFor="let medication of filteredMedications | async" [value]="medication" (onSelectionChange)="addAddress($event)">
               {{ medication }}
@@ -21,9 +36,9 @@
           </md-autocomplete>
         </div>
         <div>
-          <md-input-container class="input-full-width">
+          <md-form-field class="input-full-width">
             <input mdInput placeholder="Medication Template" [mdAutocomplete]="autoMedicationTemplate" [formControl]="medicationTemplateCtrl">
-          </md-input-container>
+          </md-form-field>
           <md-autocomplete #autoMedicationTemplate="mdAutocomplete">
             <md-option *ngFor="let medicationTemplate of filteredMedicationTemplates | async" [value]="medicationTemplate">
               {{ medicationTemplate }}
@@ -40,42 +55,42 @@
         <div formArrayName="prescribeList">
           <div *ngFor="let address of myForm.controls.prescribeList.controls; let i=index" >
 
-        <md-expansion-panel class="md-expansion-demo-width" #myPanel expanded="true">
+        <md-expansion-panel #myPanel expanded="true">
             <md-expansion-panel-header>
               <mat-panel-description>
               </mat-panel-description>
               <mat-panel-title>
-                  {{address.controls["drugName"].value}}
+                  <strong>#{{(i+1)}} - {{address.controls["drugName"].value}}</strong>
               </mat-panel-title>
             </md-expansion-panel-header>
               <div [formGroupName]="i">
                   <div class="container">
                       <div class="two">
-                          <md-input-container class="input-full-width">
+                          <md-form-field class="input-full-width">
                               <input mdInput placeholder="Dosage" formControlName="dosage">
                               <md-hint align="end">1 tablet(s) 1 times(s) a day for 1 days(s)</md-hint>
-                            </md-input-container>
+                            </md-form-field>
                       </div>
                       <div>
-                          <md-input-container class="input-full-width">
+                          <md-form-field class="input-full-width">
                             <input mdInput type="number" placeholder="Take/Apply" formControlName="take">
-                          </md-input-container>
+                          </md-form-field>
                         </div>
                         <div>
-                          <md-input-container class="input-full-width">
+                          <md-form-field class="input-full-width">
                             <input mdInput type="number" placeholder="Time per Day" formControlName="time">
-                          </md-input-container>
+                          </md-form-field>
                         </div>
                         <div>
-                          <md-input-container class="input-full-width">
+                          <md-form-field class="input-full-width">
                             <input mdInput type="number" placeholder="Number of Day" formControlName="day">
-                          </md-input-container>
+                          </md-form-field>
                         </div>
                         <div>
-                            <md-input-container class="input-full-width">
+                            <md-form-field class="input-full-width">
                               <input mdInput type="number" placeholder="Total Quantity" formControlName="totalQty">
                               <md-hint align="end">Avail Qty: 503</md-hint>
-                            </md-input-container>
+                            </md-form-field>
                         </div>
                         <div>
                             <md-select placeholder="UOM" name="uom" formControlName="uom">
@@ -88,30 +103,30 @@
                             <md-checkbox formControlName="necessary">When Necessary</md-checkbox>
                         </div>
                   </div>
-                  <br>
+                
                   <div class="container">
                       <div>
-                          <md-input-container class="input-full-width">
+                          <md-form-field class="input-full-width">
                             <input mdInput type="number" placeholder="Selling Price" name="price" disabled="true" value="103.00" formControlName="price">
-                          </md-input-container>
+                          </md-form-field>
                         </div>
                         <div>
-                            <md-input-container class="input-full-width">
+                            <md-form-field class="input-full-width">
                               <input mdInput type="number" placeholder="Discount Apply (%)" formControlName="discPerc">
-                            </md-input-container>
+                            </md-form-field>
                         </div>
                         <div>
-                            <md-input-container class="input-full-width">
+                            <md-form-field class="input-full-width">
                               <input mdInput type="number" placeholder="Discount Apply (Amount)" formControlName="discAmt">
-                            </md-input-container>
+                            </md-form-field>
                         </div>
                         <div>
-                          <md-input-container class="input-full-width">
+                          <md-form-field class="input-full-width">
                             <input mdInput type="number" placeholder="Total Price" name="totalPrice" disabled="true" value="403.00" formControlName="totalPrice">
-                          </md-input-container>
+                          </md-form-field>
                         </div>
                   </div>
-                  <br>
+                  
                   <div class="container"> 
                       <div>
                           <md-select placeholder="Route of Adminitration" name="route" formControlName="route">
@@ -122,19 +137,19 @@
                       </div>
 
                       <div>
-                        <md-input-container class="input-full-width">
+                        <md-form-field class="input-full-width">
                           <input mdInput placeholder="Instruction #1" formControlName="instructionOne">
-                        </md-input-container>
+                        </md-form-field>
                       </div>
                       <div>
-                        <md-input-container class="input-full-width">
+                        <md-form-field class="input-full-width">
                           <input mdInput placeholder="Instruction #2" formControlName="instructionTwo">
-                        </md-input-container>
+                        </md-form-field>
                       </div>
                       <div>
-                        <md-input-container class="input-full-width">
+                        <md-form-field class="input-full-width">
                           <input mdInput placeholder="Indication" formControlName="indication">
-                        </md-input-container>
+                        </md-form-field>
                       </div>
                     </div>
               </div>
@@ -151,9 +166,9 @@
 
       <div class="container">
         <div>
-          <md-input-container class="input-full-width">
+          <md-form-field class="input-full-width">
             <input mdInput placeholder="Order By" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
-          </md-input-container>
+          </md-form-field>
           <md-autocomplete #autoOrderBy="mdAutocomplete">
             <md-option *ngFor="let orderBy of filteredOrderBys | async" [value]="orderBy">
               {{ orderBy }}
@@ -163,9 +178,9 @@
       </div>
       <div class="container">
         <div>
-          <md-input-container class="input-full-width">
+          <md-form-field class="input-full-width">
             <textarea mdInput placeholder="Medication Note"></textarea>
-          </md-input-container>
+          </md-form-field>
         </div>
       </div>
   </md-card-content>
