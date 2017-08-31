@@ -95,6 +95,10 @@ export class MasterDataService {
         return this.http.get(this.sURL + 'Inventory/' + id)
                     .map(res => res.json());
     }
+    GetInventoryBySearch(keyword) {
+        return this.http.get(this.sURL + 'InventorySearch/' + keyword)
+                    .map(res => res.json());
+    }
     GetInventoryBrand() {
         return this.http.get(this.sURL + 'InventoryBrand')
                     .map(res => res.json());
@@ -179,7 +183,14 @@ export class MasterDataService {
         return this.http.get(this.sURL + 'DiagnosisSearch/' + searchKey)
                     .map(res => res.json());
     }
-
+    GetLabItem() {
+        return this.http.get(this.sURL + 'LabItem')
+                    .map(res => res.json());
+    }
+    GetLabItemByID(id) {
+        return this.http.get(this.sURL + 'LabItem/' + id)
+                    .map(res => res.json());
+    }
 
 //Add Data
     CreatePurposeOfVisit(PurposeOfVisit) {
@@ -200,6 +211,10 @@ export class MasterDataService {
     }
     CreateInsurance(Insurance) {
         return this.http.post(this.sURL + 'Insurance', Insurance)
+                    .map(res => res.json());
+    }
+    CreateLabItem(LabItem) {
+        return this.http.post(this.sURL + 'LabItem', LabItem)
                     .map(res => res.json());
     }
     CreateInventory(Inventory) {
@@ -318,6 +333,10 @@ export class MasterDataService {
     }
     UpdateDiagnosisByID(Diagnosis) {
         return this.http.put(this.sURL + 'Diagnosis/' + Diagnosis.diagnosisID, Diagnosis)
+                    .map(res => res.json());
+    }
+    UpdateLabItemByID(LabItem) {
+        return this.http.put(this.sURL + 'LabItem/' + LabItem.labItemID, LabItem)
                     .map(res => res.json());
     }
     UpdatePatientByID(Patient) {

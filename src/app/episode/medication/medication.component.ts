@@ -1,3 +1,4 @@
+import { MasterDataService } from 'app/services/masterdata.service';
 
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormArray, FormBuilder  } from '@angular/forms';
@@ -29,6 +30,7 @@ export class MedicationComponent implements OnInit {
     orderByCtrl: FormControl;
     filteredOrderBys: any;
     displayDrug;
+    medications: any[] = [];
     public myForm: FormGroup; // our form model
     
     visible: boolean = true;
@@ -39,11 +41,9 @@ export class MedicationComponent implements OnInit {
     message: string = '';
     
 
-  constructor(private _fb: FormBuilder) { 
-        this.medicationCtrl = new FormControl();
-        this.filteredMedications = this.medicationCtrl.valueChanges
-        .startWith(null)
-        .map(name => this.filterMedication(name));
+  constructor(private _fb: FormBuilder, private MasterDataService: MasterDataService) { 
+
+        this.medicationCtrl = new FormControl({inventoryID: 0, inventoryDescription: ''});
 
         this.medicationTemplateCtrl = new FormControl();
         this.filteredMedicationTemplates = this.medicationTemplateCtrl.valueChanges
@@ -66,7 +66,16 @@ export class MedicationComponent implements OnInit {
               //this.initAddress(),
           ])
       });
-  
+
+      this.medicationCtrl = new FormControl({inventoryID: 0, inventoryDescription: ''});
+      this.filteredMedications = this.medicationCtrl.valueChanges
+      .debounceTime(400)
+      .do(value => {
+
+         this.MasterDataService.GetInventoryBySearch(value).subscribe(res => { this.medications = res; 
+
+        }); 
+     }).delay(500).map(() => this.medications);
   }
 
   initAddress(drugName: string) {
@@ -151,15 +160,6 @@ control.removeAt(i);
       updatedBy: 'Doctor Chin',
     },
   ];
-
-  medications = [
-    'MED001 - Panadol - 500 MG',
-    'MED002 - Uphamol 650 TAB 500mg(Paracetamol)',
-    'MED003 - Longize',
-    'MED004 - Paraceptamol',
-    'MED005 - Antibiotic',
-    'MED006 - Amoxicilin',
-    ];
 
   medicationTemplates = [
     'TEMP001 - URTI',
@@ -262,11 +262,6 @@ control.removeAt(i);
   filterOrderBy(val: string) {
     return val ? this.orderBys.filter((s) => new RegExp(val, 'gi').test(s)) : this.orderBys;
   }
-
-
-
-
-  
 
     // Enter, comma, semi-colon
     separatorKeysCodes = [ENTER, 188, 186];

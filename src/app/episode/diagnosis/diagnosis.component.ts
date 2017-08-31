@@ -32,11 +32,7 @@ export class DiagnosisComponent implements OnInit {
       this.filteredDiagnosis = this.diagnosisCtrl.valueChanges
       .debounceTime(400)
       .do(value => {
-     
-         // i don't want to make another request on value change if content placeholder already has it.
-         //let exist = this.myContent.findIndex(t => t.text === value);
-         //if (exist > -1) return;
-         // get data from the server. my response is an array [{id:1, text:'hello world'}]
+
          this.MasterDataService.GetDiagnosisBySearch(value).subscribe(res => { this.diagnosis = res; 
 
         }); 
@@ -80,8 +76,5 @@ export class DiagnosisComponent implements OnInit {
     return val ? this.diagnosis.filter((s) => new RegExp(val, 'gi').test(s.diagnosisCode))
     : this.diagnosis;
   }
-////////////
-
-
  
 }

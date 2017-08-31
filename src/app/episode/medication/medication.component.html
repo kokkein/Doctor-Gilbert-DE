@@ -29,8 +29,9 @@
     >
   </md-form-field>
   <md-autocomplete #autoMedication="mdAutocomplete">
-    <md-option *ngFor="let medication of filteredMedications | async" [value]="medication" (onSelectionChange)="add($event)">
-      {{ medication }}
+    <md-option *ngFor="let medication of filteredMedications | async" [value]="medication.inventoryCode" (onSelectionChange)="add($event)">
+      <span>{{medication.inventoryCode}}, </span>
+      <small>{{medication.inventoryDescription}}</small>
     </md-option>
   </md-autocomplete>
 <section>
@@ -43,8 +44,10 @@
             <input mdInput placeholder="Medication" [mdAutocomplete]="autoMedication" [formControl]="medicationCtrl">
           </md-form-field>
           <md-autocomplete #autoMedication="mdAutocomplete">
-            <md-option *ngFor="let medication of filteredMedications | async" [value]="medication" (onSelectionChange)="addAddress($event)">
-              {{ medication }}
+            <md-option *ngFor="let medication of filteredMedications | async" [value]="medication.inventoryCode" (onSelectionChange)="addAddress($event)">
+              <span>{{medication.inventoryCode}}, </span>
+              <small>{{medication.inventoryDescription}}</small>
+
             </md-option>
           </md-autocomplete>
         </div>
