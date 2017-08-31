@@ -13,13 +13,26 @@
         <md-icon mdChipRemove *ngIf="removable">cancel</md-icon>
       </md-chip>
     </md-chip-list>
-    <input mdInput placeholder="New Contributor..."
+    <input mdInput placeholder="Search Medication..."
            [mdChipInputFor]="chipList1"
            [mdChipInputSeparatorKeyCodes]="separatorKeysCodes"
            [mdChipInputAddOnBlur]="addOnBlur"
            (mdChipInputTokenEnd)="add($event)" />
   </md-form-field>
-
+  <md-form-field class="input-full-width">
+    <input mdInput placeholder="Medication" [mdAutocomplete]="autoMedication" [formControl]="medicationCtrl"
+    [mdChipInputFor]="chipList1"
+    [mdChipInputSeparatorKeyCodes]="separatorKeysCodes"
+    [mdChipInputAddOnBlur]="addOnBlur"
+    (mdChipInputTokenEnd)="add($event)"
+    
+    >
+  </md-form-field>
+  <md-autocomplete #autoMedication="mdAutocomplete">
+    <md-option *ngFor="let medication of filteredMedications | async" [value]="medication" (onSelectionChange)="add($event)">
+      {{ medication }}
+    </md-option>
+  </md-autocomplete>
 <section>
 
 <md-card>

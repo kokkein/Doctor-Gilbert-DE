@@ -62,7 +62,9 @@
             </div>
             <div>
               <md-form-field class="input-full-width">
-                <input mdInput type="datetime-local" placeholder="Requested Sample Date-Time" >
+                <input mdInput [mdDatepicker]="picker" placeholder="Requested Sample Date-Time">
+                <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+                <md-datepicker #picker></md-datepicker>
               </md-form-field>
             </div>
             <div>

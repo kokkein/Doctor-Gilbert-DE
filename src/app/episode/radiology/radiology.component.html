@@ -104,7 +104,9 @@
             </div>
             <div>
               <md-form-field class="input-full-width">
-                  <input mdInput type="date" placeholder="LMP"   name="lmp">
+                <input mdInput [mdDatepicker]="picker" placeholder="LMP">
+                <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+                <md-datepicker #picker></md-datepicker>
               </md-form-field>
             </div>
           </div>

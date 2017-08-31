@@ -40,7 +40,9 @@
         <div class="container">
             <div>
               <md-form-field class="input-full-width">
-                <input mdInput type="datetime-local" placeholder="Visit Date-Time"  [(ngModel)]="visitdata.VisitDateTime" name="VisitDateTime">
+                <input mdInput [mdDatepicker]="picker" placeholder="Visit Date-Time" [ngModel]="visitdata.VisitDateTime| date:'yyyy-MM-dd'" name="VisitDateTime">
+                <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+                <md-datepicker #picker></md-datepicker>
               </md-form-field>
             </div>
             <div>

@@ -68,4 +68,29 @@ body {
         max-width: 100%;
 }
 
+/*temporary ui fix */
+:host /deep/ .mat-select-trigger {
+    font-size: inherit;
+    height: inherit;
     
+}
+
+:host /deep/ .mat-select-value-text {
+    line-height: inherit;
+}
+
+:host /deep/ .mat-select {
+    margin-top: 8px;
+    margin-left: 30px;
+  }
+
+  :host /deep/ .mat-checkbox {
+    margin-top: 8px;
+    margin-left: 30px;
+  }
+
+  :host /deep/ .mat-radio-group {
+    margin-top: 8px;
+    margin-left: 30px;
+  }
+  /*temporary ui fix */

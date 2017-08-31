@@ -47,7 +47,9 @@
                   <div class="container">
                     <div>
                       <md-form-field class="input-full-width">
-                        <input mdInput type="date" placeholder="Date of Birth" [ngModel]="data.dob| date:'yyyy-MM-dd'" (ngModelChange)="data.dob = $event" name="dob">
+                        <input mdInput [mdDatepicker]="pickerdob" placeholder="Date of Birth" [ngModel]="data.dob| date:'yyyy-MM-dd'" (ngModelChange)="data.dob = $event" name="dob">
+                        <md-datepicker-toggle mdSuffix [for]="pickerdob"></md-datepicker-toggle>
+                        <md-datepicker #pickerdob></md-datepicker>
                       </md-form-field>
                     </div>
                     <div>
@@ -141,7 +143,9 @@
                 <div class="container">
                   <div>
                     <md-form-field class="input-full-width">
-                      <input mdInput type="date" placeholder="Date of Birth" [ngModel]="data.patientEmergencyResources.dob| date:'yyyy-MM-dd'" (ngModelChange)="data.patientEmergencyResources.dob = $event" name="patientEmergencyResources.dob">
+                      <input mdInput [mdDatepicker]="picker" placeholder="Date of Birth" [ngModel]="data.patientEmergencyResources.dob| date:'yyyy-MM-dd'" (ngModelChange)="data.patientEmergencyResources.dob = $event" name="patientEmergencyResources.dob">
+                      <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+                      <md-datepicker #picker></md-datepicker>
                     </md-form-field>
                   </div>
                   <div>
@@ -249,12 +253,16 @@
                 <div class="container">
                   <div>
                     <md-form-field class="input-full-width">
-                      <input mdInput type="date" placeholder="Start Date" [ngModel]="data.patientPolicyResources.startDate| date:'yyyy-MM-dd'" (ngModelChange)="data.patientPolicyResources.startDate = $event" name="patientPolicyResources.startDate">
+                      <input mdInput [mdDatepicker]="pickerstartDate" placeholder="Start Date" [ngModel]="data.patientPolicyResources.startDate| date:'yyyy-MM-dd'" (ngModelChange)="data.patientPolicyResources.startDate = $event" name="patientPolicyResources.startDate">
+                      <md-datepicker-toggle mdSuffix [for]="pickerstartDate"></md-datepicker-toggle>
+                      <md-datepicker #pickerstartDate></md-datepicker>
                     </md-form-field>
                   </div>
                   <div>
                     <md-form-field class="input-full-width">
-                      <input mdInput type="date" placeholder="End date" [ngModel]="data.patientPolicyResources.endDate| date:'yyyy-MM-dd'" (ngModelChange)="data.patientPolicyResources.endDate = $event" name="patientPolicyResources.endDate">
+                      <input mdInput [mdDatepicker]="pickerendDate" placeholder="End Date" [ngModel]="data.patientPolicyResources.endDate| date:'yyyy-MM-dd'" (ngModelChange)="data.patientPolicyResources.endDate = $event" name="patientPolicyResources.endDate">
+                      <md-datepicker-toggle mdSuffix [for]="pickerendDate"></md-datepicker-toggle>
+                      <md-datepicker #pickerendDate></md-datepicker>
                     </md-form-field>
                   </div>
                   <div>
