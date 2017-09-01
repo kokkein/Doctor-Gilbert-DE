@@ -167,7 +167,7 @@
       <div class="container">
         <div>
           <md-form-field class="input-full-width">
-            <input mdInput placeholder="Order By" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
+            <input mdInput placeholder="Ordered By" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
           </md-form-field>
           <md-autocomplete #autoOrderBy="mdAutocomplete">
             <md-option *ngFor="let orderBy of filteredOrderBys | async" [value]="orderBy">
@@ -217,7 +217,7 @@
       <span> <small>Selling Price: </small><b>{{medication.price}}</b> </span>
       <span> <small>Total Price: </small><b>{{medication.totalPrice}}</b> </span>
       <span> <small>Discount Apply: </small><b>{{medication.discount}}</b> </span>
-      <span> <small>Order By: </small><b>{{medication.orderBy}}</b> </span>
+      <span> <small>Ordered By: </small><b>{{medication.orderBy}}</b> </span>
     </p>
     <p md-line>
       <span> <b>{{medication.note}} </b></span>

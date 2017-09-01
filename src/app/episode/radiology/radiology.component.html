@@ -14,7 +14,7 @@
         <div class="container">
           <div class="two">
             
-              <button md-mini-fab (click)="toggleSearch()"><i class="material-icons">assignment</i></button>
+            <button md-mini-fab (click)="toggleSearch()"><i class="material-icons">search</i></button>
 
             <md-select placeholder="Modality" name="modality" class="input-full-width">
             <md-option *ngFor="let modality of modalities" [value]="modality.value">
@@ -34,7 +34,7 @@
         <div class="container">
             <div>
                 <md-form-field class="input-full-width">
-                  <input mdInput placeholder="Order By" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
+                  <input mdInput placeholder="Ordered By" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
                   
                   <md-autocomplete #autoOrderBy="mdAutocomplete">
                   <md-option *ngFor="let orderBy of filteredOrderBys | async" [value]="orderBy">
@@ -94,46 +94,28 @@
             </div>
         </div>
 
-        <form [formGroup]="myForm" novalidate (ngSubmit)="save(myForm)">
-            
-            <div formArrayName="radiologyList">
-              <div *ngFor="let DynamicRow of myForm.controls.radiologyList.controls; let i=index" >
-                <md-expansion-panel #myPanel expanded="true">
-                    <md-expansion-panel-header>
-                      <mat-panel-description>
-                      </mat-panel-description>
-                      <mat-panel-title>
-                          <strong>#{{(i+1)}} - {{DynamicRow.controls["analysis"].value}}</strong>
-                      </mat-panel-title>
-                    </md-expansion-panel-header>
-                      <div [formGroupName]="i">
-                          <div class="container">
-                              <div>
-                                  <md-form-field class="input-full-width">
-                                    <input mdInput type="number" placeholder="Price" name="price" disabled="true" value="103.00" formControlName="price">
-                                  </md-form-field>
-                                </div>
-                                <div>
-                                    <md-form-field class="input-full-width">
-                                      <input mdInput type="number" placeholder="Discount Apply (%)" formControlName="discPerc">
-                                    </md-form-field>
-                                </div>
-                                <div>
-                                    <md-form-field class="input-full-width">
-                                      <input mdInput type="number" placeholder="Discount Apply (Amount)" formControlName="discAmt">
-                                    </md-form-field>
-                                </div>
-                                <div>
-                                  <md-form-field class="input-full-width">
-                                    <input mdInput type="number" placeholder="Total Price" name="totalPrice" disabled="true" value="403.00" formControlName="totalPrice">
-                                  </md-form-field>
-                                </div>
-                          </div>
-                      </div>
-                </md-expansion-panel>
-              </div>
-            </div>
-        </form><br>
+
+          <div>
+            <dx-data-grid style="display:block;" #grid
+            id="gridContainer" 
+            [dataSource]="datad"
+            [allowColumnResizing]="true"
+            [columnResizingMode]="columnResizingMode"
+            [columnAutoWidth]="true"
+            [allowColumnReordering]="true">  
+            <dxo-editing 
+                mode="cell"
+                [allowUpdating]="true"
+                [allowDeleting]="true">
+            </dxo-editing>
+            <dxi-column dataField="catalog"></dxi-column>
+            <dxi-column dataField="labCode"></dxi-column>
+            <dxi-column dataField="analysis"></dxi-column>
+            <dxi-column dataField="externalCode"></dxi-column>
+            <dxi-column *ngIf="toShow" dataField="Price" dataType="number"></dxi-column>
+            </dx-data-grid>
+      
+          </div>     
 
 
 
@@ -141,25 +123,6 @@
             <div>
               <md-form-field class="input-full-width">
                 <input mdInput placeholder="Allergy"   name="Allergy">
-              </md-form-field>
-            </div>
-            <div>
-              <md-form-field class="input-full-width">
-                <input mdInput placeholder="Blood Urea Nitrogen(mmol/L)"  name="bun">
-              </md-form-field>
-            </div>
-            <div>
-              <md-form-field class="input-full-width">
-                <input mdInput [mdDatepicker]="picker" placeholder="LMP">
-                <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
-                <md-datepicker #picker></md-datepicker>
-              </md-form-field>
-            </div>
-          </div>
-        <div class="container">
-            <div>
-              <md-form-field class="input-full-width">
-                <input mdInput placeholder="Creatinine(umol/L)"   name="creatinine">
               </md-form-field>
             </div>
             <div>
@@ -193,7 +156,7 @@
           <i class="material-icons">delete</i>
         </button>
       <p md-line>
-        <span> <b><small>Order By: </small></b>{{laboratory.orderBy}} </span>
+        <span> <b><small>Ordered By: </small></b>{{laboratory.orderBy}} </span>
         <span> <b><small>Referred By: </small></b>{{laboratory.refferedBy}} </span>
         <span> <b><small>Reply To: </small></b>{{laboratory.replyTo}} </span>
         <span> <b><small>Reported By: </small></b>{{laboratory.reportedBy}} </span>

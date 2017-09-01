@@ -20,6 +20,7 @@ export class RadiologyComponent implements OnInit {
 
   displayDialog: boolean;
   selectedOption: string;
+  toShow: boolean = true;
 
   constructor(private _fb: FormBuilder, private MasterDataService: MasterDataService, private _element: ElementRef, public dialog: MdDialog, private router: Router) {
       this.orderByCtrl = new FormControl();
@@ -63,7 +64,7 @@ control.removeAt(i);
   toggleSearch() {
     //let dialogRef = this.dialog.open(DialogResultRadiologySearch);
     let dialogRef = this.dialog.open(DialogResultRadiologySearch, {
-      height: '600px',
+      height: '700px',
       width: '900px',
       data: {
         refdata: this.datad
