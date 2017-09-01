@@ -13,110 +13,99 @@ import { DxDataGridComponent } from "devextreme-angular";
   styleUrls: ['./radiology.component.css']
 })
 export class RadiologyComponent implements OnInit {
-  orderByCtrl: FormControl;
-  filteredOrderBys: any;
   public myForm: FormGroup; // our form model
-  datad: any = {};
+  returnedResult: any = {};
 
   displayDialog: boolean;
   selectedOption: string;
   toShow: boolean = true;
 
-  constructor(private _fb: FormBuilder, private MasterDataService: MasterDataService, private _element: ElementRef, public dialog: MdDialog, private router: Router) {
-      this.orderByCtrl = new FormControl();
-      this.filteredOrderBys = this.orderByCtrl.valueChanges
-      .startWith(null)
-      .map(name => this.filterOrderBy(name));
+  doctors;
+  //doctorCtrl: FormControl;
+  orderedByCtrl: FormControl;
+  referredByCtrl: FormControl;
+  replyToCtrl: FormControl;
+  reportedByCtrl: FormControl;
+  filteredOrderedBy: any;
+  filteredReferredBy: any;
+  filteredReplyTo: any;
+  filteredReportedBy: any;
+
+  displayDoctorFn(value: any): string {
+    return value && typeof value === 'object' ? value.userFullName : value;
+  }
+  filterDoctors(val: string) {
+    //`^${val}`
+    return val ? this.doctors.filter((s) => new RegExp(val, 'gi').test(s.userFullName))
+               : this.doctors;
+  }
+  constructor(private MasterDataService: MasterDataService, private _element: ElementRef, public dialog: MdDialog, private router: Router) {
+    this.orderedByCtrl = new FormControl({dgUserID: 0, userFullName: ''});
+    this.referredByCtrl = new FormControl({dgUserID: 0, userFullName: ''});
+    this.replyToCtrl = new FormControl({dgUserID: 0, userFullName: ''});
+    this.reportedByCtrl = new FormControl({dgUserID: 0, userFullName: ''});
   }
   
   ngOnInit() {
-    this.myForm = this._fb.group({
-      name: ['', [Validators.required, Validators.minLength(5)]],
-      radiologyList: this._fb.array([
-              //this.initDynamicRow(),
-          ])
-      });
+
+      this.MasterDataService.GetDGUser().subscribe(doctor => {
+        this.doctors = doctor;
+        //here only start filter
+        this.filteredOrderedBy = this.orderedByCtrl.valueChanges
+            .startWith(this.orderedByCtrl.value)
+            .map(val => this.displayDoctorFn(val))
+            .map(name => this.filterDoctors(name));
+        this.filteredReferredBy = this.referredByCtrl.valueChanges
+            .startWith(this.referredByCtrl.value)
+            .map(val => this.displayDoctorFn(val))
+            .map(name => this.filterDoctors(name));
+        this.filteredReplyTo = this.replyToCtrl.valueChanges
+            .startWith(this.replyToCtrl.value)
+            .map(val => this.displayDoctorFn(val))
+            .map(name => this.filterDoctors(name));
+        this.filteredReportedBy = this.reportedByCtrl.valueChanges
+            .startWith(this.reportedByCtrl.value)
+            .map(val => this.displayDoctorFn(val))
+            .map(name => this.filterDoctors(name));
+        });
+
   }
 
-  initDynamicRow(analysis: string) {
-    return this._fb.group({
-        radiologyCode:[''],
-        analysis: [analysis],
-        price: [''],
-        discPerc: [''],
-        discAmt: [''],
-        totalPrice: [''],
-    });
-}
-
-addDynamicRow() {
-// add DynamicRow to the list
-const control = <FormArray>this.myForm.controls['radiologyList'];
-control.push(this.initDynamicRow('123'));
-}
-
-removeDynamicRow(i: number) {
-// remove DynamicRow from the list
-const control = <FormArray>this.myForm.controls['radiologyList'];
-control.removeAt(i);
-}
 
   toggleSearch() {
-    //let dialogRef = this.dialog.open(DialogResultRadiologySearch);
     let dialogRef = this.dialog.open(DialogResultRadiologySearch, {
-      height: '700px',
+      height: '650px',
       width: '900px',
       data: {
-        refdata: this.datad
+        refdata: this.returnedResult
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.datad = result;
-      this.addDynamicRow();
-      console.log(result);
+      this.returnedResult = result;
     });
 
   }
 
-priorities = [
-  'Urgent',
-  'Stat',
-  'Routine'
-];
-
-modalities = [
-  {value: '1', viewValue: 'COMPUTED TOMOGRAPHY (CT)'},
-  {value: '2', viewValue: 'MAGNETIC RESONANCE IMAGING (MRI)'},
-  {value: '3', viewValue: 'ULTRASOUND'},
-  {value: '4', viewValue: 'X-RAY'},
-  {value: '5', viewValue: 'BIOMARKERS'},
-  {value: '6', viewValue: 'POSITRON EMISSION TOMOGRAPHY (PET)'}
-];
-
-lateralities = [
-  {value: '1', viewValue: 'LEFT'},
-  {value: '2', viewValue: 'RIGHT'},
-  {value: '3', viewValue: 'BILATERAL'}
-];
-
-chronicConditions = [
-  {value: '1', viewValue: 'Diabeties Mellitius'},
-  {value: '2', viewValue: 'Hypertension'},
-  {value: '2', viewValue: 'Bronchial Asthma'},
-  {value: '2', viewValue: 'Obesity'},
-  {value: '2', viewValue: 'Epilepsy'},
-  {value: '3', viewValue: 'Others'}
-];
-
-orderBys = [
-  'USER0001 - Doctor Gilbert',
-  'USER0002 - Doctor Huey Yuh',
-  'USER0003 - Doctor Dato Seri. Tan Seri. Abdullah Bin Dadawi',
+  modalities = [
+    {value: '1', viewValue: 'COMPUTED TOMOGRAPHY (CT)'},
+    {value: '2', viewValue: 'MAGNETIC RESONANCE IMAGING (MRI)'},
+    {value: '3', viewValue: 'ULTRASOUND'},
+    {value: '4', viewValue: 'X-RAY'},
+    {value: '5', viewValue: 'BIOMARKERS'},
+    {value: '6', viewValue: 'POSITRON EMISSION TOMOGRAPHY (PET)'}
   ];
-
-filterOrderBy(val: string) {
-  return val ? this.orderBys.filter((s) => new RegExp(val, 'gi').test(s)) : this.orderBys;
-}
+  
+  priorities = ['Urgent','Stat','Routine'];
+  lateralities = [{value: '1', viewValue: 'LEFT'},{value: '2', viewValue: 'RIGHT'},{value: '3', viewValue: 'BILATERAL'}];
+  
+  chronicConditions = [
+    {value: '1', viewValue: 'Diabeties Mellitius'},
+    {value: '2', viewValue: 'Hypertension'},
+    {value: '2', viewValue: 'Bronchial Asthma'},
+    {value: '2', viewValue: 'Obesity'},
+    {value: '2', viewValue: 'Epilepsy'},
+    {value: '3', viewValue: 'Others'}
+  ];
 
   laboratoryRecord = [
   {
@@ -167,9 +156,7 @@ filterOrderBy(val: string) {
     updated: new Date('1/1/16'),
     updatedBy: 'Doctor Chin',
   },
-];
-
-
+  ];
 }
 
 @Component({
@@ -190,7 +177,7 @@ export class DialogResultRadiologySearch {
   @ViewChild(DxDataGridComponent) dataGrid: DxDataGridComponent
     
   getSelectedItem() {
-    this.data.datad = this.dataGrid.instance.getSelectedRowKeys();
+    this.data.returnedResult = this.dataGrid.instance.getSelectedRowKeys();
   }
 
 }

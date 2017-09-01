@@ -20,8 +20,8 @@
     (mdChipInputTokenEnd)="add($event)"
     >
   </md-form-field>
-  <md-autocomplete #autoMedication="mdAutocomplete">
-    <md-option *ngFor="let medication of filteredMedications | async" [value]="medication.inventoryCode">
+  <md-autocomplete #autoMedication="mdAutocomplete" [displayWith]="displayMedicationFn">
+    <md-option *ngFor="let medication of filteredMedications | async" [value]="medication">
       <span>{{medication.inventoryCode}}, </span>
       <small>{{medication.inventoryDescription}}</small>
     </md-option>
@@ -35,8 +35,8 @@
           <md-form-field class="input-full-width">
             <input mdInput placeholder="Medication" [mdAutocomplete]="autoMedication" [formControl]="medicationCtrl">
           </md-form-field>
-          <md-autocomplete #autoMedication="mdAutocomplete">
-            <md-option *ngFor="let medication of filteredMedications | async" [value]="medication.inventoryCode" (onSelectionChange)="addAddress($event)">
+          <md-autocomplete #autoMedication="mdAutocomplete"  [displayWith]="displayMedicationFn">
+            <md-option *ngFor="let medication of filteredMedications | async" [value]="medication" (onSelectionChange)="addAddress($event)">
               <span>{{medication.inventoryCode}}, </span>
               <small>{{medication.inventoryDescription}}</small>
 
@@ -164,6 +164,38 @@
         </div>
       </form><br>
 
+
+      <div>
+          <dx-data-grid style="display:block;" #grid
+          id="gridContainer" 
+          [dataSource]="returnedResult"
+          [allowColumnResizing]="true"
+          [columnResizingMode]="columnResizingMode"
+          [columnAutoWidth]="true"
+          [allowColumnReordering]="true">  
+          <dxo-editing 
+              mode="cell"
+              [allowUpdating]="true"
+              [allowDeleting]="true">
+          </dxo-editing>
+          <dxi-column dataField="Medication"></dxi-column>
+          <dxi-column dataField="Dosage"></dxi-column>
+          <dxi-column dataField="take" dataType="number"></dxi-column>
+          <dxi-column dataField="time" dataType="number"></dxi-column>
+          <dxi-column dataField="day" dataType="number"></dxi-column>
+          <dxi-column dataField="totalQty" dataType="number"></dxi-column>
+          <dxi-column dataField="uom"></dxi-column>
+          <dxi-column dataField="price" dataType="number"></dxi-column>
+          <dxi-column dataField="totalPrice" dataType="number"></dxi-column>
+          <dxi-column dataField="route"></dxi-column>
+          <dxi-column dataField="Whennecessary" dataType="boolean"></dxi-column>
+          <dxi-column dataField="instructionOne"></dxi-column>
+          <dxi-column dataField="instructionTwo"></dxi-column>
+          <dxi-column dataField="indication"></dxi-column>
+          </dx-data-grid>
+    
+        </div>   
+
       <div class="container">
         <div>
           <md-form-field class="input-full-width">
@@ -187,7 +219,7 @@
 </md-card>
 
 <md-list>
-  <h3 md-subheader>Records List</h3>
+  <h3 md-subheader>Medical History</h3>
   <md-list-item *ngFor="let medication of medicationRecord" >
     <h4 md-line><i class="material-icons">timer</i> {{medication.id}} <strong>{{medication.medicationCode}}</strong></h4>
       <button md-icon-button (click)="open()">

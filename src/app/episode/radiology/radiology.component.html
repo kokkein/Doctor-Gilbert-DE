@@ -1,4 +1,4 @@
-{{datad | json}}
+
 <section>
   <form>
     <div class="toolbar">
@@ -17,9 +17,9 @@
             <button md-mini-fab (click)="toggleSearch()"><i class="material-icons">search</i></button>
 
             <md-select placeholder="Modality" name="modality" class="input-full-width">
-            <md-option *ngFor="let modality of modalities" [value]="modality.value">
-                {{modality.viewValue}}
-            </md-option>
+              <md-option *ngFor="let modality of modalities" [value]="modality.value">
+                  {{modality.viewValue}}
+              </md-option>
             </md-select>
           </div>
           <div>
@@ -34,49 +34,58 @@
         <div class="container">
             <div>
                 <md-form-field class="input-full-width">
-                  <input mdInput placeholder="Ordered By" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
+                  <input mdInput placeholder="Ordered By" [mdAutocomplete]="orderedBy" [formControl]="orderedByCtrl">
                   
-                  <md-autocomplete #autoOrderBy="mdAutocomplete">
-                  <md-option *ngFor="let orderBy of filteredOrderBys | async" [value]="orderBy">
-                      {{ orderBy }}
+                  <md-autocomplete #orderedBy="mdAutocomplete" [displayWith]="displayDoctorFn">
+                  <md-option *ngFor="let doctor of filteredOrderedBy | async" [value]="doctor">
+                    <span>{{ doctor.userFullName }}, </span>
+                    <small><strong>Initial:</strong>{{doctor.userInitial}}, <strong>Speciality:</strong>{{doctor.specialityID}}</small>
                   </md-option>
                   </md-autocomplete>
                 </md-form-field>
             </div>
             <div>
+              
                 <md-form-field class="input-full-width">
-                  <input mdInput placeholder="Referred By" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
+                  <input mdInput placeholder="Referred By" [mdAutocomplete]="referredBy" [formControl]="referredByCtrl">
                   
-                  <md-autocomplete #autoOrderBy="mdAutocomplete">
-                  <md-option *ngFor="let orderBy of filteredOrderBys | async" [value]="orderBy">
-                      {{ orderBy }}
+                  <md-autocomplete #referredBy="mdAutocomplete" [displayWith]="displayDoctorFn">
+                  <md-option *ngFor="let doctor of filteredReferredBy | async" [value]="doctor">
+                    <span>{{ doctor.userFullName }}, </span>
+                    <small><strong>Initial:</strong>{{doctor.userInitial}}, <strong>Speciality:</strong>{{doctor.specialityID}}</small>
                   </md-option>
                   </md-autocomplete>
                 </md-form-field>
+              
             </div>
             <div>
+              
                 <md-form-field class="input-full-width">
-                  <input mdInput placeholder="Reply To" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
+                  <input mdInput placeholder="Reply To" [mdAutocomplete]="replyTo" [formControl]="replyToCtrl">
                   
-                  <md-autocomplete #autoOrderBy="mdAutocomplete">
-                  <md-option *ngFor="let orderBy of filteredOrderBys | async" [value]="orderBy">
-                      {{ orderBy }}
+                  <md-autocomplete #replyTo="mdAutocomplete" [displayWith]="displayDoctorFn">
+                  <md-option *ngFor="let doctor of filteredReplyTo | async" [value]="doctor">
+                    <span>{{ doctor.userFullName }}, </span>
+                    <small><strong>Initial:</strong>{{doctor.userInitial}}, <strong>Speciality:</strong>{{doctor.specialityID}}</small>
                   </md-option>
                   </md-autocomplete>
                 </md-form-field>
+              
             </div>
         </div>
         <div class="container">
             <div>
                 <md-form-field class="input-full-width">
-                  <input mdInput placeholder="Reported By" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
+                  <input mdInput placeholder="Reported By" [mdAutocomplete]="reportedBy" [formControl]="reportedByCtrl">
                   
-                  <md-autocomplete #autoOrderBy="mdAutocomplete">
-                  <md-option *ngFor="let orderBy of filteredOrderBys | async" [value]="orderBy">
-                      {{ orderBy }}
+                  <md-autocomplete #reportedBy="mdAutocomplete" [displayWith]="displayDoctorFn">
+                  <md-option *ngFor="let doctor of filteredReportedBy | async" [value]="doctor">
+                    <span>{{ doctor.userFullName }}, </span>
+                    <small><strong>Initial:</strong>{{doctor.userInitial}}, <strong>Speciality:</strong>{{doctor.specialityID}}</small>
                   </md-option>
                   </md-autocomplete>
                 </md-form-field>
+          
             </div>
             <div>
                 <md-select placeholder="Laterality" name="laterality" class="input-full-width">
@@ -94,11 +103,10 @@
             </div>
         </div>
 
-
           <div>
             <dx-data-grid style="display:block;" #grid
             id="gridContainer" 
-            [dataSource]="datad"
+            [dataSource]="returnedResult"
             [allowColumnResizing]="true"
             [columnResizingMode]="columnResizingMode"
             [columnAutoWidth]="true"
@@ -116,8 +124,6 @@
             </dx-data-grid>
       
           </div>     
-
-
 
         <div class="container">
             <div>
@@ -146,7 +152,7 @@
 
 
   <md-list>
-    <h3 md-subheader>Records List</h3>
+    <h3 md-subheader>Medical History</h3>
     <md-list-item *ngFor="let laboratory of laboratoryRecord" >
       <h4 md-line><i class="material-icons">timer</i> {{laboratory.id}} <strong>{{laboratory.laboratory}}</strong></h4>
         <button md-icon-button (click)="open()">
@@ -156,17 +162,17 @@
           <i class="material-icons">delete</i>
         </button>
       <p md-line>
-        <span> <b><small>Ordered By: </small></b>{{laboratory.orderBy}} </span>
-        <span> <b><small>Referred By: </small></b>{{laboratory.refferedBy}} </span>
-        <span> <b><small>Reply To: </small></b>{{laboratory.replyTo}} </span>
-        <span> <b><small>Reported By: </small></b>{{laboratory.reportedBy}} </span>
+        <span> <small>Ordered By: </small><b>{{laboratory.orderBy}}</b> </span>
+        <span> <small>Referred By: </small><b>{{laboratory.refferedBy}}</b> </span>
+        <span> <small>Reply To: </small><b>{{laboratory.replyTo}}</b> </span>
+        <span> <small>Reported By: </small><b>{{laboratory.reportedBy}}</b> </span>
       </p>
       <p md-line>
-        <span> <b><small>Priority: </small></b>{{laboratory.orderBy}} </span>
-        <span> <b><small>Requested Sample Date-Time: </small></b>{{laboratory.refferedBy}} </span>
+        <span> <small>Priority: </small><b>{{laboratory.orderBy}}</b> </span>
+        <span> <small>Requested Sample Date-Time:</small><b>{{laboratory.refferedBy}}</b> </span>
       </p>
       <p md-line>
-        <span> {{laboratory.note}} </span>
+        <span> <b>{{laboratory.note}}</b> </span>
       </p>
       <p md-line>
           <span>
@@ -192,19 +198,19 @@
       </p>
       <p md-line class="pRight"> 
         <small>
-          <span><b>Current Version: </b><i>{{laboratory.version}}</i></span>
+          <span>Current Version: <b><i>{{laboratory.version}}</i></b></span>
         </small>
       </p>
       <p md-line class="pRight">
         <small>      
-          <span><b>Updated: </b><i>{{laboratory.updated | date:'medium'}}</i> </span>
-          <span>, <b>By: </b><i>{{laboratory.updatedBy}}</i></span>
+          <span>Updated: <b><i>{{laboratory.updated | date:'medium'}}</i></b> </span>
+          <span>, By: <b><i>{{laboratory.updatedBy}}</i></b></span>
         </small>
       </p>
       <p md-line class="pRight">
         <small>
-          <span><b>Created: </b><i>{{laboratory.created | date:'medium'}}</i> </span>
-          <span>, <b>By: </b><i>{{laboratory.createdBy}}</i></span>
+          <span>Created: <b><i>{{laboratory.created | date:'medium'}}</i></b> </span>
+          <span>, By: <b><i>{{laboratory.createdBy}}</i></b></span>
         </small>
       </p>
 

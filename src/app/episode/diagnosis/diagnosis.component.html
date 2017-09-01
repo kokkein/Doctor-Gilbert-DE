@@ -71,7 +71,7 @@
     </md-card>
 
 <md-list>
-  <h3 md-subheader>Records List</h3>
+  <h3 md-subheader>Medical History</h3>
   <md-list-item *ngFor="let dia of diagnosisRecord" >
     <h4 md-line><strong>{{dia.diagnosisCode}} - {{dia.diagnosisDesc}}</strong></h4>
       <button md-icon-button (click)="open()">

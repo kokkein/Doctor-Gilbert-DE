@@ -40,6 +40,9 @@ export class MedicationComponent implements OnInit {
     addOnBlur: boolean = true;
     message: string = '';
     
+  displayMedicationFn(value: any): string {
+    return value && typeof value === 'object' ? value.inventoryDescription : value;
+  }
 
   constructor(private _fb: FormBuilder, private MasterDataService: MasterDataService) { 
 
@@ -48,6 +51,7 @@ export class MedicationComponent implements OnInit {
         this.medicationTemplateCtrl = new FormControl();
         this.filteredMedicationTemplates = this.medicationTemplateCtrl.valueChanges
         .startWith(null)
+        .map(val => this.displayMedicationFn(val))
         .map(name => this.filterMedicationTemplate(name));
 
         this.orderByCtrl = new FormControl();
@@ -57,8 +61,8 @@ export class MedicationComponent implements OnInit {
   }
   save(model: MedicationList) {
     // call API to save customer
-    console.log(model);
-}
+      console.log(model);
+  }
   ngOnInit() {
     this.myForm = this._fb.group({
       name: ['', [Validators.required, Validators.minLength(5)]],
@@ -104,8 +108,7 @@ export class MedicationComponent implements OnInit {
 addAddress(event) {
 // add address to the list
 const control = <FormArray>this.myForm.controls['prescribeList'];
-control.push(this.initAddress(event.source.value));
-console.log(event.source.value);
+control.push(this.initAddress(event.source.value.inventoryCode + ', ' +event.source.value.inventoryDescription));
 }
 
 removeAddress(i: number) {
@@ -266,12 +269,7 @@ control.removeAt(i);
     // Enter, comma, semi-colon
     separatorKeysCodes = [ENTER, 188, 186];
     
-      people: Person[] = [
-        { name: 'Panadol' },
-        { name: 'Uphama' },
-        { name: 'Vitamin B-Complex' },
-        { name: 'Amoxicilin' }
-      ];
+      people: Person[] = [];
 
     
       displayMessage(message: string): void {
