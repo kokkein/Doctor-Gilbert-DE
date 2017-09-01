@@ -43,7 +43,7 @@ export class MedicationComponent implements OnInit {
 
   constructor(private _fb: FormBuilder, private MasterDataService: MasterDataService) { 
 
-        this.medicationCtrl = new FormControl({inventoryID: 0, inventoryDescription: ''});
+        this.medicationCtrl = new FormControl({inventoryCode: 0, inventoryDescription: ''});
 
         this.medicationTemplateCtrl = new FormControl();
         this.filteredMedicationTemplates = this.medicationTemplateCtrl.valueChanges
@@ -67,7 +67,7 @@ export class MedicationComponent implements OnInit {
           ])
       });
 
-      this.medicationCtrl = new FormControl({inventoryID: 0, inventoryDescription: ''});
+      this.medicationCtrl = new FormControl({inventoryCode: 0, inventoryDescription: ''});
       this.filteredMedications = this.medicationCtrl.valueChanges
       .debounceTime(400)
       .do(value => {
@@ -298,6 +298,7 @@ control.removeAt(i);
     
         if (index >= 0) {
           this.people.splice(index, 1);
+          this.removeAddress(index);
         }
       }
 }

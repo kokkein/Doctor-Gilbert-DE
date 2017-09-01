@@ -1,7 +1,5 @@
 
 import { Component, OnInit } from '@angular/core';
-import { TreeTableModule, TreeNode } from 'primeng/primeng';
-import { NodeService } from './../../services/NodeService';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -13,12 +11,11 @@ export class LaboratoryComponent implements OnInit {
 
     orderByCtrl: FormControl;
     filteredOrderBys: any;
-    files: TreeNode[];
-    selectedFiles: TreeNode[];
+
 
     displayDialog: boolean;
 
-    constructor(private nodeService: NodeService) {
+    constructor() {
         this.orderByCtrl = new FormControl();
         this.filteredOrderBys = this.orderByCtrl.valueChanges
         .startWith(null)
@@ -29,9 +26,6 @@ export class LaboratoryComponent implements OnInit {
         //this.nodeService.getFilesystem().then(files => this.files = files);
     }
  
-    nodeSelect(event) {
-        //event.node = selected node
-    }
 
   priorities = [
     'Urgent',

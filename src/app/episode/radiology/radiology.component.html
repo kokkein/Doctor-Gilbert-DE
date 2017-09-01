@@ -5,7 +5,6 @@
       <div>
         <button md-raised-button>Save</button>
         <button md-raised-button>New</button>
-        <button md-raised-button (click)="toggleSearch()">Search</button>
       </div>
     </div>
 
@@ -14,6 +13,9 @@
 
         <div class="container">
           <div class="two">
+            
+              <button md-mini-fab (click)="toggleSearch()"><i class="material-icons">assignment</i></button>
+
             <md-select placeholder="Modality" name="modality" class="input-full-width">
             <md-option *ngFor="let modality of modalities" [value]="modality.value">
                 {{modality.viewValue}}
@@ -67,7 +69,7 @@
         <div class="container">
             <div>
                 <md-form-field class="input-full-width">
-                  <input mdInput placeholder="Reporting By" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
+                  <input mdInput placeholder="Reported By" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
                   
                   <md-autocomplete #autoOrderBy="mdAutocomplete">
                   <md-option *ngFor="let orderBy of filteredOrderBys | async" [value]="orderBy">
@@ -91,6 +93,50 @@
                 </md-select>
             </div>
         </div>
+
+        <form [formGroup]="myForm" novalidate (ngSubmit)="save(myForm)">
+            
+            <div formArrayName="radiologyList">
+              <div *ngFor="let DynamicRow of myForm.controls.radiologyList.controls; let i=index" >
+                <md-expansion-panel #myPanel expanded="true">
+                    <md-expansion-panel-header>
+                      <mat-panel-description>
+                      </mat-panel-description>
+                      <mat-panel-title>
+                          <strong>#{{(i+1)}} - {{DynamicRow.controls["analysis"].value}}</strong>
+                      </mat-panel-title>
+                    </md-expansion-panel-header>
+                      <div [formGroupName]="i">
+                          <div class="container">
+                              <div>
+                                  <md-form-field class="input-full-width">
+                                    <input mdInput type="number" placeholder="Price" name="price" disabled="true" value="103.00" formControlName="price">
+                                  </md-form-field>
+                                </div>
+                                <div>
+                                    <md-form-field class="input-full-width">
+                                      <input mdInput type="number" placeholder="Discount Apply (%)" formControlName="discPerc">
+                                    </md-form-field>
+                                </div>
+                                <div>
+                                    <md-form-field class="input-full-width">
+                                      <input mdInput type="number" placeholder="Discount Apply (Amount)" formControlName="discAmt">
+                                    </md-form-field>
+                                </div>
+                                <div>
+                                  <md-form-field class="input-full-width">
+                                    <input mdInput type="number" placeholder="Total Price" name="totalPrice" disabled="true" value="403.00" formControlName="totalPrice">
+                                  </md-form-field>
+                                </div>
+                          </div>
+                      </div>
+                </md-expansion-panel>
+              </div>
+            </div>
+        </form><br>
+
+
+
         <div class="container">
             <div>
               <md-form-field class="input-full-width">

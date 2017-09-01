@@ -1,8 +1,7 @@
+import { MasterDataService } from 'app/services/masterdata.service';
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Service, Company } from './../../services/app.service';
-import { TreeTableModule, TreeNode } from 'primeng/primeng';
-import { NodeService } from './../../services/NodeService';
+import { FormControl, Validators, FormGroup, FormArray, FormBuilder  } from '@angular/forms';
+import { RadiologyList } from './RadiologyList.interface';
 import { AnimationTransitionEvent, ViewEncapsulation, ElementRef } from '@angular/core';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
 import { Router } from '@angular/router';
@@ -16,38 +15,63 @@ import { DxDataGridComponent } from "devextreme-angular";
 export class RadiologyComponent implements OnInit {
   orderByCtrl: FormControl;
   filteredOrderBys: any;
-  
+  public myForm: FormGroup; // our form model
   datad: any = {};
 
   displayDialog: boolean;
-  dataSource: Company[];
-
   selectedOption: string;
 
-  constructor(service: Service, private _element: ElementRef, public dialog: MdDialog, private router: Router) {
+  constructor(private _fb: FormBuilder, private MasterDataService: MasterDataService, private _element: ElementRef, public dialog: MdDialog, private router: Router) {
       this.orderByCtrl = new FormControl();
       this.filteredOrderBys = this.orderByCtrl.valueChanges
       .startWith(null)
       .map(name => this.filterOrderBy(name));
-
-      this.dataSource = service.getCompanies();
   }
   
   ngOnInit() {
-
+    this.myForm = this._fb.group({
+      name: ['', [Validators.required, Validators.minLength(5)]],
+      radiologyList: this._fb.array([
+              //this.initDynamicRow(),
+          ])
+      });
   }
+
+  initDynamicRow(analysis: string) {
+    return this._fb.group({
+        radiologyCode:[''],
+        analysis: [analysis],
+        price: [''],
+        discPerc: [''],
+        discAmt: [''],
+        totalPrice: [''],
+    });
+}
+
+addDynamicRow() {
+// add DynamicRow to the list
+const control = <FormArray>this.myForm.controls['radiologyList'];
+control.push(this.initDynamicRow('123'));
+}
+
+removeDynamicRow(i: number) {
+// remove DynamicRow from the list
+const control = <FormArray>this.myForm.controls['radiologyList'];
+control.removeAt(i);
+}
 
   toggleSearch() {
     //let dialogRef = this.dialog.open(DialogResultRadiologySearch);
     let dialogRef = this.dialog.open(DialogResultRadiologySearch, {
       height: '600px',
-      width: '800px',
+      width: '900px',
       data: {
         refdata: this.datad
       }
     });
     dialogRef.afterClosed().subscribe(result => {
       this.datad = result;
+      this.addDynamicRow();
       console.log(result);
     });
 
@@ -152,15 +176,19 @@ filterOrderBy(val: string) {
   templateUrl: './dialog-radiology-search.html',
 })
 export class DialogResultRadiologySearch {
-  dataSource: Company[];
+  dataSource: any;
 
-  constructor(public dialogRef: MdDialogRef<DialogResultRadiologySearch>, service: Service, @Inject(MD_DIALOG_DATA) public data: any) {
-    this.dataSource = service.getCompanies();
+  constructor(public dialogRef: MdDialogRef<DialogResultRadiologySearch>, private MasterDataService: MasterDataService, @Inject(MD_DIALOG_DATA) public data: any) {
+
+    this.MasterDataService.GetLabItem()
+    .subscribe(x => {
+      this.dataSource  = x;
+    });
   }
 
   @ViewChild(DxDataGridComponent) dataGrid: DxDataGridComponent
     
-  refresh() {
+  getSelectedItem() {
     this.data.datad = this.dataGrid.instance.getSelectedRowKeys();
   }
 

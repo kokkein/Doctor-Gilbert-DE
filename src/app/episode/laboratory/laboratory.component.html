@@ -69,7 +69,7 @@
             </div>
             <div>
                 <md-form-field class="input-full-width">
-                <input mdInput placeholder="Reporting By" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
+                <input mdInput placeholder="Reported By" [mdAutocomplete]="autoOrderBy" [formControl]="orderByCtrl">
                 </md-form-field>
                 <md-autocomplete #autoOrderBy="mdAutocomplete">
                 <md-option *ngFor="let orderBy of filteredOrderBys | async" [value]="orderBy">
@@ -84,14 +84,6 @@
                 <textarea mdInput placeholder="Remark"></textarea>
               </md-form-field>
 
-          </div>
-          <div class="container">
-                <p-treeTable [value]="files" selectionMode="checkbox" [(selection)]="selectedFiles" (onNodeSelect)="nodeSelect($event)">
-                    <p-column field="labItems" header="Lab Group>Lab Items"></p-column>
-                    <p-column field="labCode" header="Lab Code"></p-column>
-                    <p-column field="description" header="Description"></p-column>
-                    <p-column field="price" header="Price"></p-column>
-                </p-treeTable>
           </div>
       </md-card-content>
     </md-card>

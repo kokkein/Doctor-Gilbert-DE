@@ -5,31 +5,23 @@
   </div>
 </div>
 
-<md-form-field class="input-full-width">
-    <md-chip-list mdPrefix #chipList1>
-      <md-chip *ngFor="let person of people" [selectable]="selectable"
-               [removable]="removable" (remove)="remove(person)">
-        {{person.name}}
-        <md-icon mdChipRemove *ngIf="removable">cancel</md-icon>
-      </md-chip>
-    </md-chip-list>
-    <input mdInput placeholder="Search Medication..."
-           [mdChipInputFor]="chipList1"
-           [mdChipInputSeparatorKeyCodes]="separatorKeysCodes"
-           [mdChipInputAddOnBlur]="addOnBlur"
-           (mdChipInputTokenEnd)="add($event)" />
-  </md-form-field>
   <md-form-field class="input-full-width">
-    <input mdInput placeholder="Medication" [mdAutocomplete]="autoMedication" [formControl]="medicationCtrl"
+      <md-chip-list mdPrefix #chipList1>
+          <md-chip *ngFor="let person of people" [selectable]="selectable"
+                   [removable]="removable" (remove)="remove(person)">
+            {{person.name}}
+            <md-icon mdChipRemove *ngIf="removable">cancel</md-icon>
+          </md-chip>
+        </md-chip-list>
+    <input mdInput placeholder="Search Medication ..." [mdAutocomplete]="autoMedication" [formControl]="medicationCtrl"
     [mdChipInputFor]="chipList1"
     [mdChipInputSeparatorKeyCodes]="separatorKeysCodes"
     [mdChipInputAddOnBlur]="addOnBlur"
     (mdChipInputTokenEnd)="add($event)"
-    
     >
   </md-form-field>
   <md-autocomplete #autoMedication="mdAutocomplete">
-    <md-option *ngFor="let medication of filteredMedications | async" [value]="medication.inventoryCode" (onSelectionChange)="add($event)">
+    <md-option *ngFor="let medication of filteredMedications | async" [value]="medication.inventoryCode">
       <span>{{medication.inventoryCode}}, </span>
       <small>{{medication.inventoryDescription}}</small>
     </md-option>
@@ -66,8 +58,6 @@
 <br>
 
 <form [formGroup]="myForm" novalidate (ngSubmit)="save(myForm)">
-
-        <!--addresses-->
         <div formArrayName="prescribeList">
           <div *ngFor="let address of myForm.controls.prescribeList.controls; let i=index" >
 
@@ -123,7 +113,7 @@
                   <div class="container">
                       <div>
                           <md-form-field class="input-full-width">
-                            <input mdInput type="number" placeholder="Selling Price" name="price" disabled="true" value="103.00" formControlName="price">
+                            <input mdInput type="number" placeholder="Price" name="price" disabled="true" value="103.00" formControlName="price">
                           </md-form-field>
                         </div>
                         <div>
@@ -169,16 +159,10 @@
                       </div>
                     </div>
               </div>
-            <md-action-row>
-              <button md-button (click)="removeAddress(i)">Remove</button>
-            </md-action-row>
           </md-expansion-panel>
-
-
           </div>
         </div>
-
-      </form>
+      </form><br>
 
       <div class="container">
         <div>
