@@ -69,6 +69,8 @@ import { InventoryPregnancycategoryComponent } from './masterData/inventory-preg
 import { DiagnosisMasterComponent } from './masterData/diagnosis-master/diagnosis-master.component';
 import { LandingComponent } from './landing/landing.component';
 import { ProcedureComponent } from './episode/procedure/procedure.component';
+import { PriceStructureComponent } from './masterData/price-structure/price-structure.component';
+import { InventoryPriceStructureComponent } from './masterData/inventory-price-structure/inventory-price-structure.component';
 
 const appRoutes: Routes = [
 { path: 'appointment', component: AppointmentComponent},
@@ -112,6 +114,10 @@ const appRoutes: Routes = [
 { path: 'Appointment/:id', component: AppointmentComponent},
 { path: 'Diagnosis-master', component: DiagnosisMasterComponent},
 { path: 'Diagnosis-master/:id', component: DiagnosisMasterComponent},
+{ path: 'price-structure', component: PriceStructureComponent},
+{ path: 'price-structure/:id', component: PriceStructureComponent},
+{ path: 'inventory-price-structure', component: InventoryPriceStructureComponent},
+{ path: 'inventory-price-structure/:id', component: InventoryPriceStructureComponent},
 ];
 
 @NgModule({
@@ -130,7 +136,7 @@ const appRoutes: Routes = [
     MedicationComponent,
     TimelineComponent, 
     DiagnosisComponent, DialogResultRadiologySearch, DialogResultLaboratorySearch,
-    VitalSignsComponent, DialogResultExampleDialog, AppointmentComponent, DepartmentComponent, InsuranceComponent, PayorComponent, MOHVisitTypeComponent, PurposeOfVisitComponent, MasterDataComponent, InventoryBrandComponent, InventoryGenericComponent, InventoryAtcComponent, InventoryCategoryComponent, InventorySubcategoryComponent, InventoryMedicationclassComponent, InventoryPregnancycategoryComponent, SpecialityComponent, DiagnosisMasterComponent, LandingComponent, ProcedureComponent
+    VitalSignsComponent, DialogResultExampleDialog, AppointmentComponent, DepartmentComponent, InsuranceComponent, PayorComponent, MOHVisitTypeComponent, PurposeOfVisitComponent, MasterDataComponent, InventoryBrandComponent, InventoryGenericComponent, InventoryAtcComponent, InventoryCategoryComponent, InventorySubcategoryComponent, InventoryMedicationclassComponent, InventoryPregnancycategoryComponent, SpecialityComponent, DiagnosisMasterComponent, LandingComponent, ProcedureComponent, PriceStructureComponent, InventoryPriceStructureComponent
   ],
   imports: [
     BrowserModule,

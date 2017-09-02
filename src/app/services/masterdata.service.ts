@@ -163,6 +163,14 @@ export class MasterDataService {
         return this.http.get(this.sURL + 'Speciality/' + id)
                     .map(res => res.json());
     }
+    GetPriceStructure() {
+        return this.http.get(this.sURL + 'PriceStructure')
+                    .map(res => res.json());
+    }
+    GetPriceStructureByID(id) {
+        return this.http.get(this.sURL + 'PriceStructure/' + id)
+                    .map(res => res.json());
+    }
     GetAppointment() {
         return this.http.get(this.sURL + 'Appointment/Appointment')
                     .map(res => res.json());
@@ -253,6 +261,10 @@ export class MasterDataService {
         return this.http.post(this.sURL + 'DGUser', DGUser)
                     .map(res => res.json());
     }
+    CreatePriceStructure(PriceStructure) {
+        return this.http.post(this.sURL + 'PriceStructure', PriceStructure)
+                    .map(res => res.json());
+    }
     CreateSpeciality(Speciality) {
         return this.http.post(this.sURL + 'Speciality', Speciality)
                     .map(res => res.json());
@@ -325,6 +337,10 @@ export class MasterDataService {
     }
     UpdateDGUserByID(DGUser) {
         return this.http.put(this.sURL + 'DGUser/' + DGUser.dgUserID, DGUser)
+                    .map(res => res.json());
+    }
+    UpdatePriceStructureByID(PriceStructure) {
+        return this.http.put(this.sURL + 'PriceStructure/' + PriceStructure.priceStructureID, PriceStructure)
                     .map(res => res.json());
     }
     UpdateSpecialityByID(Speciality) {
