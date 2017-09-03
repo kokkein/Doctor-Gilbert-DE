@@ -1,3 +1,4 @@
+import { AuthService } from './services/auth.service';
 import { SpecialityComponent } from './masterData/speciality/speciality.component';
 import { SpeechRecognitionService } from './services/SpeechRecognitionService';
 import { MasterDataService } from './services/masterdata.service';
@@ -73,6 +74,7 @@ import { PriceStructureComponent } from './masterData/price-structure/price-stru
 import { InventoryPriceStructureComponent } from './masterData/inventory-price-structure/inventory-price-structure.component';
 
 const appRoutes: Routes = [
+{ path: 'landing', component: LandingComponent},
 { path: 'appointment', component: AppointmentComponent},
 { path: 'patient', component: PatientComponent},
 { path: 'patient/:id', component: PatientComponent},
@@ -149,7 +151,7 @@ const appRoutes: Routes = [
     DxCheckBoxModule, DxSelectBoxModule, DxTextBoxModule, DxTemplateModule, DxBoxModule, DxTextAreaModule,
     DxDataGridModule
   ],
-  providers: [NodeService, CarService, EventService, MasterDataService, SpeechRecognitionService,Service, Company],
+  providers: [NodeService, CarService, EventService, MasterDataService, SpeechRecognitionService,Service, Company, AuthService],
   entryComponents: [DialogResultExampleDialog, DialogResultRadiologySearch, DialogResultLaboratorySearch],
   bootstrap: [AppComponent]
 })

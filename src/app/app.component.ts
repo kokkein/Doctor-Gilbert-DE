@@ -10,18 +10,14 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   navItems = [
-    {name: 'Landing', route: 'autocomplete'},
+    {name: 'Landing', route: 'landing'},
     {name: 'Appointment', route: 'appointment'},
     {name: 'Episode', route: 'episode'},
-    {name: 'Visit', route: 'visit'},
-    {name: 'Master Data', route: 'master-data'},
     {name: 'Patient', route: 'patient'},
-    {name: 'Vital Signs', route: 'vital'},
+    {name: 'Visit', route: 'visit'},
     {name: 'Billing', route: 'button-toggle'},
-    {name: 'Medical Record', route: 'card'},
     {name: 'Medical Calculator', route: 'card'},
-    {name: 'Laboratory', route: 'mohvisit-type/3'},
-    {name: 'Radiology', route: 'mohvisit-type/2'}
+    {name: 'Master Data', route: 'master-data'}
   ];
 
   selectedOption: string;
@@ -64,16 +60,8 @@ export class AppComponent {
 export class DialogResultExampleDialog {
   constructor(public dialogRef: MdDialogRef<DialogResultExampleDialog>) {}
     Items = [
-    {name: 'Appointment', route: 'appointment'},
-    {name: 'Landing', route: 'autocomplete'},
-    {name: 'Episode', route: 'episode'},
-    {name: 'Visit', route: 'visit'},
-    {name: 'Patient', route: 'patient'},
-    {name: 'Vital Signs', route: 'vital'},
     {name: 'Billing', route: 'button-toggle'},
     {name: 'Medical Record', route: 'card'},
-    {name: 'Medical Calculator', route: 'card'},
-    {name: 'Laboratory', route: 'chips'},
-    {name: 'Radiology', route: 'checkbox'}
+    {name: 'Medical Calculator', route: 'card'}
   ];
 }

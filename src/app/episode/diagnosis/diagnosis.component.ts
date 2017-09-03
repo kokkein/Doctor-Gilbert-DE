@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -22,10 +23,14 @@ export class DiagnosisComponent implements OnInit {
     myContent: any[] = [];
     diagnosisTypeData: any;
 
-  constructor(private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) { 
+  constructor(private AuthService: AuthService, private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) { 
         this.diagnosisCtrl = new FormControl({diagnosisID: 0, diagnosisCode: ''});
-
+        
   }
+  
+logme(){
+  this.AuthService.login();
+}
 
   ngOnInit() {
     this.diagnosisCtrl = new FormControl({diagnosisID: 0, diagnosisCode: ''});
