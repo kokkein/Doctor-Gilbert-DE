@@ -28,6 +28,14 @@ export class MasterDataService {
         return this.authHttp.get(this.sURL + 'insurance/' + id)
                     .map(res => res.json());
     }
+    GetVisit() {
+        return this.authHttp.get(this.sURL + 'MedicalRecord/Visit')
+                    .map(res => res.json());
+    }
+    GetVisitByID(id) {
+        return this.authHttp.get(this.sURL + 'MedicalRecord/Visit/' + id)
+                    .map(res => res.json());
+    }
     GetPayor() {
         return this.authHttp.get(this.sURL + 'payor')
                     .map(res => res.json());
@@ -206,6 +214,10 @@ export class MasterDataService {
         return this.authHttp.post(this.sURL + 'VisitPurpose', PurposeOfVisit)
                     .map(res => res.json());
     }
+    CreateVisit(Visit) {
+        return this.authHttp.post(this.sURL + 'MedicalRecord/Visit', Visit)
+                    .map(res => res.json());
+    }
     CreateMOHVisitType(MOHVisitType) {
         return this.authHttp.post(this.sURL + 'MOHVisitType', MOHVisitType)
                     .map(res => res.json());
@@ -338,6 +350,10 @@ export class MasterDataService {
     }
     UpdateDGUserByID(DGUser) {
         return this.authHttp.put(this.sURL + 'DGUser/' + DGUser.dgUserID, DGUser)
+                    .map(res => res.json());
+    }
+    UpdateVisitByID(Visit) {
+        return this.authHttp.put(this.sURL + 'MedicalRecord/Visit/' + Visit.visitID, Visit)
                     .map(res => res.json());
     }
     UpdatePriceStructureByID(PriceStructure) {
