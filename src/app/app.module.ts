@@ -1,3 +1,4 @@
+import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { AuthService } from './services/auth.service';
 import { SpecialityComponent } from './masterData/speciality/speciality.component';
 import { SpeechRecognitionService } from './services/SpeechRecognitionService';
@@ -9,12 +10,12 @@ import { CarService } from './services/carService';
 import { MdDatepickerModule } from '@angular/material'
 import { MdTableModule } from '@angular/material';
 import { CdkTableModule } from '@angular/cdk/table';
-
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { Http, HttpModule, RequestOptions } from '@angular/http';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent, DialogResultExampleDialog } from './app.component';
 import { MaterialModule, MdNativeDateModule, MdChipsModule } from '@angular/material';
@@ -72,9 +73,11 @@ import { LandingComponent } from './landing/landing.component';
 import { ProcedureComponent } from './episode/procedure/procedure.component';
 import { PriceStructureComponent } from './masterData/price-structure/price-structure.component';
 import { InventoryPriceStructureComponent } from './masterData/inventory-price-structure/inventory-price-structure.component';
+import { Auth0UserProfileComponent } from './auth0-user-profile/auth0-user-profile.component';
 
 const appRoutes: Routes = [
 { path: 'landing', component: LandingComponent},
+{ path: 'profile', component: Auth0UserProfileComponent},
 { path: 'appointment', component: AppointmentComponent},
 { path: 'patient', component: PatientComponent},
 { path: 'patient/:id', component: PatientComponent},
@@ -122,6 +125,12 @@ const appRoutes: Routes = [
 { path: 'inventory-price-structure/:id', component: InventoryPriceStructureComponent},
 ];
 
+export function authHttpServiceFactory(http: Http, options: RequestOptions) {
+  return new AuthHttp(new AuthConfig({
+    tokenGetter: (() => localStorage.getItem('access_token'))
+  }), http, options);
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -138,7 +147,7 @@ const appRoutes: Routes = [
     MedicationComponent,
     TimelineComponent, 
     DiagnosisComponent, DialogResultRadiologySearch, DialogResultLaboratorySearch,
-    VitalSignsComponent, DialogResultExampleDialog, AppointmentComponent, DepartmentComponent, InsuranceComponent, PayorComponent, MOHVisitTypeComponent, PurposeOfVisitComponent, MasterDataComponent, InventoryBrandComponent, InventoryGenericComponent, InventoryAtcComponent, InventoryCategoryComponent, InventorySubcategoryComponent, InventoryMedicationclassComponent, InventoryPregnancycategoryComponent, SpecialityComponent, DiagnosisMasterComponent, LandingComponent, ProcedureComponent, PriceStructureComponent, InventoryPriceStructureComponent
+    VitalSignsComponent, DialogResultExampleDialog, AppointmentComponent, DepartmentComponent, InsuranceComponent, PayorComponent, MOHVisitTypeComponent, PurposeOfVisitComponent, MasterDataComponent, InventoryBrandComponent, InventoryGenericComponent, InventoryAtcComponent, InventoryCategoryComponent, InventorySubcategoryComponent, InventoryMedicationclassComponent, InventoryPregnancycategoryComponent, SpecialityComponent, DiagnosisMasterComponent, LandingComponent, ProcedureComponent, PriceStructureComponent, InventoryPriceStructureComponent, Auth0UserProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -149,9 +158,16 @@ const appRoutes: Routes = [
     InputMaskModule, ChipsModule, EditorModule, SharedModule, CheckboxModule,
     Ng2GoogleChartsModule, TreeTableModule, DataTableModule, DialogModule, ScheduleModule, CalendarModule,
     DxCheckBoxModule, DxSelectBoxModule, DxTextBoxModule, DxTemplateModule, DxBoxModule, DxTextAreaModule,
-    DxDataGridModule
+    DxDataGridModule, CommonModule
   ],
-  providers: [NodeService, CarService, EventService, MasterDataService, SpeechRecognitionService,Service, Company, AuthService],
+  providers: [NodeService, CarService, EventService, MasterDataService, SpeechRecognitionService,Service, Company, AuthService,
+    AuthService,
+    {
+      provide: AuthHttp,
+      useFactory: authHttpServiceFactory,
+      deps: [Http, RequestOptions]
+    }
+  ],
   entryComponents: [DialogResultExampleDialog, DialogResultRadiologySearch, DialogResultLaboratorySearch],
   bootstrap: [AppComponent]
 })

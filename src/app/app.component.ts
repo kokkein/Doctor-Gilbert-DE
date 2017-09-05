@@ -1,6 +1,7 @@
 import { Component, AnimationTransitionEvent, ViewEncapsulation, ElementRef } from '@angular/core';
 import { MdDialog, MdDialogRef, MdDialogConfig} from '@angular/material';
 import { Router } from '@angular/router';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,9 @@ export class AppComponent {
 
   selectedOption: string;
 
-  constructor(private _element: ElementRef, public dialog: MdDialog, private router: Router) {}
+  constructor(private AuthService: AuthService, private _element: ElementRef, public dialog: MdDialog, private router: Router) {
+    AuthService.handleAuthentication();
+  }
 
   toggleMenu() {
     let dialogRef = this.dialog.open(DialogResultExampleDialog);
@@ -51,8 +54,6 @@ export class AppComponent {
 
  }
 
-
-
 @Component({
   selector: 'dialog-result-example-dialog',
   templateUrl: './dialog-result-example-dialog.html',
@@ -62,6 +63,7 @@ export class DialogResultExampleDialog {
     Items = [
     {name: 'Billing', route: 'button-toggle'},
     {name: 'Medical Record', route: 'card'},
-    {name: 'Medical Calculator', route: 'card'}
+    {name: 'Medical Calculator', route: 'card'},
+    {name: 'User Profile', route: 'profile'}
   ];
 }

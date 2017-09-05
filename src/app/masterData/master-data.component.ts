@@ -14,6 +14,7 @@ export class MasterDataComponent implements OnInit {
     {name: 'MOH Visit Type', overview: '/mohvisit-type', newRecord: '/mohvisit-type'},
     {name: 'Purpose Of Visit', overview: '/purpose-of-visit', newRecord: '/purpose-of-visit'},
     {name: 'User', overview: '/user', newRecord: '/user'},
+    {name: 'User Profile', overview: '/profile', newRecord: '/profile'},
     {name: 'Price Structure', overview: '/price-structure', newRecord: '/price-structure'},
     {name: 'Speciality', overview: '/speciality', newRecord: '/speciality'},
     {name: 'Insurance', overview: '/insurance', newRecord: '/insurance'},

@@ -11,10 +11,8 @@ import { FormControl } from '@angular/forms';
 })
 export class VisitComponent implements OnInit {
 
-  visitTypes = [
-    'OutPatient',
-    'InPatient'
-  ];
+  visitTypes = [ 'OutPatient', 'InPatient' ];
+  
   policies;
   policyCtrl: FormControl;
   filteredPolicies: any;
@@ -22,8 +20,6 @@ export class VisitComponent implements OnInit {
   doctorCtrl: FormControl;
   filteredDoctors: any;
   departments;
-  departmentCtrl: FormControl;
-  filteredDepartments: any;
   purposeOfVisits;
   purposeOfVisitCtrl: FormControl;
   filteredPurposeOfVisits: any;
@@ -41,13 +37,12 @@ export class VisitComponent implements OnInit {
    constructor(private MasterDataService: MasterDataService) {
 
     //assign value for edit mode
-    this.patientCtrl = new FormControl({patientID: 1, name: 'A very sick guy'});
-    this.payorCtrl = new FormControl({payorID: 13, payorName: 'Tokio Marine Life Insurance Malaysia Bhd.'});
-    this.mohCtrl = new FormControl({mohVisitTypeID: 2, mohVisitTypeName: 'Foreign'});
-    this.purposeOfVisitCtrl = new FormControl({visitPurposeID: 2, visitPurposeName: 'New Visit'});
-    this.departmentCtrl = new FormControl({departmentID: 1, departmentName: 'Accident & Emergency'});
-    this.doctorCtrl = new FormControl({dgUserID: 1, userFullName: 'Gilbert Chin Kok Kein'});
-    this.policyCtrl = new FormControl({insuranceID: 1, insuranceName: 'A-Plus Gen?Next'});
+    this.patientCtrl = new FormControl({patientID: 0, name: ''});
+    this.payorCtrl = new FormControl({payorID: 0, payorName: ''});
+    this.mohCtrl = new FormControl({mohVisitTypeID: 0, mohVisitTypeName: ''});
+    this.purposeOfVisitCtrl = new FormControl({visitPurposeID: 0, visitPurposeName: ''});
+    this.doctorCtrl = new FormControl({dgUserID: 0, userFullName: ''});
+    this.policyCtrl = new FormControl({insuranceID: 0, insuranceName: ''});
 
   }
   displayPolicyFn(value: any): string {
@@ -55,10 +50,7 @@ export class VisitComponent implements OnInit {
   }
   displayDoctorFn(value: any): string {
     return value && typeof value === 'object' ? value.userFullName : value;
-  }
-  displayDepartmentFn(value: any): string {
-    return value && typeof value === 'object' ? value.departmentName : value;
-  }
+  } 
   displayPurposeOfVisitFn(value: any): string {
     return value && typeof value === 'object' ? value.visitPurposeName : value;
   }
@@ -69,7 +61,7 @@ export class VisitComponent implements OnInit {
     return value && typeof value === 'object' ? value.payorName : value;
   }
   displayPatientFn(value: any): string {
-    return value && typeof value === 'object' ? value.name : value;
+    return value && typeof value === 'object' ? value.patientID + ', ' + value.name : value;
   }
   filterPolicies(val: string) {
     //`^${val}`
@@ -80,12 +72,7 @@ export class VisitComponent implements OnInit {
     //`^${val}`
     return val ? this.doctors.filter((s) => new RegExp(val, 'gi').test(s.userFullName))
                : this.doctors;
-  }
-  filterDepartments(val: string) {
-    //`^${val}`
-    return val ? this.departments.filter((s) => new RegExp(val, 'gi').test(s.departmentName))
-               : this.departments;
-  }
+  } 
   filterPurposeOfVisits(val: string) {
     //`^${val}`
     return val ? this.purposeOfVisits.filter((s) => new RegExp(val, 'gi').test(s.visitPurposeName))
@@ -108,10 +95,9 @@ export class VisitComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.visitdata.VisitDateTime = "2017-08-12T15:14";
+    
     this.MasterDataService.GetInsurance().subscribe(policy => {
     this.policies = policy;
-    //here only start filter
     this.filteredPolicies = this.policyCtrl.valueChanges
         .startWith(this.policyCtrl.value)
         .map(val => this.displayPolicyFn(val))
@@ -120,7 +106,6 @@ export class VisitComponent implements OnInit {
 
     this.MasterDataService.GetDGUser().subscribe(doctor => {
     this.doctors = doctor;
-    //here only start filter
     this.filteredDoctors = this.doctorCtrl.valueChanges
         .startWith(this.doctorCtrl.value)
         .map(val => this.displayDoctorFn(val))
@@ -128,17 +113,11 @@ export class VisitComponent implements OnInit {
     });
 
     this.MasterDataService.GetDepartment().subscribe(department => {
-    this.departments = department;
-    //here only start filter
-    this.filteredDepartments = this.departmentCtrl.valueChanges
-        .startWith(this.departmentCtrl.value)
-        .map(val => this.displayDepartmentFn(val))
-        .map(name => this.filterDepartments(name));
+    this.departments = department; 
     });
 
     this.MasterDataService.GetPurposeOfVisit().subscribe(purposeOfVisit => {
     this.purposeOfVisits = purposeOfVisit;
-    //here only start filter
     this.filteredPurposeOfVisits = this.purposeOfVisitCtrl.valueChanges
         .startWith(this.purposeOfVisitCtrl.value)
         .map(val => this.displayPurposeOfVisitFn(val))
@@ -147,7 +126,6 @@ export class VisitComponent implements OnInit {
 
     this.MasterDataService.GetMOHVisitType().subscribe(moh => {
     this.mohs = moh;
-    //here only start filter
     this.filteredMOHs = this.mohCtrl.valueChanges
         .startWith(this.mohCtrl.value)
         .map(val => this.displayMOHFn(val))
@@ -156,7 +134,6 @@ export class VisitComponent implements OnInit {
 
     this.MasterDataService.GetPayor().subscribe(payor => {
     this.payors = payor;
-    //here only start filter
     this.filteredPayors = this.payorCtrl.valueChanges
         .startWith(this.payorCtrl.value)
         .map(val => this.displayPayorFn(val))
@@ -165,7 +142,6 @@ export class VisitComponent implements OnInit {
 
     this.MasterDataService.GetPatient().subscribe(patient => {
     this.patients = patient;
-    //here only start filter
     this.filteredPatients = this.patientCtrl.valueChanges
         .startWith(this.patientCtrl.value)
         .map(val => this.displayPatientFn(val))

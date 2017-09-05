@@ -6,19 +6,21 @@ import * as auth0 from 'auth0-js';
 @Injectable()
 export class AuthService {
 
+  userProfile: any;
   auth0 = new auth0.WebAuth({
     clientID: 'RBjWPle3E8LoA5xr9AyrTZ84Mt6zzUYn',
     domain: 'doctorgilbert.auth0.com',
     responseType: 'token id_token',
-    audience: 'https://doctorgilbert.auth0.com/userinfo',
-    redirectUri: 'http://localhost:4200/master-data',      
-    scope: 'openid'
+    audience: 'https://api.doctorgilbert.com',
+    redirectUri: 'http://localhost:4200/',      
+    scope: 'openid profile read:messages'
   });
 
   constructor(public router: Router) {}
 
   public login(): void {
     this.auth0.authorize();
+    
   }
 
   public handleAuthentication(): void {
@@ -26,9 +28,9 @@ export class AuthService {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
         this.setSession(authResult);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/']);
       } else if (err) {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/error']);
         console.log(err);
       }
     });
@@ -58,5 +60,20 @@ export class AuthService {
     return new Date().getTime() < expiresAt;
   }
 
+  public getProfile(cb): void {
+    const accessToken = localStorage.getItem('access_token');
+    if (!accessToken) {
+      throw new Error('Access token must exist to fetch profile');
+    }
+  
+    const self = this;
+    this.auth0.client.userInfo(accessToken, (err, profile) => {
+      if (profile) {
+        self.userProfile = profile;
+        console.log(profile);
+      }
+      cb(err, profile);
+    });
+  }
 
 }

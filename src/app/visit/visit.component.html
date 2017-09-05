@@ -4,6 +4,7 @@
     <div class="toolbar">
       <div>
         <button md-raised-button>Save</button>
+        <button md-raised-button>Save + Edit Episode</button>
         <button md-raised-button>New</button>
       </div>
     </div>
@@ -29,11 +30,11 @@
             </md-autocomplete>
           </div>
           <div>
-              <md-radio-group>
-                <md-radio-button *ngFor="let visitType of visitTypes" [value]="visitType"  [(ngModel)]="visitdata.VisitType" name="VisitType">
-                  {{visitType}}
+              <md-radio-group class="input-full-width" [(ngModel)]="visitdata.VisitType" name="visitType">
+                <md-radio-button *ngFor="let visitType of visitTypes" [value]="visitType" >
+                    {{visitType}}
                 </md-radio-button>
-              </md-radio-group>
+            </md-radio-group>
             </div>
         </div>
 
@@ -46,16 +47,13 @@
               </md-form-field>
             </div>
             <div>
-              <md-form-field class="input-full-width">
-                <input mdInput placeholder="Department" [mdAutocomplete]="reactiveDepartment" [formControl]="departmentCtrl"  [(ngModel)]="visitdata.Department" name="Department">
-              </md-form-field>
 
-              <md-autocomplete #reactiveDepartment="mdAutocomplete" [displayWith]="displayDepartmentFn">
-                <md-option *ngFor="let department of filteredDepartments | async" [value]="department">
-                  <span>{{ department.departmentID }}</span>
-                  <span> ({{department.departmentName}}) </span>
+              <md-select placeholder="Visit Department(s)" name="Department" multiple="true" class="input-full-width">
+                <md-option *ngFor="let department of departments" [value]="department.departmentID">
+                    {{department.departmentName}}
                 </md-option>
-              </md-autocomplete>
+              </md-select>
+
             </div>
           </div>
           <div class="container">

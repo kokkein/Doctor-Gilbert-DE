@@ -30,6 +30,7 @@
     "@angular/platform-browser-dynamic": "^4.3.6",
     "@angular/platform-server": "^4.3.6",
     "@angular/router": "^4.3.6",
+    "angular2-jwt": "^0.2.3",
     "auth0-js": "^8.9.3",
     "core-js": "^2.5.0",
     "devextreme": "^17.1.5",
