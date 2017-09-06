@@ -1,4 +1,7 @@
+import { ActivatedRoute, Router } from '@angular/router';
+import { MasterDataService } from './../services/masterdata.service';
 import { Component, OnInit } from '@angular/core';
+import { MdSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-episode',
@@ -6,17 +9,43 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./episode.component.css']
 })
 export class EpisodeComponent implements OnInit {
-  public hide = false;
-  public direction = "row";
-  public mainAxis = "space-around";
-  public crossAxis = "center";
-  public hgh=100;
+  data: any = {}
 
-//  layoutAlign () {
-//      return `${this.mainAxis} ${this.crossAxis}`;
-//  }
+  constructor(public snackBar: MdSnackBar, private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {
+    this.openSnackBar("error","errorrrrr");
+    route.params.subscribe(p=>{
+      if (p['id']!=null)
+        this.data.visitID = +p['id'];
+        if (this.data.patientID)
+        {
+          this.retrieveData();
+        }
+    });
+  
+  }
+  
+  retrieveData(){
+    this.MasterDataService.GetPatientByID(this.data.patientID)
+    .subscribe(m => {
+      this.data = m;
+      if (m.patientEmergencyResources == null)
+        this.data.patientEmergencyResources = {};
+      if (this.data.patientPolicyResources == null)
+        this.data.patientPolicyResources = {};
+      if (this.data.patientEmployeeResources == null)
+        this.data.patientEmployeeResources = {};
 
-  constructor() { }
+    }, err => {
+      //if (err.status == 404)
+        this.openSnackBar("error","errorrrrr");
+    } );
+}
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
 
   ngOnInit() {
   }
@@ -32,8 +61,4 @@ export class EpisodeComponent implements OnInit {
     { value: 'Panadol, Uphamol, Paraceptamol',}
   ];
 
-  togglePatientBar(){
-    //this.hide = !this.hide;
-    this.hgh = 20;
-  }
 }

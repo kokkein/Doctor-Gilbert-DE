@@ -1,8 +1,10 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { MasterDataService } from './../services/masterdata.service';
 import { Component, OnInit } from '@angular/core';
 import 'rxjs/add/operator/startWith';
 import { Observable } from 'rxjs/Observable';
 import { FormControl } from '@angular/forms';
+import { MdSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-visit',
@@ -34,7 +36,7 @@ export class VisitComponent implements OnInit {
   filteredPatients: any;
   visitdata: any = {};
 
-   constructor(private MasterDataService: MasterDataService) {
+   constructor(public snackBar: MdSnackBar, private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {
 
     //assign value for edit mode
     this.patientCtrl = new FormControl({patientID: 0, name: ''});
@@ -61,7 +63,7 @@ export class VisitComponent implements OnInit {
     return value && typeof value === 'object' ? value.payorName : value;
   }
   displayPatientFn(value: any): string {
-    return value && typeof value === 'object' ? value.patientID + ', ' + value.name : value;
+    return value && typeof value === 'object' ? value.name : value;
   }
   filterPolicies(val: string) {
     //`^${val}`
@@ -113,7 +115,7 @@ export class VisitComponent implements OnInit {
     });
 
     this.MasterDataService.GetDepartment().subscribe(department => {
-    this.departments = department; 
+      this.departments = department; 
     });
 
     this.MasterDataService.GetPurposeOfVisit().subscribe(purposeOfVisit => {
@@ -148,5 +150,39 @@ export class VisitComponent implements OnInit {
         .map(name => this.filterPatients(name));
     });
   }
+
+  onSave(goToEpisode: boolean = false) {
+
+      this.visitdata.patientID = this.patientCtrl.value.patientID;
+      this.visitdata.PayorID = this.payorCtrl.value.payorID;
+      this.visitdata.MOHVisitTypeID = this.mohCtrl.value.mohVisitTypeID;
+      this.visitdata.VisitPurposeID = this.purposeOfVisitCtrl.value.visitPurposeID;
+      this.visitdata.VisitDoctorID = this.doctorCtrl.value.dgUserID;
+      this.visitdata.InsuranceID = this.policyCtrl.value.insuranceID;
+
+      if (this.visitdata.visitID){
+        this.MasterDataService.UpdateVisitByID(this.visitdata)
+          .subscribe(x => {
+            this.openSnackBar('"' + x.visitID + '" Updated Sucessfully!','Close');
+        });
+        if (goToEpisode) {
+          this.router.navigate(['/episode/', this.visitdata.visitID]);
+        }
+      }
+      else
+        this.MasterDataService.CreateVisit(this.visitdata)
+          .subscribe(x => {
+            this.openSnackBar('"' + x.visitID + '" Created Sucessfully!','Close');
+            if (goToEpisode) {
+              this.router.navigate(['/episode/', x.visitID]);
+            }
+        });
+    }
+
+    openSnackBar(message: string, action: string) {
+      this.snackBar.open(message, action, {
+        duration: 2000,
+      });
+    }
 
 }

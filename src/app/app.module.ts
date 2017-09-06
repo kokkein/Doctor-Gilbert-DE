@@ -76,6 +76,7 @@ import { InventoryPriceStructureComponent } from './masterData/inventory-price-s
 import { Auth0UserProfileComponent } from './auth0-user-profile/auth0-user-profile.component';
 
 const appRoutes: Routes = [
+{ path: '', component: LandingComponent},
 { path: 'landing', component: LandingComponent},
 { path: 'profile', component: Auth0UserProfileComponent},
 { path: 'appointment', component: AppointmentComponent},
@@ -88,6 +89,7 @@ const appRoutes: Routes = [
 { path: 'user', component: UserComponent},
 { path: 'user/:id', component: UserComponent},
 { path: 'episode', component: EpisodeComponent},
+{ path: 'episode/:id', component: EpisodeComponent},
 { path: 'master-data', component: MasterDataComponent},
 { path: 'payor', component: PayorComponent},
 { path: 'payor/:id', component: PayorComponent},

@@ -215,7 +215,7 @@ export class MasterDataService {
                     .map(res => res.json());
     }
     CreateVisit(Visit) {
-        return this.authHttp.post(this.sURL + 'MedicalRecord/Visit', Visit)
+        return this.authHttp.post(this.sURL + 'MedicalRecord/CreateVisit', Visit)
                     .map(res => res.json());
     }
     CreateMOHVisitType(MOHVisitType) {
