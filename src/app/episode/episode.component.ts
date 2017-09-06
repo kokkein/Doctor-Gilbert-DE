@@ -10,13 +10,13 @@ import { MdSnackBar } from '@angular/material';
 })
 export class EpisodeComponent implements OnInit {
   data: any = {}
+  patientData: any = {}
 
   constructor(public snackBar: MdSnackBar, private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {
-    this.openSnackBar("error","errorrrrr");
     route.params.subscribe(p=>{
       if (p['id']!=null)
         this.data.visitID = +p['id'];
-        if (this.data.patientID)
+        if (this.data.visitID)
         {
           this.retrieveData();
         }
@@ -25,20 +25,22 @@ export class EpisodeComponent implements OnInit {
   }
   
   retrieveData(){
-    this.MasterDataService.GetPatientByID(this.data.patientID)
-    .subscribe(m => {
-      this.data = m;
-      if (m.patientEmergencyResources == null)
-        this.data.patientEmergencyResources = {};
-      if (this.data.patientPolicyResources == null)
-        this.data.patientPolicyResources = {};
-      if (this.data.patientEmployeeResources == null)
-        this.data.patientEmployeeResources = {};
+    this.MasterDataService.GetVisitByID(this.data.visitID)
+    .subscribe(i =>{
+      this.data = i;
+        this.MasterDataService.GetPatientByID(i.patientID)
+        .subscribe(m => {
+          this.patientData = m;
+        }, err => {
+          if (err.status == 404)
+            this.openSnackBar(err,'Close');
+        } );
 
     }, err => {
-      //if (err.status == 404)
-        this.openSnackBar("error","errorrrrr");
+      if (err.status == 404)
+        this.openSnackBar(err,'Close');
     } );
+
 }
 
   openSnackBar(message: string, action: string) {

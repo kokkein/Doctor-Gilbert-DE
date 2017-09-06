@@ -83,6 +83,7 @@ const appRoutes: Routes = [
 { path: 'patient', component: PatientComponent},
 { path: 'patient/:id', component: PatientComponent},
 { path: 'visit', component: VisitComponent},
+{ path: 'visit/:id', component: VisitComponent},
 { path: 'vital', component: VitalComponent},
 { path: 'inventory-item', component: InventoryItemComponent},
 { path: 'inventory-item/:id', component: InventoryItemComponent},
