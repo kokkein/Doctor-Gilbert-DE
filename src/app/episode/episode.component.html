@@ -2,10 +2,10 @@
 
   <md-expansion-panel  #myPanel>
     <md-expansion-panel-header>
-      <mat-panel-description>{{data.visitType}} - <a [routerLink]="['/visit/'+data.visitID]">OPD-0000101027</a>, Payment Mode: AIA Premium Patient</mat-panel-description>
+      <mat-panel-description>{{data.visitType}} - <a [routerLink]="['/visit/'+data.visitID]">OPD-0000101027</a>, Payment Mode: {{data.cashPatient ? 'Cash' : 'Non-Cash' }}</mat-panel-description>
       <mat-panel-title>
-        <strong>{{data.visitID}} <a [routerLink]="['/patient/'+patientData.patientID]">{{patientData.name}}</a></strong>
-        , {{patientData.gender =='M' ? 'Male' : 'Female'}}
+        <strong>{{data.visitID}} <a [routerLink]="['/patient/'+data.patientID]">{{data.patientResource.name}}</a></strong>
+        , {{data.patientResource.gender =='M' ? 'Male' : 'Female'}}
       </mat-panel-title>
     </md-expansion-panel-header>
     <div class="containerheader">
@@ -16,13 +16,13 @@
           <md-list dense>
             <md-list-item>
                <p md-line>
-                <span>MRN: {{patientData.patientID}}</span>
+                <span>MRN: {{data.patientID}}</span>
               </p>
                <p md-line>
-                <span>{{patientData.identificationTypeID}}:{{patientData.identificationValue}}</span>
+                <span>{{data.patientResource.identificationTypeID}}:{{data.patientResource.identificationValue}}</span>
               </p>
                <p md-line>
-                <span>D.O.B: {{patientData.dob | date: 'dd/MM/yyyy'}}(36 yr 5 mth 21 d)</span>
+                <span>D.O.B: {{data.patientResource.dob | date: 'dd/MM/yyyy'}}(36 yr 5 mth 21 d)</span>
               </p>
             </md-list-item>
           </md-list>
@@ -32,10 +32,10 @@
             <md-list-item>
               <h4 md-line><strong>Payment Mode</strong></h4>
               <p md-line>
-                <span>AIA Premium Patient</span>
+                <span>{{data.insuranceResource.insuranceName}}</span>
               </p>
               <p md-line>
-                <span>AIA Malaysia International (South East Asia Region) Berhard</span>
+                <span>{{data.payorResource.payorName}}</span>
               </p>
               <p md-line>
                 <span>Current Bill: RM534.00 </span>
@@ -73,7 +73,7 @@
             </ng-template>
             <md-card>
               <md-card-content>
-                <app-timeline></app-timeline>
+                <app-timeline [patientID]="data.patientID" [visitID]="data.visitID"></app-timeline>
               </md-card-content>
             </md-card>
           </md-tab>
@@ -83,7 +83,7 @@
             </ng-template>
             <md-card>
               <md-card-content>
-                <app-diagnosis></app-diagnosis>
+                <app-diagnosis [patientID]="data.patientID" [visitID]="data.visitID"></app-diagnosis>
               </md-card-content>
             </md-card>
           </md-tab>
@@ -103,7 +103,7 @@
             </ng-template>
             <md-card>
               <md-card-content>
-                <app-procedure></app-procedure>
+                <app-procedure [patientID]="data.patientID" [visitID]="data.visitID"></app-procedure>
               </md-card-content>
             </md-card>
           </md-tab>
@@ -113,7 +113,7 @@
             </ng-template>
             <md-card>
               <md-card-content>
-                <app-medication></app-medication>
+                <app-medication [patientID]="data.patientID" [visitID]="data.visitID"></app-medication>
               </md-card-content>
             </md-card>
           </md-tab>
@@ -123,7 +123,7 @@
             </ng-template>
             <md-card>
               <md-card-content>
-                <app-laboratory></app-laboratory>
+                <app-laboratory [patientID]="data.patientID" [visitID]="data.visitID"></app-laboratory>
               </md-card-content>
             </md-card>
           </md-tab>
@@ -133,7 +133,7 @@
             </ng-template>
             <md-card>
               <md-card-content>
-                <app-radiology></app-radiology>
+                <app-radiology [patientID]="data.patientID" [visitID]="data.visitID"></app-radiology>
               </md-card-content>
             </md-card>
           </md-tab>
@@ -143,7 +143,7 @@
             </ng-template>
             <md-card>
               <md-card-content>
-                <app-document></app-document>
+                <app-document [patientID]="data.patientID" [visitID]="data.visitID"></app-document>
               </md-card-content>
             </md-card>
           </md-tab>

@@ -36,7 +36,7 @@ export class VisitComponent implements OnInit {
   filteredPatients: any;
   visitdata: any = {};
 
-   constructor(public snackBar: MdSnackBar, private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {
+  constructor(public snackBar: MdSnackBar, private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {
 
     //assign value for edit mode
     this.patientCtrl = new FormControl({patientID: 0, name: ''});
@@ -45,6 +45,15 @@ export class VisitComponent implements OnInit {
     this.purposeOfVisitCtrl = new FormControl({visitPurposeID: 0, visitPurposeName: ''});
     this.doctorCtrl = new FormControl({dgUserID: 0, userFullName: ''});
     this.policyCtrl = new FormControl({insuranceID: 0, insuranceName: ''});
+
+    route.params.subscribe(p=>{
+      if (p['id']!=null)
+        this.visitdata.visitID = +p['id'];
+        if (this.visitdata.visitID)
+        {
+          this.retrieveData();
+        }
+    });
 
   }
   displayPolicyFn(value: any): string {
@@ -66,32 +75,26 @@ export class VisitComponent implements OnInit {
     return value && typeof value === 'object' ? value.name : value;
   }
   filterPolicies(val: string) {
-    //`^${val}`
     return val ? this.policies.filter((s) => new RegExp(val, 'gi').test(s.insuranceName))
                : this.policies;
   }
   filterDoctors(val: string) {
-    //`^${val}`
     return val ? this.doctors.filter((s) => new RegExp(val, 'gi').test(s.userFullName))
                : this.doctors;
   } 
   filterPurposeOfVisits(val: string) {
-    //`^${val}`
     return val ? this.purposeOfVisits.filter((s) => new RegExp(val, 'gi').test(s.visitPurposeName))
                : this.purposeOfVisits;
   }
   filterMOHs(val: string) {
-    //`^${val}`
     return val ? this.mohs.filter((s) => new RegExp(val, 'gi').test(s.mohVisitTypeName))
                : this.mohs;
   }
   filterPayors(val: string) {
-    //`^${val}`
     return val ? this.payors.filter((s) => new RegExp(val, 'gi').test(s.payorName))
                : this.payors;
   }
   filterPatients(val: string) {
-    //`^${val}`
     return val ? this.patients.filter((s) => new RegExp(val, 'gi').test(s.name))
                : this.patients;
   }
@@ -178,6 +181,24 @@ export class VisitComponent implements OnInit {
             }
         });
     }
+
+  retrieveData(){
+      this.MasterDataService.GetVisitByID(this.visitdata.visitID)
+      .subscribe(m => {
+        this.visitdata = m;
+
+        this.patientCtrl = new FormControl({patientID: m.patientResource.patientID, name: m.patientResource.name});
+        this.payorCtrl = new FormControl({payorID: m.payorResource.payorID, payorName: m.payorResource.payorName});
+        this.mohCtrl = new FormControl({mohVisitTypeID: m.mohVisitTypeResource.mohVisitTypeID, mohVisitTypeName: m.mohVisitTypeResource.mohVisitTypeName});
+        this.purposeOfVisitCtrl = new FormControl({visitPurposeID: m.visitPurposeResource.visitPurposeID, visitPurposeName: m.visitPurposeResource.visitPurposeName});
+        this.doctorCtrl = new FormControl({dgUserID: m.visitDoctorResource.dgUserID, userFullName: m.visitDoctorResource.userFullName});
+        this.policyCtrl = new FormControl({insuranceID: m.insuranceResource.insuranceID, insuranceName: m.insuranceResource.insuranceName});
+
+      }, err => {
+        if (err.status == 404)
+          this.openSnackBar('Record Not Found!','Close');
+      } );
+  }
 
     openSnackBar(message: string, action: string) {
       this.snackBar.open(message, action, {

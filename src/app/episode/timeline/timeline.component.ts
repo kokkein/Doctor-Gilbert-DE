@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { ChartReadyEvent } from 'ng2-google-charts';
 import { ChartErrorEvent } from 'ng2-google-charts';
 import { ChartSelectEvent } from 'ng2-google-charts';
@@ -9,7 +9,8 @@ import { ChartSelectEvent } from 'ng2-google-charts';
   styleUrls: ['./timeline.component.css']
 })
 export class TimelineComponent implements OnInit {
-
+  @Input() patientID: number;
+  @Input() visitID: number
   constructor() { }
 
   ngOnInit() {

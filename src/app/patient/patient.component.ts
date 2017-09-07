@@ -18,7 +18,7 @@ export class PatientComponent implements OnInit {
     data: any = {
       patientEmergencyResources: {},
       patientPolicyResources: {},
-      patientEmployeeResources: {}
+      patientResource: {}
     };
     datat: any;
     dataList: any = [];
@@ -142,8 +142,8 @@ export class PatientComponent implements OnInit {
           this.data.patientEmergencyResources = {};
         if (this.data.patientPolicyResources == null)
           this.data.patientPolicyResources = {};
-        if (this.data.patientEmployeeResources == null)
-          this.data.patientEmployeeResources = {};
+        if (this.data.patientResource == null)
+          this.data.patientResource = {};
 
         this.payorCtrl = new FormControl({payorID: 0, payorName: ''});
         this.insuranceCtrl = new FormControl({insuranceID: 0, insuranceName: ''});

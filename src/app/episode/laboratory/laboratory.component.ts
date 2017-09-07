@@ -1,5 +1,5 @@
 import { MasterDataService } from 'app/services/masterdata.service';
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, Input } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormArray, FormBuilder  } from '@angular/forms';
 import { AnimationTransitionEvent, ViewEncapsulation, ElementRef } from '@angular/core';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
@@ -12,7 +12,9 @@ import { DxDataGridComponent } from "devextreme-angular";
   styleUrls: ['./laboratory.component.css']
 })
 export class LaboratoryComponent implements OnInit {
-  public myForm: FormGroup; // our form model
+  @Input() patientID: number;
+  @Input() visitID: number
+
   returnedResult: any = {};
 
   displayDialog: boolean;

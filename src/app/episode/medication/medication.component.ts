@@ -1,6 +1,6 @@
 import { MasterDataService } from 'app/services/masterdata.service';
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormArray, FormBuilder  } from '@angular/forms';
 import { MedicationList } from './MedicationList.interface';
 
@@ -23,6 +23,9 @@ export interface DemoColor {
   styleUrls: ['./medication.component.css']
 })
 export class MedicationComponent implements OnInit {
+  @Input() patientID: number;
+  @Input() visitID: number
+
     medicationCtrl: FormControl;
     filteredMedications: any;
     medicationTemplateCtrl: FormControl;

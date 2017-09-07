@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Message } from 'primeng/primeng';
 import { Observable } from 'rxjs/Observable';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -15,6 +15,9 @@ import ArrayStore from 'devextreme/data/array_store';
   styleUrls: ['./diagnosis.component.css']
 })
 export class DiagnosisComponent implements OnInit {
+    @Input() patientID: number;
+    @Input() visitID: number
+
     diagnosisCtrl: FormControl;
     filteredDiagnosis: Observable<any[]>;
     diagnosis: any[] = [];

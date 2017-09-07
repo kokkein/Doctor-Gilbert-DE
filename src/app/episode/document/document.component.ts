@@ -1,5 +1,5 @@
 import { SpeechRecognitionService } from './../../services/SpeechRecognitionService';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-document',
@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./document.component.css']
 })
 export class DocumentComponent implements OnInit {
+
+    @Input() patientID: number;
+    @Input() visitID: number
 
   text: string;
   showRecording: boolean;

@@ -9,8 +9,13 @@ import { MdSnackBar } from '@angular/material';
   styleUrls: ['./episode.component.css']
 })
 export class EpisodeComponent implements OnInit {
-  data: any = {}
-  patientData: any = {}
+  data: any = {
+    insuranceResource: {},
+    payorResource: {},
+    patientResource: {}
+  }
+  patientVisit;
+
 
   constructor(public snackBar: MdSnackBar, private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {
     route.params.subscribe(p=>{
@@ -28,14 +33,13 @@ export class EpisodeComponent implements OnInit {
     this.MasterDataService.GetVisitByID(this.data.visitID)
     .subscribe(i =>{
       this.data = i;
-        this.MasterDataService.GetPatientByID(i.patientID)
-        .subscribe(m => {
-          this.patientData = m;
-        }, err => {
-          if (err.status == 404)
-            this.openSnackBar(err,'Close');
-        } );
-
+      if (i.insuranceResource == null)
+        this.data.insuranceResource = {};
+      if (i.payorResource == null)
+        this.data.payorResource = {};
+      if (i.patientResource == null)
+        this.data.patientResource = {};
+      this.patientVisit = [{patientID: this.data.patientID ,visitID: this.data.visitID}];
     }, err => {
       if (err.status == 404)
         this.openSnackBar(err,'Close');
