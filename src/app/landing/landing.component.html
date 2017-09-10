@@ -1,6 +1,3 @@
-
-
-
         <div class="container">
             <div>
                 <md-list>
@@ -49,10 +46,12 @@
             </div>
             <div>
                 <md-form-field class="input-full-width">
-                    <input mdInput placeholder="Search Patient...">
+                    <input mdInput placeholder="Search Patient..." [(ngModel)]="patient">
                   </md-form-field>
+                  <button md-mini-fab (click)="searchPatient()"><i class="material-icons">search</i></button>
                   <md-form-field class="input-full-width">
-                      <input mdInput placeholder="Search Episode...">
+                      <input mdInput placeholder="Search Episode..." [(ngModel)]="episode">
                   </md-form-field>
+                  <button md-mini-fab (click)="searchEpisode()"><i class="material-icons">search</i></button>
             </div>
         </div>
