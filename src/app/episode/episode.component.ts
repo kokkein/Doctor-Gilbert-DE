@@ -25,6 +25,10 @@ export class EpisodeComponent implements OnInit {
         {
           this.retrieveData();
         }
+        else{
+          this.data.visitID =1;
+          this.retrieveData();
+        }
     });
   
   }

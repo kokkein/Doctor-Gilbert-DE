@@ -16,7 +16,7 @@ export class AppComponent {
     {name: 'Episode', route: 'episode'},
     {name: 'Patient', route: 'patient'},
     {name: 'Visit', route: 'visit'},
-    {name: 'Billing', route: 'button-toggle'},
+    {name: 'Billing', route: 'billing'},
     {name: 'Medical Calculator', route: 'card'},
     {name: 'Master Data', route: 'master-data'}
   ];
@@ -61,7 +61,7 @@ export class AppComponent {
 export class DialogResultExampleDialog {
   constructor(public dialogRef: MdDialogRef<DialogResultExampleDialog>) {}
     Items = [
-    {name: 'Billing', route: 'button-toggle'},
+    {name: 'Billing', route: 'billing'},
     {name: 'Medical Record', route: 'card'},
     {name: 'Medical Calculator', route: 'card'},
     {name: 'User Profile', route: 'profile'}

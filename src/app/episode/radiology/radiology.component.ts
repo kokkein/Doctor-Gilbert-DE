@@ -17,13 +17,15 @@ export class RadiologyComponent implements OnInit {
   @Input() visitID: number
 
   returnedResult: any = {};
+  data: any = {RadiologyLnResource:{}};
 
   displayDialog: boolean;
   selectedOption: string;
   toShow: boolean = true;
 
+  historyRecord;
+  modalities;
   doctors;
-  //doctorCtrl: FormControl;
   orderedByCtrl: FormControl;
   referredByCtrl: FormControl;
   replyToCtrl: FormControl;
@@ -48,6 +50,18 @@ export class RadiologyComponent implements OnInit {
     this.reportedByCtrl = new FormControl({dgUserID: 0, userFullName: ''});
   }
   
+mergeData(){
+  this.data.RadiologyLnResource = this.returnedResult;
+
+  this.data.orderedByID = this.orderedByCtrl.value.dgUserID;
+  this.data.referredByID = this.referredByCtrl.value.dgUserID;
+  this.data.replyToID = this.replyToCtrl.value.dgUserID;
+  this.data.reportedByID = this.reportedByCtrl.value.dgUserID;
+  this.data.patientID = this.patientID;
+  this.data.visitID = this.visitID;
+  this.data.CreatedByID = 1;
+}
+
   ngOnInit() {
 
       this.MasterDataService.GetDGUser().subscribe(doctor => {
@@ -70,6 +84,12 @@ export class RadiologyComponent implements OnInit {
             .map(val => this.displayDoctorFn(val))
             .map(name => this.filterDoctors(name));
         });
+      this.MasterDataService.GetModality().subscribe(modality => {
+        this.modalities = modality;
+        });
+      this.MasterDataService.GetRadiologyByVisit(this.visitID).subscribe(hr => {
+        this.historyRecord = hr;
+        });
 
   }
 
@@ -87,78 +107,10 @@ export class RadiologyComponent implements OnInit {
     });
 
   }
-
-  modalities = [
-    {value: '1', viewValue: 'COMPUTED TOMOGRAPHY (CT)'},
-    {value: '2', viewValue: 'MAGNETIC RESONANCE IMAGING (MRI)'},
-    {value: '3', viewValue: 'ULTRASOUND'},
-    {value: '4', viewValue: 'X-RAY'},
-    {value: '5', viewValue: 'BIOMARKERS'},
-    {value: '6', viewValue: 'POSITRON EMISSION TOMOGRAPHY (PET)'}
-  ];
   
   priorities = ['Urgent','Stat','Routine'];
-  lateralities = [{value: '1', viewValue: 'LEFT'},{value: '2', viewValue: 'RIGHT'},{value: '3', viewValue: 'BILATERAL'}];
-  
-  chronicConditions = [
-    {value: '1', viewValue: 'Diabeties Mellitius'},
-    {value: '2', viewValue: 'Hypertension'},
-    {value: '2', viewValue: 'Bronchial Asthma'},
-    {value: '2', viewValue: 'Obesity'},
-    {value: '2', viewValue: 'Epilepsy'},
-    {value: '3', viewValue: 'Others'}
-  ];
+  lateralities = [{value: 'LEFT', viewValue: 'LEFT'},{value: 'RIGHT', viewValue: 'RIGHT'},{value: 'BILATERAL', viewValue: 'BILATERAL'}];
 
-  laboratoryRecord = [
-  {
-    id: 'RAD-0003',
-    laboratory: 'Wellness lab Cheras Taman Midah Sdn. Bhd',
-    refferedBy: 'Doctor Lai from LAI Clinic',
-    replyTo: '',
-    reportedBy: 'Doctor Joo',
-    priority: 'Routine',
-    sampleDateTime: new Date('1/1/16'),
-    note: 'This is a dangerous drug, take more to get more dangerous. take less also dangerous.',
-    orderBy: 'Doctor Gilbert Chin',
-    created: new Date('1/1/16'),
-    createdBy: 'Doctor Gilbert',
-    version: 2,
-    updated: new Date('1/1/16'),
-    updatedBy: 'Doctor Chin',
-  },
-  {
-    id: 'RAD-0004',
-    laboratory: 'Quantum Laboratory (Shah Alam) Sdn. Bhd.',
-    refferedBy: 'Doctor Lai from LAI Clinic',
-    replyTo: '',
-    reportedBy: 'Doctor Khoo',
-    priority: 'Routine',
-    sampleDateTime: new Date('1/1/16'),
-    note: 'This Patient is pregnant!',
-    orderBy: 'Doctor Gilbert Chin',
-    created: new Date('1/1/16'),
-    createdBy: 'Doctor Gilbert',
-    version: 2,
-    updated: new Date('1/1/16'),
-    updatedBy: 'Doctor Chin',
-  },
-  {
-    id: 'RAD-0005',
-    laboratory: 'Wellness lab Cheras Taman Midah Sdn. Bhd',
-    refferedBy: 'Doctor Lai from LAI Clinic',
-    replyTo: 'Ward A',
-    reportedBy: 'Doctor Khoo',
-    priority: 'Stat',
-    sampleDateTime: new Date('1/1/16'),
-    note: 'This is a dangerous drug, take more to get more dangerous. take less also dangerous.',
-    orderBy: 'Doctor Gilbert Chin',
-    created: new Date('1/1/16'),
-    createdBy: 'Doctor Gilbert',
-    version: 2,
-    updated: new Date('1/1/16'),
-    updatedBy: 'Doctor Chin',
-  },
-  ];
 }
 
 @Component({

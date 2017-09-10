@@ -16,6 +16,10 @@ export class MasterDataService {
         return this.authHttp.get(this.sURL + 'country')
                     .map(res => res.json());
     }
+    GetModality() {
+        return this.authHttp.get(this.sURL + 'Modality')
+                    .map(res => res.json());
+    }
     GetIdentificationType() {
         return this.authHttp.get(this.sURL + 'identificationtype')
                     .map(res => res.json());
@@ -26,6 +30,10 @@ export class MasterDataService {
     }
     GetInsuranceByID(id) {
         return this.authHttp.get(this.sURL + 'insurance/' + id)
+                    .map(res => res.json());
+    }
+    GetModalityByID(id) {
+        return this.authHttp.get(this.sURL + 'Modality/' + id)
                     .map(res => res.json());
     }
     GetVisit() {
@@ -200,6 +208,18 @@ export class MasterDataService {
         return this.authHttp.get(this.sURL + 'DiagnosisSearch/' + searchKey)
                     .map(res => res.json());
     }
+    GetRadiology() {
+        return this.authHttp.get(this.sURL + 'medicalRecord/Radiology')
+                    .map(res => res.json());
+    }
+    GetRadiologyByID(id) {
+        return this.authHttp.get(this.sURL + 'medicalRecord/Radiology/' + id)
+                    .map(res => res.json());
+    }
+    GetRadiologyByVisit(visitID) {
+        return this.authHttp.get(this.sURL + 'medicalRecord/RadiologyByVisit/' + visitID)
+                    .map(res => res.json());
+    }
     GetLabItem() {
         return this.authHttp.get(this.sURL + 'LabItem')
                     .map(res => res.json());
@@ -212,6 +232,10 @@ export class MasterDataService {
 //Add Data
     CreatePurposeOfVisit(PurposeOfVisit) {
         return this.authHttp.post(this.sURL + 'VisitPurpose', PurposeOfVisit)
+                    .map(res => res.json());
+    }
+    CreateModality(Modality) {
+        return this.authHttp.post(this.sURL + 'Modality', Modality)
                     .map(res => res.json());
     }
     CreateVisit(Visit) {
@@ -294,6 +318,10 @@ export class MasterDataService {
         return this.authHttp.post(this.sURL + 'Appointment/CreateAppointment', Appointment)
                     .map(res => res.json());
     }
+    CreateRadiologyRecord(RadiologyHdr) {
+        return this.authHttp.post(this.sURL + 'MedicalRecord/CreateRadiology', RadiologyHdr)
+                    .map(res => res.json());
+    }
 
 //Update Data
     UpdateMOHVisitTypeByID(MOHVisitType) {
@@ -306,6 +334,10 @@ export class MasterDataService {
     }
     UpdatePayorByID(Payor) {
         return this.authHttp.put(this.sURL + 'payor/' + Payor.payorID, Payor)
+                    .map(res => res.json());
+    }
+    UpdateModalityByID(Modality) {
+        return this.authHttp.put(this.sURL + 'Modality/' + Modality.modalityID, Modality)
                     .map(res => res.json());
     }
     UpdateDepartmentByID(Department) {
@@ -378,6 +410,10 @@ export class MasterDataService {
     }
     UpdateAppointmentByID(Appointment) {
         return this.authHttp.put(this.sURL + 'Appointment/Appointment/' + Appointment.appointmentID, Appointment)
+                    .map(res => res.json());
+    }
+    UpdateRaiologyRecordByID(Radiology) {
+        return this.authHttp.put(this.sURL + 'MedicalRecord/Radiology/' + Radiology.radiologyHdrID, Radiology)
                     .map(res => res.json());
     }
 }

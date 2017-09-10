@@ -7,15 +7,9 @@ import { MedicationList } from './MedicationList.interface';
 import { MdChipInputEvent, ENTER } from '@angular/material';
 
 
-export interface Person {
+export interface Medication {
   name: string;
 }
-
-export interface DemoColor {
-  name: string;
-  color: string;
-}
-
 
 @Component({
   selector: 'app-medication',
@@ -272,7 +266,7 @@ control.removeAt(i);
     // Enter, comma, semi-colon
     separatorKeysCodes = [ENTER, 188, 186];
     
-      people: Person[] = [];
+    medicationList: Medication[] = [];
 
     
       displayMessage(message: string): void {
@@ -285,7 +279,7 @@ control.removeAt(i);
     
         // Add our person
         if ((value || '').trim()) {
-          this.people.push({ name: value.trim() });
+          this.medicationList.push({ name: value.trim() });
         }
     
         // Reset the input value
@@ -294,11 +288,11 @@ control.removeAt(i);
         }
       }
     
-      remove(person: Person): void {
-        let index = this.people.indexOf(person);
+      remove(medication: Medication): void {
+        let index = this.medicationList.indexOf(medication);
     
         if (index >= 0) {
-          this.people.splice(index, 1);
+          this.medicationList.splice(index, 1);
           this.removeAddress(index);
         }
       }

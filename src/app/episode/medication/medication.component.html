@@ -7,12 +7,12 @@
 
   <md-form-field class="input-full-width">
       <md-chip-list mdPrefix #chipList1>
-          <md-chip *ngFor="let person of people" [selectable]="selectable"
-                   [removable]="removable" (remove)="remove(person)">
-            {{person.name}}
+          <md-chip *ngFor="let medication of medicationList" [selectable]="selectable"
+                   [removable]="removable" (remove)="remove(medication)">
+            {{medication.name}}
             <md-icon mdChipRemove *ngIf="removable">cancel</md-icon>
           </md-chip>
-        </md-chip-list>
+      </md-chip-list>
     <input mdInput placeholder="Search Medication ..." [mdAutocomplete]="autoMedication" [formControl]="medicationCtrl"
     [mdChipInputFor]="chipList1"
     [mdChipInputSeparatorKeyCodes]="separatorKeysCodes"

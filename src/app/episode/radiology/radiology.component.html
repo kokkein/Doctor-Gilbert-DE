@@ -1,9 +1,9 @@
 
 <section>
-  <form>
+
     <div class="toolbar">
       <div>
-        <button md-raised-button>Save</button>
+        <button md-raised-button (click)="mergeData()">Save</button>
         <button md-raised-button>New</button>
       </div>
     </div>
@@ -16,15 +16,15 @@
             
             <button md-mini-fab (click)="toggleSearch()"><i class="material-icons">search</i></button>
 
-            <md-select placeholder="Modality" name="modality" class="input-full-width">
-              <md-option *ngFor="let modality of modalities" [value]="modality.value">
-                  {{modality.viewValue}}
+            <md-select placeholder="Modality" [(ngModel)]="data.modalityID" name="modality" class="input-full-width">
+              <md-option *ngFor="let modality of modalities" [value]="modality.modalityID">
+                  {{modality.modalityName}}
               </md-option>
             </md-select>
           </div>
           <div>
-              <md-radio-group class="input-full-width">
-                  <md-radio-button *ngFor="let priority of priorities" [value]="priority">
+              <md-radio-group [(ngModel)]="data.priority" class="input-full-width">
+                  <md-radio-button *ngFor="let priority of priorities" [value]="priority" [checked]="priority==data.priority">
                       {{priority}}
                   </md-radio-button>
               </md-radio-group>
@@ -45,7 +45,6 @@
                 </md-form-field>
             </div>
             <div>
-              
                 <md-form-field class="input-full-width">
                   <input mdInput placeholder="Referred By" [mdAutocomplete]="referredBy" [formControl]="referredByCtrl">
                   
@@ -56,10 +55,8 @@
                   </md-option>
                   </md-autocomplete>
                 </md-form-field>
-              
             </div>
             <div>
-              
                 <md-form-field class="input-full-width">
                   <input mdInput placeholder="Reply To" [mdAutocomplete]="replyTo" [formControl]="replyToCtrl">
                   
@@ -70,7 +67,6 @@
                   </md-option>
                   </md-autocomplete>
                 </md-form-field>
-              
             </div>
         </div>
         <div class="container">
@@ -88,16 +84,9 @@
           
             </div>
             <div>
-                <md-select placeholder="Laterality" name="laterality" class="input-full-width">
+                <md-select placeholder="Laterality" [(ngModel)]="data.laterality" name="laterality" class="input-full-width">
                 <md-option *ngFor="let laterality of lateralities" [value]="laterality.value">
                     {{laterality.viewValue}}
-                </md-option>
-                </md-select>
-            </div>
-            <div>
-                <md-select placeholder="Chronic Condition" name="chronicCondition" multiple="true" class="input-full-width">
-                <md-option *ngFor="let chronicCondition of chronicConditions" [value]="chronicCondition.value">
-                    {{chronicCondition.viewValue}}
                 </md-option>
                 </md-select>
             </div>
@@ -128,96 +117,101 @@
         <div class="container">
             <div>
               <md-form-field class="input-full-width">
-                <input mdInput placeholder="Allergy"   name="Allergy">
+                <input mdInput placeholder="Allergy" [(ngModel)]="data.Allergy" name="Allergy">
               </md-form-field>
             </div>
             <div>
               <md-form-field class="input-full-width">
-                <input mdInput placeholder="Special Instruction"  name="special">
+                <input mdInput placeholder="Special Instruction" [(ngModel)]="data.special" name="special">
               </md-form-field>
             </div>
             <div>
-                <md-checkbox>Pregnant</md-checkbox>
-                <md-checkbox>Breast Feeding</md-checkbox>
+                <md-checkbox [(ngModel)]="data.Pregnant" name="Pregnant">Pregnant</md-checkbox>
+                <md-checkbox [(ngModel)]="data.BreastFeeding" name="BreastFeeding">Breast Feeding</md-checkbox>
             </div>
           </div>
         <div class="container">
               <md-form-field class="input-full-width">
-                <textarea mdInput placeholder="Medical Note"></textarea>
+                <textarea mdInput [(ngModel)]="data.Remark" name="Remark" placeholder="Medical Note"></textarea>
               </md-form-field>
         </div>
       </md-card-content>
     </md-card>
-  </form>
+  </section>
+
+  <md-expansion-panel  #myPanel>
+    <md-expansion-panel-header>
+      <mat-panel-description></mat-panel-description>
+      <mat-panel-title>
+        <strong>Medical History</strong>
+      </mat-panel-title>
+    </md-expansion-panel-header>
+      <md-list>
+        <md-list-item *ngFor="let historyList of historyRecord" >
+          <h4 md-line><i class="material-icons">timer</i> {{historyList.radiologyOrderNo}} <strong>{{historyList.radiologyOrderNo}}</strong></h4>
+            <button md-icon-button (click)="open()">
+              <i class="material-icons">mode_edit</i>
+            </button>
+            <button md-icon-button (click)="open()">
+              <i class="material-icons">delete</i>
+            </button>
+          <p md-line>
+            <span> <small>Ordered By: </small><b>{{historyList.orderedByResource.userFullName}}</b> </span>
+            <span> <small>Reply To: </small><b>{{historyList.replyToResource.userFullName}}</b> </span>
+            <span> <small>Reported By: </small><b>{{historyList.reportedByResource.userFullName}}</b> </span>
+          </p>
+          <p md-line>
+            <span> <small>Priority: </small><b>{{historyList.priority}}</b> </span>
+          </p>
+          <p md-line>
+            <span> <b>{{historyList.remark}}</b> </span>
+          </p>
+          <p md-line>
+              <span>
+                <div class="tablerow">
+                    <div><b>Lab item</b></div>
+                    <div><b>Description</b></div>
+                    <div><b>Price</b></div>
+                    <div><b>Lab Group</b></div>
+                </div>
+                <div class="tablerow">
+                    <div>Urine Test</div>
+                    <div>Test urine color</div>
+                    <div>RM 100.00</div>
+                    <div>Urine Test Profile</div>
+                </div>
+                <div class="tablerow">
+                    <div>Urine Test Count</div>
+                    <div>Test urine Count Protein</div>
+                    <div>RM 30.00</div>
+                    <div>Urine Test Profile</div>
+                </div>
+              </span>
+          </p>
+          <p md-line class="pRight"> 
+            <small>
+              <span>Current Version: <b><i>{{historyList.version}}</i></b></span>
+            </small>
+          </p>
+          <p md-line class="pRight">
+            <small>      
+              <span>Updated: <b><i>{{historyList.created | date:'medium'}}</i></b> </span>
+              <span>, By: <b><i>{{historyList.createdByResource.userFullName}}</i></b></span>
+            </small>
+          </p>
+          <p md-line class="pRight">
+            <small>
+              <span>Created: <b><i>{{historyList.created | date:'medium'}}</i></b> </span>
+              <span>, By: <b><i>{{historyList.createdByResource.userFullName}}</i></b></span>
+            </small>
+          </p>
+        </md-list-item>
+      </md-list>
+  </md-expansion-panel>
 
 
-  <md-list>
-    <h3 md-subheader>Medical History</h3>
-    <md-list-item *ngFor="let laboratory of laboratoryRecord" >
-      <h4 md-line><i class="material-icons">timer</i> {{laboratory.id}} <strong>{{laboratory.laboratory}}</strong></h4>
-        <button md-icon-button (click)="open()">
-          <i class="material-icons">mode_edit</i>
-        </button>
-        <button md-icon-button (click)="open()">
-          <i class="material-icons">delete</i>
-        </button>
-      <p md-line>
-        <span> <small>Ordered By: </small><b>{{laboratory.orderBy}}</b> </span>
-        <span> <small>Referred By: </small><b>{{laboratory.refferedBy}}</b> </span>
-        <span> <small>Reply To: </small><b>{{laboratory.replyTo}}</b> </span>
-        <span> <small>Reported By: </small><b>{{laboratory.reportedBy}}</b> </span>
-      </p>
-      <p md-line>
-        <span> <small>Priority: </small><b>{{laboratory.orderBy}}</b> </span>
-        <span> <small>Requested Sample Date-Time:</small><b>{{laboratory.refferedBy}}</b> </span>
-      </p>
-      <p md-line>
-        <span> <b>{{laboratory.note}}</b> </span>
-      </p>
-      <p md-line>
-          <span>
-            <div class="tablerow">
-                <div><b>Lab item</b></div>
-                <div><b>Description</b></div>
-                <div><b>Price</b></div>
-                <div><b>Lab Group</b></div>
-            </div>
-            <div class="tablerow">
-                <div>Urine Test</div>
-                <div>Test urine color</div>
-                <div>RM 100.00</div>
-                <div>Urine Test Profile</div>
-            </div>
-            <div class="tablerow">
-                <div>Urine Test Count</div>
-                <div>Test urine Count Protein</div>
-                <div>RM 30.00</div>
-                <div>Urine Test Profile</div>
-            </div>
-          </span>
-      </p>
-      <p md-line class="pRight"> 
-        <small>
-          <span>Current Version: <b><i>{{laboratory.version}}</i></b></span>
-        </small>
-      </p>
-      <p md-line class="pRight">
-        <small>      
-          <span>Updated: <b><i>{{laboratory.updated | date:'medium'}}</i></b> </span>
-          <span>, By: <b><i>{{laboratory.updatedBy}}</i></b></span>
-        </small>
-      </p>
-      <p md-line class="pRight">
-        <small>
-          <span>Created: <b><i>{{laboratory.created | date:'medium'}}</i></b> </span>
-          <span>, By: <b><i>{{laboratory.createdBy}}</i></b></span>
-        </small>
-      </p>
-
-    </md-list-item>
-  </md-list>
 
 
-</section>
+
 
 
