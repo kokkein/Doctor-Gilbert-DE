@@ -68,13 +68,13 @@ export class RadiologyComponent implements OnInit {
       if (this.data.radiologyHdrID){
         this.MasterDataService.UpdateRadiologyRecordByID(this.data)
           .subscribe(x => {
-              this.GDService.openSnackBar(x.RadiologyOrderNo + '" Updated Sucessfully!','Close');
+              this.GDService.openSnackBar(x.radiologyOrderNo + '" Updated Sucessfully!','Close');
         });
       }
       else
         this.MasterDataService.CreateRadiologyRecord(this.data)
           .subscribe(x => {
-            this.GDService.openSnackBar(x.RadiologyOrderNo + '" Created Sucessfully!','Close');
+            this.GDService.openSnackBar(x.radiologyOrderNo + '" Created Sucessfully!','Close');
         });
     }
 

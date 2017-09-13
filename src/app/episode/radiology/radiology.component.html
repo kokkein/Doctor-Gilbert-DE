@@ -147,7 +147,7 @@
     </md-expansion-panel-header>
       <md-list>
         <md-list-item *ngFor="let historyList of historyRecord" >
-          <h4 md-line><i class="material-icons">timer</i> {{historyList.created | date:'medium'}} - {{historyList.radiologyOrderNo}} <strong>{{historyList.radiologyOrderNo}}</strong></h4>
+          <h4 md-line><i class="material-icons">timer</i> {{historyList.created | date:'medium'}} - <strong>{{historyList.radiologyOrderNo}}</strong></h4>
             <button md-icon-button (click)="open()">
               <i class="material-icons">mode_edit</i>
             </button>
