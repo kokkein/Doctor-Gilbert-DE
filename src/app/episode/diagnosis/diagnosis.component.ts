@@ -16,7 +16,8 @@ import ArrayStore from 'devextreme/data/array_store';
 })
 export class DiagnosisComponent implements OnInit {
     @Input() patientID: number;
-    @Input() visitID: number
+    @Input() visitID: number;
+    @Input() invoiceHdrID: number;
 
     diagnosisCtrl: FormControl;
     filteredDiagnosis: Observable<any[]>;

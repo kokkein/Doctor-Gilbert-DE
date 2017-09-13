@@ -1,3 +1,4 @@
+import { GDService } from './services/GDService.service';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { AuthService } from './services/auth.service';
 import { SpecialityComponent } from './masterData/speciality/speciality.component';
@@ -165,7 +166,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     DxCheckBoxModule, DxSelectBoxModule, DxTextBoxModule, DxTemplateModule, DxBoxModule, DxTextAreaModule,
     DxDataGridModule, CommonModule
   ],
-  providers: [NodeService, CarService, EventService, MasterDataService, SpeechRecognitionService,Service, Company, AuthService,
+  providers: [NodeService, CarService, EventService, MasterDataService, SpeechRecognitionService,Service, Company, AuthService, GDService,
     AuthService,
     {
       provide: AuthHttp,

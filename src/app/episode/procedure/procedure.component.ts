@@ -7,7 +7,8 @@ import { Component, OnInit,Input } from '@angular/core';
 })
 export class ProcedureComponent implements OnInit {
   @Input() patientID: number;
-  @Input() visitID: number
+  @Input() visitID: number;
+  @Input() invoiceHdrID: number;
   
   constructor() { }
 

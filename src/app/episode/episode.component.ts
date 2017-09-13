@@ -1,3 +1,4 @@
+import { GDService } from './../services/GDService.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MasterDataService } from './../services/masterdata.service';
 import { Component, OnInit } from '@angular/core';
@@ -17,7 +18,7 @@ export class EpisodeComponent implements OnInit {
   patientVisit;
 
 
-  constructor(public snackBar: MdSnackBar, private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {
+  constructor(private GDService: GDService, private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {
     route.params.subscribe(p=>{
       if (p['id']!=null)
         this.data.visitID = +p['id'];
@@ -43,16 +44,16 @@ export class EpisodeComponent implements OnInit {
         this.data.payorResource = {};
       if (i.patientResource == null)
         this.data.patientResource = {};
-      this.patientVisit = [{patientID: this.data.patientID ,visitID: this.data.visitID}];
+      //this.patientVisit = [{patientID: this.data.patientID ,visitID: this.data.visitID}];
     }, err => {
       if (err.status == 404)
-        this.openSnackBar(err,'Close');
+        this.GDService.openSnackBar(err,'Close');
     } );
 
 }
 
   openSnackBar(message: string, action: string) {
-    this.snackBar.open(message, action, {
+    this.GDService.snackBar.open(message, action, {
       duration: 2000,
     });
   }

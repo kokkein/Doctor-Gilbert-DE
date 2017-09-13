@@ -1,9 +1,8 @@
 
 <section>
-
     <div class="toolbar">
       <div>
-        <button md-raised-button (click)="mergeData()">Save</button>
+        <button md-raised-button (click)="onSave()">Save</button>
         <button md-raised-button>New</button>
       </div>
     </div>
@@ -109,7 +108,7 @@
             <dxi-column dataField="labCode"></dxi-column>
             <dxi-column dataField="analysis"></dxi-column>
             <dxi-column dataField="externalCode"></dxi-column>
-            <dxi-column *ngIf="toShow" dataField="Price" dataType="number"></dxi-column>
+            <dxi-column *ngIf="toShow" dataField="BillPrice" dataType="number"></dxi-column>
             </dx-data-grid>
       
           </div>     

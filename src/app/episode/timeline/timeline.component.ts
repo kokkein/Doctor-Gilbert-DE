@@ -10,7 +10,9 @@ import { ChartSelectEvent } from 'ng2-google-charts';
 })
 export class TimelineComponent implements OnInit {
   @Input() patientID: number;
-  @Input() visitID: number
+  @Input() visitID: number;
+  @Input() invoiceHdrID: number;
+  
   constructor() { }
 
   ngOnInit() {

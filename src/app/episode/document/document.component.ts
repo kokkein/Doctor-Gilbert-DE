@@ -9,7 +9,8 @@ import { Component, OnInit, Input } from '@angular/core';
 export class DocumentComponent implements OnInit {
 
     @Input() patientID: number;
-    @Input() visitID: number
+    @Input() visitID: number;
+    @Input() invoiceHdrID: number;
 
   text: string;
   showRecording: boolean;

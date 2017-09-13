@@ -1,3 +1,4 @@
+import { GDService } from './../services/GDService.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MasterDataService } from './../services/masterdata.service';
 import { Component, OnInit } from '@angular/core';
@@ -36,7 +37,7 @@ export class VisitComponent implements OnInit {
   filteredPatients: any;
   visitdata: any = {};
 
-  constructor(public snackBar: MdSnackBar, private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {
+  constructor(private GDService: GDService, private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {
 
     //assign value for edit mode
     this.patientCtrl = new FormControl({patientID: 0, name: ''});
@@ -166,7 +167,7 @@ export class VisitComponent implements OnInit {
       if (this.visitdata.visitID){
         this.MasterDataService.UpdateVisitByID(this.visitdata)
           .subscribe(x => {
-            this.openSnackBar('"' + x.visitID + '" Updated Sucessfully!','Close');
+            this.GDService.openSnackBar('"' + x.visitNo + '" Updated Sucessfully!','Close');
         });
         if (goToEpisode) {
           this.router.navigate(['/episode/', this.visitdata.visitID]);
@@ -175,7 +176,7 @@ export class VisitComponent implements OnInit {
       else
         this.MasterDataService.CreateVisit(this.visitdata)
           .subscribe(x => {
-            this.openSnackBar('"' + x.visitID + '" Created Sucessfully!','Close');
+            this.GDService.openSnackBar('"' + x.visitNo + '" Created Sucessfully!','Close');
             if (goToEpisode) {
               this.router.navigate(['/episode/', x.visitID]);
             }
@@ -196,14 +197,9 @@ export class VisitComponent implements OnInit {
 
       }, err => {
         if (err.status == 404)
-          this.openSnackBar('Record Not Found!','Close');
+          this.GDService.openSnackBar('Record Not Found!','Close');
       } );
   }
 
-    openSnackBar(message: string, action: string) {
-      this.snackBar.open(message, action, {
-        duration: 2000,
-      });
-    }
 
 }

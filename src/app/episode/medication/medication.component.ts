@@ -18,7 +18,8 @@ export interface Medication {
 })
 export class MedicationComponent implements OnInit {
   @Input() patientID: number;
-  @Input() visitID: number
+  @Input() visitID: number;
+  @Input() invoiceHdrID: number;
 
     medicationCtrl: FormControl;
     filteredMedications: any;

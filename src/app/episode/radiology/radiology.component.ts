@@ -1,3 +1,4 @@
+import { GDService } from './../../services/GDService.service';
 import { MasterDataService } from 'app/services/masterdata.service';
 import { Component, OnInit, Inject, ViewChild, Input } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormArray, FormBuilder  } from '@angular/forms';
@@ -6,6 +7,7 @@ import { AnimationTransitionEvent, ViewEncapsulation, ElementRef } from '@angula
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
 import { Router } from '@angular/router';
 import { DxDataGridComponent } from "devextreme-angular";
+import { MdSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-radiology',
@@ -15,6 +17,7 @@ import { DxDataGridComponent } from "devextreme-angular";
 export class RadiologyComponent implements OnInit {
   @Input() patientID: number;
   @Input() visitID: number
+  @Input() invoiceHdrID: number;
 
   returnedResult: any = {};
   data: any = {RadiologyLnResource:{}};
@@ -43,24 +46,37 @@ export class RadiologyComponent implements OnInit {
     return val ? this.doctors.filter((s) => new RegExp(val, 'gi').test(s.userFullName))
                : this.doctors;
   }
-  constructor(private MasterDataService: MasterDataService, private _element: ElementRef, public dialog: MdDialog, private router: Router) {
+  constructor(private GDService: GDService, private MasterDataService: MasterDataService, private _element: ElementRef, public dialog: MdDialog, private router: Router) {
     this.orderedByCtrl = new FormControl({dgUserID: 0, userFullName: ''});
     this.referredByCtrl = new FormControl({dgUserID: 0, userFullName: ''});
     this.replyToCtrl = new FormControl({dgUserID: 0, userFullName: ''});
     this.reportedByCtrl = new FormControl({dgUserID: 0, userFullName: ''});
   }
   
-mergeData(){
-  this.data.RadiologyLnResource = this.returnedResult;
+    onSave() {
+      this.data.RadiologyLnResource = this.returnedResult;
+      
+      this.data.orderedByID = this.orderedByCtrl.value.dgUserID;
+      this.data.referredByID = this.referredByCtrl.value.dgUserID;
+      this.data.replyToID = this.replyToCtrl.value.dgUserID;
+      this.data.reportedByID = this.reportedByCtrl.value.dgUserID;
+      this.data.patientID = this.patientID;
+      this.data.visitID = this.visitID;
+      this.data.invoiceHdrID = this.invoiceHdrID;
+      this.data.CreatedByID = 1;
 
-  this.data.orderedByID = this.orderedByCtrl.value.dgUserID;
-  this.data.referredByID = this.referredByCtrl.value.dgUserID;
-  this.data.replyToID = this.replyToCtrl.value.dgUserID;
-  this.data.reportedByID = this.reportedByCtrl.value.dgUserID;
-  this.data.patientID = this.patientID;
-  this.data.visitID = this.visitID;
-  this.data.CreatedByID = 1;
-}
+      if (this.data.radiologyHdrID){
+        this.MasterDataService.UpdateRadiologyRecordByID(this.data)
+          .subscribe(x => {
+              this.GDService.openSnackBar(x.RadiologyOrderNo + '" Updated Sucessfully!','Close');
+        });
+      }
+      else
+        this.MasterDataService.CreateRadiologyRecord(this.data)
+          .subscribe(x => {
+            this.GDService.openSnackBar(x.RadiologyOrderNo + '" Created Sucessfully!','Close');
+        });
+    }
 
   ngOnInit() {
 
@@ -133,5 +149,6 @@ export class DialogResultRadiologySearch {
   getSelectedItem() {
     this.data.returnedResult = this.dataGrid.instance.getSelectedRowKeys();
   }
+
 
 }
