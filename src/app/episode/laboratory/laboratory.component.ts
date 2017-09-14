@@ -159,7 +159,7 @@ export class DialogResultLaboratorySearch {
 
   constructor(public dialogRef: MdDialogRef<DialogResultLaboratorySearch>, private MasterDataService: MasterDataService, @Inject(MD_DIALOG_DATA) public data: any) {
 
-    this.MasterDataService.GetLabItem()
+    this.MasterDataService.GetLaboratoryItem()
     .subscribe(x => {
       this.dataSource  = x;
     });

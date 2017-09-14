@@ -105,7 +105,7 @@
                 [allowDeleting]="true">
             </dxo-editing>
             <dxi-column dataField="catalog"></dxi-column>
-            <dxi-column dataField="labCode"></dxi-column>
+            <dxi-column dataField="radiologyCode"></dxi-column>
             <dxi-column dataField="analysis"></dxi-column>
             <dxi-column dataField="externalCode"></dxi-column>
             <dxi-column *ngIf="toShow" dataField="BillPrice" dataType="number"></dxi-column>
@@ -176,9 +176,9 @@
               </div>
               <div class="tablerow" *ngFor="let orderList of historyList.radiologyLnResource; let i=index">
                 <div>{{i+1}}</div>
-                <div>{{orderList.labItemResource.catalog}}</div>
-                <div>{{orderList.labItemResource.labCode}}</div>
-                <div>{{orderList.labItemResource.analysis}}</div>
+                <div>{{orderList.LaboratoryItemResource.catalog}}</div>
+                <div>{{orderList.LaboratoryItemResource.labCode}}</div>
+                <div>{{orderList.LaboratoryItemResource.analysis}}</div>
                 <div>{{orderList.billPrice}}</div>
               </div>
             </span>

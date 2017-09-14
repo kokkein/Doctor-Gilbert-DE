@@ -3,7 +3,7 @@
     [  
         {  
             "data":{  
-                "labItems":"Blood Test",
+                "LaboratoryItems":"Blood Test",
                 "labCode":"LAB0001",
                 "description":"Blood Test",
                 "price":""
@@ -11,7 +11,7 @@
             "children":[
                 {  
                     "data":{  
-                        "labItems":"Blood Count",
+                        "LaboratoryItems":"Blood Count",
                         "labCode":"LAB0002",
                         "description":"Blood Count",
                         "price":"RM 45.00"
@@ -19,7 +19,7 @@
                     "children":[  
                         {  
                             "data":{  
-                                "labItems":"Urine Count",
+                                "LaboratoryItems":"Urine Count",
                                 "labCode":"LAB0003",
                                 "description":"Urine Count",
                                 "price":"RM 28.00"
@@ -27,7 +27,7 @@
                         },
                         {  
                             "data":{  
-                                "labItems":"Red Blood Cell",
+                                "LaboratoryItems":"Red Blood Cell",
                                 "labCode":"LAB0004",
                                 "description":"Red Blood Cell Count",
                                 "price":"RM 25.00"
@@ -37,7 +37,7 @@
                 },
                 {  
                     "data":{  
-                        "labItems":"White Blood Cell",
+                        "LaboratoryItems":"White Blood Cell",
                         "labCode":"LAB0005",
                         "description":"White Blood Cell Count",
                         "price":"RM 56.00"
@@ -45,7 +45,7 @@
                     "children":[  
                         {  
                             "data":{  
-                                "labItems":"White Blood Count",
+                                "LaboratoryItems":"White Blood Count",
                                 "labCode":"LAB0006",
                                 "description":"White Blood Count",
                                 "price":"RM 58.00"
@@ -57,7 +57,7 @@
         },
         {  
             "data":{  
-                "labItems":"Thyroid",
+                "LaboratoryItems":"Thyroid",
                 "labCode":"LAB0007",
                 "description":"Thyroid Checking",
                 "price":""
@@ -65,7 +65,7 @@
             "children":[  
                 {  
                     "data":{  
-                        "labItems":"FEME",
+                        "LaboratoryItems":"FEME",
                         "labCode":"LAB0008",
                         "description":"FEME Test",
                         "price":"RM 21.00"
@@ -73,7 +73,7 @@
                 },
                 {  
                     "data":{  
-                        "labItems":"FEME Color",
+                        "LaboratoryItems":"FEME Color",
                         "labCode":"LAB0009",
                         "description":"FEME Color",
                         "price":"RM 45.00"
@@ -81,7 +81,7 @@
                 },
                 {  
                     "data":{  
-                        "labItems":"FEME Density",
+                        "LaboratoryItems":"FEME Density",
                         "labCode":"LAB0010",
                         "description":"FEME Density",
                         "price":"RM 321.00"
