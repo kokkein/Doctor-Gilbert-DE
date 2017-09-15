@@ -138,7 +138,7 @@ export class DialogResultRadiologySearch {
 
   constructor(public dialogRef: MdDialogRef<DialogResultRadiologySearch>, private MasterDataService: MasterDataService, @Inject(MD_DIALOG_DATA) public data: any) {
 
-    this.MasterDataService.GetLaboratoryItem()
+    this.MasterDataService.GetChargeItemRadiology()
     .subscribe(x => {
       this.dataSource  = x;
     });

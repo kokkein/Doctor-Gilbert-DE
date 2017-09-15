@@ -1,7 +1,7 @@
+import { GDService } from './../../services/GDService.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Message } from 'primeng/primeng';
 import { Observable } from 'rxjs/Observable';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MasterDataService } from "app/services/masterdata.service";
@@ -14,10 +14,9 @@ import { MasterDataService } from "app/services/masterdata.service";
 export class SpecialityComponent implements OnInit {
   data: any = {};
   dataList: any = [];
-  msgs: Message[] = [];
   specialityID;
 
-  constructor(private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {  
+  constructor(private GDService: GDService, private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {  
     route.params.subscribe(p=>{
       if (p['id']!=null)
         this.data.specialityID = +p['id'];
@@ -27,16 +26,16 @@ export class SpecialityComponent implements OnInit {
         }
     });
   }
-
+  onRowSelect(event) {
+    this.router.navigate(['/speciality/', event.selectedRowKeys[0].specialityID]);
+  }
   retrieveData(){
       this.MasterDataService.GetSpecialityByID(this.data.specialityID)
       .subscribe(m => {
         this.data = m;
       }, err => {
         if (err.status == 404)
-          this.msgs = [];
-          this.msgs.push({severity:'error', summary:'Info Message', detail:'Record Not Found!'});
-          this.data = {};
+          this.GDService.openSnackBar('Record Not Found!','Close');
       } );
   }
 
@@ -53,15 +52,13 @@ export class SpecialityComponent implements OnInit {
     if (this.data.specialityID){
       this.MasterDataService.UpdateSpecialityByID(this.data)
         .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.specialityName + '" Updated Sucessfully!'});
+            this.GDService.openSnackBar('"' + x.specialityName + '" Updated Sucessfully!','Close');
       });
     }
     else
       this.MasterDataService.CreateSpeciality(this.data)
         .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.specialityName + '" Created Sucessfully!'});
+            this.GDService.openSnackBar('"' + x.specialityName + '" Created Sucessfully!','Close');
       });
   }
 

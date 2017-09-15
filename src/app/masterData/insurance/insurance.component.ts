@@ -1,9 +1,9 @@
+import { GDService } from './../../services/GDService.service';
 import { MasterDataService } from './../../services/masterdata.service';
 import { Component, OnInit } from '@angular/core';
 import 'rxjs/add/operator/startWith';
 import { Observable } from 'rxjs/Observable';
 import { FormControl } from '@angular/forms';
-import { Message } from 'primeng/primeng';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -18,11 +18,10 @@ export class InsuranceComponent implements OnInit {
   filteredPayors: any;
   data: any = {};
   dataList: any = [];
-  msgs: Message[] = [];
   insuranceID;
   test;
 
-  constructor(private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) { 
+  constructor(private GDService: GDService, private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) { 
     this.payorCtrl = new FormControl({payorID: 0, payorName: ''});
 
     route.params.subscribe(p=>{
@@ -44,7 +43,9 @@ export class InsuranceComponent implements OnInit {
     return val ? this.payors.filter((s) => new RegExp(val, 'gi').test(s.payorName))
                : this.payors;
   }
-
+  onRowSelect(event) {
+    this.router.navigate(['/insurance/', event.selectedRowKeys[0].insuranceID]);
+  }
   retrieveData(){
       this.MasterDataService.GetInsuranceByID(this.data.insuranceID)
       .subscribe(m => {
@@ -52,9 +53,7 @@ export class InsuranceComponent implements OnInit {
         this.payorCtrl = new FormControl({payorID: m.payorResource.payorID, payorName: m.payorResource.payorName});
       }, err => {
         if (err.status == 404)
-          this.msgs = [];
-          this.msgs.push({severity:'error', summary:'Info Message', detail:'Record Not Found!'});
-          this.data = {};
+          this.GDService.openSnackBar('Record Not Found!','Close');
       } );
   }
 
@@ -64,15 +63,13 @@ export class InsuranceComponent implements OnInit {
     if (this.data.insuranceID){
       this.MasterDataService.UpdateInsuranceByID(this.data)
         .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.insuranceName + '" Updated Sucessfully!'});
+            this.GDService.openSnackBar('"' + x.insuranceName + '" Updated Sucessfully!','Close');
       });
     }
     else
       this.MasterDataService.CreateInsurance(this.data)
         .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.insuranceName + '" Created Sucessfully!'});
+            this.GDService.openSnackBar('"' + x.insuranceName + '" Created Sucessfully!','Close');
       });
   }
   
@@ -85,6 +82,10 @@ export class InsuranceComponent implements OnInit {
         .map(val => this.displayPayorFn(val))
         .map(name => this.filterPayors(name));
     });
+    this.MasterDataService.GetInsurance()
+    .subscribe(x => {
+      this.dataList =x;
+     });
   }
 
 }

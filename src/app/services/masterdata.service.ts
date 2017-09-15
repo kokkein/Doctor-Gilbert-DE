@@ -228,7 +228,22 @@ export class MasterDataService {
         return this.http.get(this.sURL + 'LaboratoryItem/' + id)
                     .map(res => res.json());
     }
-
+    GetChargeItemRadiology() {
+        return this.http.get(this.sURL + 'ChargeItemRadiology')
+                    .map(res => res.json());
+    }
+    GetChargeItemLaboratory() {
+        return this.http.get(this.sURL + 'ChargeItemLaboratory')
+                    .map(res => res.json());
+    }
+    GetChargeItemDrug() {
+        return this.http.get(this.sURL + 'ChargeItemDrug')
+                    .map(res => res.json());
+    }
+    GetChargeItem() {
+        return this.http.get(this.sURL + 'ChargeItem')
+                    .map(res => res.json());
+    }
 //Add Data
     CreatePurposeOfVisit(PurposeOfVisit) {
         return this.http.post(this.sURL + 'VisitPurpose', PurposeOfVisit)

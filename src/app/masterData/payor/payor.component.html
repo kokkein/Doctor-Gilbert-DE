@@ -7,66 +7,65 @@
 </div>
 
 <section>
-  <p-growl [(value)]="msgs" life=3000></p-growl>
     <md-card>
       <md-card-header>
         <md-card-title>Payor</md-card-title>
-        <md-card-subtitle>New Payor</md-card-subtitle>
+        <md-card-subtitle>{{data.payorID > 0 ? 'Edit Mode' : 'New Mode'}}</md-card-subtitle>
       </md-card-header>
       <md-card-content>
-        <div class="ui-g">
-            <div class="ui-g-8">
+          <div class="container">
+            <div>
                 <md-form-field class="input-full-width">
                   <input mdInput placeholder="Payor Name" [(ngModel)]="data.payorName" name="payorName">
                 </md-form-field>
             </div>
-            <div class="ui-g-4">
+            <div>
               <md-checkbox [(ngModel)]="data.Active" name="Active">Active</md-checkbox>
             </div>
         </div>
-        <div class="ui-g">
-            <div class="ui-g-3">
+        <div class="container">
+            <div>
                 <md-form-field class="input-full-width">
                   <input mdInput placeholder="Phone" [(ngModel)]="data.phone" name="phone">
                 </md-form-field>
             </div>
-            <div class="ui-g-3">
+            <div>
                 <md-form-field class="input-full-width">
                   <input mdInput placeholder="Fax" [(ngModel)]="data.fax" name="fax">
                 </md-form-field>
             </div>
-            <div class="ui-g-6">
+            <div>
                 <md-form-field class="input-full-width">
                   <input mdInput type="email" placeholder="Email" [(ngModel)]="data.email" name="email">
                 </md-form-field>
             </div>
         </div>
-        <div class="ui-g">
-            <div class="ui-g-8">
+        <div class="container">
+            <div>
                 <md-form-field class="input-full-width">
-                  <textarea mdInput placeholder="Address" [(ngModel)]="data.address" name="address"></textarea>
+                  <textarea mdInput placeholder="Address" rows="1" [(ngModel)]="data.address" name="address"></textarea>
                 </md-form-field>
             </div>
-            <div class="ui-g-4">
+            <div>
                 <md-form-field class="input-full-width">
                   <input mdInput placeholder="City" [(ngModel)]="data.city" name="city">
                 </md-form-field>
             </div>
         </div>
-        <div class="ui-g">
-            <div class="ui-g-4">
+        <div class="container">
+            <div>
                 <md-form-field class="input-full-width">
                   <input mdInput type="number" placeholder="Postal Code" [(ngModel)]="data.zipcode" name="zipcode">
                 </md-form-field>
             </div>
-            <div class="ui-g-4">
+            <div>
                 <md-select placeholder="State" name="state" [(ngModel)]="data.state" name="state">
                   <md-option *ngFor="let state of states" [value]="state.stateID" >
                     {{state.stateName}}
                   </md-option>
                 </md-select>
             </div>
-            <div class="ui-g-4">
+            <div>
                 <md-select placeholder="Country" [(ngModel)]="data.countryID" name="countryID" >
                   <md-option *ngFor="let country of countries" [value]="country.countryID">
                     {{country.countryName}}
@@ -75,5 +74,43 @@
             </div>
         </div>
       </md-card-content>
+    </md-card>
+    <br>
+
+    <md-card>
+        <md-card-header>
+        <md-card-title>Master Data List</md-card-title>
+        <md-card-subtitle></md-card-subtitle>
+        </md-card-header>
+        <md-card-content>
+            <dx-data-grid style="display:block;" #grid
+            id="gridContainer" 
+            (onSelectionChanged)="onRowSelect($event)"
+            [dataSource]="dataList"
+            [allowColumnResizing]="true"
+            [columnResizingMode]="columnResizingMode"
+            [columnAutoWidth]="true"
+            [allowColumnReordering]="true"
+            [hoverStateEnabled]="true">
+            <dxo-filter-row [visible]="true"></dxo-filter-row>
+            <dxo-paging [pageSize]="30"></dxo-paging>
+            <dxo-pager 
+                [showPageSizeSelector]="true"
+                [allowedPageSizes]="[5,10,15,30,50,100]"
+                [showInfo]="true">
+            </dxo-pager>
+            <dxo-selection mode="single"></dxo-selection>  
+            <dxi-column dataField="payorID" [width]="150"></dxi-column>
+            <dxi-column dataField="payorName"></dxi-column>
+            <dxi-column dataField="phone"></dxi-column>
+            <dxi-column dataField="fax"></dxi-column>
+            <dxi-column dataField="email"></dxi-column>
+            <dxi-column dataField="address"></dxi-column>
+            <dxi-column dataField="city"></dxi-column>
+            <dxi-column dataField="state"></dxi-column>
+            <dxi-column dataField="zipcode"></dxi-column>
+            </dx-data-grid>
+
+        </md-card-content>
     </md-card>
 </section>

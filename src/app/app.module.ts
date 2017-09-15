@@ -76,6 +76,7 @@ import { PriceStructureComponent } from './masterData/price-structure/price-stru
 import { InventoryPriceStructureComponent } from './masterData/inventory-price-structure/inventory-price-structure.component';
 import { Auth0UserProfileComponent } from './auth0-user-profile/auth0-user-profile.component';
 import { BillingComponent } from './billing/billing.component';
+import { ChargeItemComponent } from './charge-item/charge-item.component';
 
 const appRoutes: Routes = [
 { path: '', component: LandingComponent},
@@ -87,8 +88,8 @@ const appRoutes: Routes = [
 { path: 'visit', component: VisitComponent},
 { path: 'visit/:id', component: VisitComponent},
 { path: 'vital', component: VitalComponent},
-{ path: 'inventory-item', component: InventoryItemComponent},
-{ path: 'inventory-item/:id', component: InventoryItemComponent},
+{ path: 'charge-item', component: ChargeItemComponent},
+{ path: 'charge-item/:id', component: ChargeItemComponent},
 { path: 'user', component: UserComponent},
 { path: 'user/:id', component: UserComponent},
 { path: 'episode', component: EpisodeComponent},
@@ -153,7 +154,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     MedicationComponent,
     TimelineComponent, 
     DiagnosisComponent, DialogResultRadiologySearch, DialogResultLaboratorySearch,
-    VitalSignsComponent, DialogResultExampleDialog, AppointmentComponent, DepartmentComponent, InsuranceComponent, PayorComponent, MOHVisitTypeComponent, PurposeOfVisitComponent, MasterDataComponent, InventoryBrandComponent, InventoryGenericComponent, InventoryAtcComponent, InventoryCategoryComponent, InventorySubcategoryComponent, InventoryMedicationclassComponent, InventoryPregnancycategoryComponent, SpecialityComponent, DiagnosisMasterComponent, LandingComponent, ProcedureComponent, PriceStructureComponent, InventoryPriceStructureComponent, Auth0UserProfileComponent, BillingComponent
+    VitalSignsComponent, DialogResultExampleDialog, AppointmentComponent, DepartmentComponent, InsuranceComponent, PayorComponent, MOHVisitTypeComponent, PurposeOfVisitComponent, MasterDataComponent, InventoryBrandComponent, InventoryGenericComponent, InventoryAtcComponent, InventoryCategoryComponent, InventorySubcategoryComponent, InventoryMedicationclassComponent, InventoryPregnancycategoryComponent, SpecialityComponent, DiagnosisMasterComponent, LandingComponent, ProcedureComponent, PriceStructureComponent, InventoryPriceStructureComponent, Auth0UserProfileComponent, BillingComponent, ChargeItemComponent
   ],
   imports: [
     BrowserModule,

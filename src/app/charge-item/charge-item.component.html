@@ -1,0 +1,211 @@
+<div class="toolbar">
+  <div>
+      <button md-raised-button (click)="onSave()">Save</button>
+      <button md-raised-button>New</button>
+      <button md-raised-button>Save + New</button>
+  </div>
+</div>
+
+<section>
+  <md-card>
+    <md-card-header>
+      <md-card-title>Charge Item</md-card-title>
+      <md-card-subtitle>{{data.chargeItemID > 0 ? 'Edit Mode' : 'New Mode'}}</md-card-subtitle>
+    </md-card-header>
+    <md-card-content>
+        <div class="container">
+          <div> 
+            <md-form-field class="input-full-width">
+              <input mdInput [(ngModel)]="data.chargeItemCode" name="chargeItemCode" placeholder="Code" >
+            </md-form-field>
+          </div>
+          <div>
+            <md-form-field class="input-full-width">
+              <input mdInput [(ngModel)]="data.chargeItemDescription" name="chargeItemDescription" placeholder="Description" >
+            </md-form-field>
+          </div>
+          <div>
+            <md-checkbox [(ngModel)]="data.active" name="active">Active</md-checkbox>
+            <md-checkbox [(ngModel)]="data.Chargeable" name="Chargeable">Chargeable</md-checkbox>
+          </div>
+        </div>
+        <div class="container">
+          <div>
+            <md-form-field class="input-full-width">
+              <input mdInput placeholder="Category" [mdAutocomplete]="reactiveinventoryCategory" [formControl]="inventoryCategoryCtrl" >
+            </md-form-field>
+
+            <md-autocomplete #reactiveinventoryCategory="mdAutocomplete" [displayWith]="displayinventoryCategoryFn">
+              <md-option *ngFor="let inventoryCategory of filteredinventoryCategorys | async" [value]="inventoryCategory">
+                <span>{{ inventoryCategory.inventoryCategoryID }}</span>
+                <span> ({{inventoryCategory.inventoryCategoryName}}) </span>
+              </md-option>
+            </md-autocomplete>
+          </div>
+          <div>
+            <md-form-field class="input-full-width">
+              <input mdInput placeholder="Sub Category" [mdAutocomplete]="reactiveinventorySubCategory" [formControl]="inventorySubCategoryCtrl" >
+            </md-form-field>
+
+            <md-autocomplete #reactiveinventorySubCategory="mdAutocomplete" [displayWith]="displayinventorySubCategoryFn">
+              <md-option *ngFor="let inventorySubCategory of filteredinventorySubCategorys | async" [value]="inventorySubCategory">
+                <span>{{ inventorySubCategory.inventorySubCategoryID }}</span>
+                <span> ({{inventorySubCategory.inventorySubCategoryName}}) </span>
+              </md-option>
+            </md-autocomplete>
+          </div>
+          </div>
+            <div class="container">
+            <div><md-checkbox [(ngModel)]="data.isDrug" name="isDrug">Drug</md-checkbox></div>
+            <div><md-checkbox [(ngModel)]="data.isLaboratory" name="isLaboratory">Laboratory</md-checkbox></div>
+            <div><md-checkbox [(ngModel)]="data.isRadiology" name="isRadiology">Radiology</md-checkbox></div>
+            <div><md-checkbox [(ngModel)]="data.isProcedure" name="isProcedure">Procedure</md-checkbox></div>
+            <div><md-checkbox [(ngModel)]="data.isConsumable" name="isConsumable">Consumable</md-checkbox></div>
+            <div><md-checkbox [(ngModel)]="data.isVaccine" name="isVaccine">Vaccine</md-checkbox></div>
+          </div>
+    </md-card-content>
+  </md-card>
+  <md-card *ngIf="data.isDrug">
+    <md-card-header>
+      <md-card-title>Drug Item - Related Details</md-card-title>
+      <md-card-subtitle></md-card-subtitle>
+    </md-card-header>
+    <md-card-content>
+        <div class="container">
+          <div>
+            <md-form-field class="input-full-width">
+              <input mdInput placeholder="ATC Classification" [mdAutocomplete]="reactiveinventoryATCClassification" [formControl]="inventoryATCClassificationCtrl" >
+            </md-form-field>
+
+            <md-autocomplete #reactiveinventoryATCClassification="mdAutocomplete" [displayWith]="displayinventoryATCClassificationFn">
+              <md-option *ngFor="let inventoryATCClassification of filteredinventoryATCClassifications | async" [value]="inventoryATCClassification">
+                <span>{{ inventoryATCClassification.inventoryATCClassificationID }}</span>
+                <span> ({{inventoryATCClassification.inventoryATCClassificationCode}}, {{inventoryATCClassification.inventoryATCClassificationName}}) </span>
+              </md-option>
+            </md-autocomplete>
+
+          </div>
+          <div>
+            <md-form-field class="input-full-width">
+              <input mdInput placeholder="Brand Name" [mdAutocomplete]="reactiveinventoryBrand" [formControl]="inventoryBrandCtrl" >
+            </md-form-field>
+
+            <md-autocomplete #reactiveinventoryBrand="mdAutocomplete" [displayWith]="displayinventoryBrandFn">
+              <md-option *ngFor="let inventoryBrand of filteredinventoryBrands | async" [value]="inventoryBrand">
+                <span>{{ inventoryBrand.inventoryBrandID }}</span>
+                <span> ({{inventoryBrand.inventoryBrandName}}) </span>
+              </md-option>
+            </md-autocomplete>
+
+          </div>
+          <div>
+            <md-form-field class="input-full-width">
+              <input mdInput placeholder="Generic Name" [mdAutocomplete]="reactiveinventoryGeneric" [formControl]="inventoryGenericCtrl" >
+            </md-form-field>
+
+            <md-autocomplete #reactiveinventoryGeneric="mdAutocomplete" [displayWith]="displayinventoryGenericFn">
+              <md-option *ngFor="let inventoryGeneric of filteredinventoryGenerics | async" [value]="inventoryGeneric">
+                <span>{{ inventoryGeneric.inventoryGenericID }}</span>
+                <span> ({{inventoryGeneric.inventoryGenericName}}) </span>
+              </md-option>
+            </md-autocomplete>
+
+          </div>
+          <div>
+            <md-form-field class="input-full-width">
+              <input mdInput [(ngModel)]="data.inventoryOtherName" name="inventoryOtherName" placeholder="Other Name">
+            </md-form-field>
+          </div>
+        </div>
+
+        <div class="container">
+          <div>
+            <md-select placeholder="Medication Class" name="medicationClass" [(ngModel)]="data.inventoryMedicationClassID" class="input-full-width">
+              <md-option *ngFor="let medicationClass of medicationClasses" [value]="medicationClass.inventoryMedicationClassID">
+                {{medicationClass.inventoryMedicationClassName}}
+              </md-option>
+            </md-select>
+          </div>
+          <div>
+            <md-select placeholder="Pregnancy Category" name="pregnancyCategory" [(ngModel)]="data.inventoryPregnancyCategoryID" class="input-full-width">
+              <md-option *ngFor="let pregnancyCategory of pregnancyCategories" [value]="pregnancyCategory.inventoryPregnancyCategoryID"  >
+                {{pregnancyCategory.inventoryPregnancyCategoryName}}
+              </md-option>
+            </md-select>
+          </div>
+
+          <div>
+            <md-checkbox [(ngModel)]="data.otc" name="otc">Over The Counter</md-checkbox>
+            <md-checkbox [(ngModel)]="data.useBatch" name="useBatch">Use Batch</md-checkbox>
+            <md-checkbox [(ngModel)]="data.expiryControl" name="expiryControl">Expiry Control</md-checkbox>
+          </div>
+        </div>
+    </md-card-content>
+  </md-card>
+  <md-card *ngIf="data.isRadiology || data.isLaboratory">
+    <md-card-header>
+      <md-card-title>Laboratory/Radiology Item - Related Details</md-card-title>
+      <md-card-subtitle></md-card-subtitle>
+    </md-card-header>
+    <md-card-content>
+        <div class="container">
+          <div>
+            <md-form-field class="input-full-width">
+              <input mdInput [(ngModel)]="data.Catalog" name="Catalog" placeholder="Catalog" >
+            </md-form-field>
+          </div>
+          <div>
+              <md-form-field class="input-full-width">
+                <input mdInput [(ngModel)]="data.Analysis" name="Analysis" placeholder="Analysis" >
+              </md-form-field>
+          </div>
+          <div>
+              <md-form-field class="input-full-width">
+                <input mdInput [(ngModel)]="data.ExternalCode" name="ExternalCode" placeholder="ExternalCode" >
+              </md-form-field>
+          </div>
+        </div>
+    </md-card-content>
+  </md-card>
+  <br>
+  
+      <md-card>
+          <md-card-header>
+          <md-card-title>Master Data List</md-card-title>
+          <md-card-subtitle></md-card-subtitle>
+          </md-card-header>
+          <md-card-content>
+              <dx-data-grid style="display:block;" #grid
+              id="gridContainer" 
+              (onSelectionChanged)="onRowSelect($event)"
+              [dataSource]="dataList"
+              [allowColumnResizing]="true"
+              [columnResizingMode]="columnResizingMode"
+              [columnAutoWidth]="true"
+              [allowColumnReordering]="true"
+              [hoverStateEnabled]="true">
+              <dxo-filter-row [visible]="true"></dxo-filter-row>
+              <dxo-paging [pageSize]="30"></dxo-paging>
+              <dxo-pager 
+                  [showPageSizeSelector]="true"
+                  [allowedPageSizes]="[5,10,15,30,50,100]"
+                  [showInfo]="true">
+              </dxo-pager>
+              <dxo-selection mode="single"></dxo-selection>  
+              <dxi-column dataField="chargeItemID" [width]="150"></dxi-column>
+              <dxi-column dataField="chargeItemCode"></dxi-column>
+              <dxi-column dataField="chargeItemDescription"></dxi-column>
+              <dxi-column dataField="catalog"></dxi-column>
+              <dxi-column dataField="active"></dxi-column>
+              <dxi-column dataField="isDrug"></dxi-column>
+              <dxi-column dataField="isLaboratory"></dxi-column>
+              <dxi-column dataField="isRadiology"></dxi-column>
+              <dxi-column dataField="isProcedure"></dxi-column>
+              <dxi-column dataField="isConsumable"></dxi-column>
+              <dxi-column dataField="isVaccine"></dxi-column>
+
+              </dx-data-grid>
+  
+          </md-card-content>
+      </md-card>
+  </section>

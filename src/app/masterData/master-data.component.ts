@@ -22,7 +22,7 @@ export class MasterDataComponent implements OnInit {
   ];
 
   menuItemsTwo = [
-    {name: 'Inventory', overview: '/inventory-item', newRecord: '/inventory-item'},
+    {name: 'Charge Item', overview: '/charge-item', newRecord: '/charge-item'},
     {name: 'Inventory ATC', overview: '/inventory-atc', newRecord: '/inventory-atc'},
     {name: 'Inventory Brand', overview: '/inventory-brand', newRecord: '/inventory-brand'},
     {name: 'Inventory Category', overview: '/inventory-category', newRecord: '/inventory-category'},

@@ -1,7 +1,7 @@
+import { GDService } from './../../services/GDService.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Message } from 'primeng/primeng';
 import { Observable } from 'rxjs/Observable';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MasterDataService } from "app/services/masterdata.service";
@@ -15,10 +15,9 @@ export class DepartmentComponent implements OnInit {
 
   data: any = {};
   dataList: any = [];
-  msgs: Message[] = [];
   departmentID;
 
-  constructor(private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {  
+  constructor(private GDService: GDService, private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {  
     route.params.subscribe(p=>{
       if (p['id']!=null)
         this.data.departmentID = +p['id'];
@@ -29,15 +28,17 @@ export class DepartmentComponent implements OnInit {
     });
   }
 
+  onRowSelect(event) {
+    this.router.navigate(['/department/', event.selectedRowKeys[0].departmentID]);
+  }
+
   retrieveData(){
       this.MasterDataService.GetDepartmentByID(this.data.departmentID)
       .subscribe(m => {
         this.data = m;
       }, err => {
         if (err.status == 404)
-          this.msgs = [];
-          this.msgs.push({severity:'error', summary:'Info Message', detail:'Record Not Found!'});
-          this.data = {};
+          this.GDService.openSnackBar('Record Not Found!','Close');
       } );
   }
 
@@ -54,15 +55,13 @@ export class DepartmentComponent implements OnInit {
     if (this.data.departmentID){
       this.MasterDataService.UpdateDepartmentByID(this.data)
         .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.departmentName + '" Updated Sucessfully!'});
+            this.GDService.openSnackBar('"' + x.departmentName + '" Updated Sucessfully!','Close');
       });
     }
     else
       this.MasterDataService.CreateDepartment(this.data)
         .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.departmentName + '" Created Sucessfully!'});
+            this.GDService.openSnackBar('"' + x.departmentName + '" Created Sucessfully!','Close');
       });
   }
 

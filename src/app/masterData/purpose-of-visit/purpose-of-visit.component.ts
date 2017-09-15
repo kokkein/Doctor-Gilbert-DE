@@ -1,7 +1,7 @@
+import { GDService } from './../../services/GDService.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Message } from 'primeng/primeng';
 import { Observable } from 'rxjs/Observable';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MasterDataService } from "app/services/masterdata.service";
@@ -16,10 +16,9 @@ export class PurposeOfVisitComponent implements OnInit {
 
   data: any = {};
   dataList: any = [];
-  msgs: Message[] = [];
   visitPurposeID;
 
-  constructor(private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {  
+  constructor(private GDService: GDService, private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {  
     route.params.subscribe(p=>{
       if (p['id']!=null)
         this.data.visitPurposeID = +p['id'];
@@ -36,9 +35,7 @@ export class PurposeOfVisitComponent implements OnInit {
         this.data = m;
       }, err => {
         if (err.status == 404)
-          this.msgs = [];
-          this.msgs.push({severity:'error', summary:'Info Message', detail:'Record Not Found!'});
-          this.data = {};
+          this.GDService.openSnackBar('Record Not Found!','Close');
       } );
   }
 
@@ -51,24 +48,22 @@ export class PurposeOfVisitComponent implements OnInit {
 
   }
 
-    onRowSelect(event) {
-        this.router.navigate(['/purpose-of-visit/', event.data.visitPurposeID]);
-    }
+  onRowSelect(event) {
+      this.router.navigate(['/purpose-of-visit/', event.selectedRowKeys[0].visitPurposeID]);
+  }
 
   onSave() {
 
     if (this.data.visitPurposeID){
       this.MasterDataService.UpdatePurposeOfVisitByID(this.data)
         .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.visitPurposeName + '" Updated Sucessfully!'});
+            this.GDService.openSnackBar('"' + x.visitPurposeName + '" Updated Sucessfully!','Close');
       });
     }
     else
       this.MasterDataService.CreatePurposeOfVisit(this.data)
         .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.visitPurposeName + '" Created Sucessfully!'});
+            this.GDService.openSnackBar('"' + x.visitPurposeName + '" Created Sucessfully!','Close');
       });
   }
 }

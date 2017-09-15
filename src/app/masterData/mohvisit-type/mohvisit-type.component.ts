@@ -1,10 +1,9 @@
+import { GDService } from './../../services/GDService.service';
 import { Component, OnInit } from '@angular/core';
-import { Message } from 'primeng/primeng';
 import { Observable } from 'rxjs/Observable';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MasterDataService } from "app/services/masterdata.service";
 import { Router, ActivatedRoute } from "@angular/router";
-import { DataTableModule } from 'primeng/primeng';
 
 @Component({
   selector: 'app-mohvisit-type',
@@ -15,10 +14,9 @@ export class MOHVisitTypeComponent implements OnInit {
 
   data: any = {};
   dataList: any = [];
-  msgs: Message[] = [];
   mohVisitTypeID;
   
-  constructor(private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {  
+  constructor(private GDService: GDService, private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {  
     route.params.subscribe(p=>{
       if (p['id']!=null)
         this.data.mohVisitTypeID = +p['id'];
@@ -35,9 +33,7 @@ export class MOHVisitTypeComponent implements OnInit {
         this.data = m;
       }, err => {
         if (err.status == 404)
-          this.msgs = [];
-          this.msgs.push({severity:'error', summary:'Info Message', detail:'Record Not Found!'});
-          this.data = {};
+          this.GDService.openSnackBar('Record Not Found!','Close');
       } );
   }
 
@@ -50,27 +46,22 @@ export class MOHVisitTypeComponent implements OnInit {
 
   }
 
-    onRowSelect(event) {
-        //this.msgs = [];
-        //this.msgs.push({severity: 'info', summary: 'Selected', detail: event.data.mohVisitTypeID});
-        this.router.navigate(['/mohvisit-type/', event.data.mohVisitTypeID]);
-    }
+  onRowSelect(event) {
+      this.router.navigate(['/mohvisit-type/', event.selectedRowKeys[0].mohVisitTypeID]);
+  }
 
   onSave() {
 
     if (this.data.mohVisitTypeID){
       this.MasterDataService.UpdateMOHVisitTypeByID(this.data)
         .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.mohVisitTypeName + '" Updated Sucessfully!'});
-            //this.router.navigate(['/home']);
+            this.GDService.openSnackBar('"' + x.mohVisitTypeName + '" Updated Sucessfully!','Close');
       });
     }
     else
       this.MasterDataService.CreateMOHVisitType(this.data)
         .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.mohVisitTypeName + '" Created Sucessfully!'});
+            this.GDService.openSnackBar('"' + x.mohVisitTypeName + '" Created Sucessfully!','Close');
       });
   }
 }

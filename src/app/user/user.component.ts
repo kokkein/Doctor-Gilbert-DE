@@ -1,7 +1,7 @@
+import { GDService } from './../services/GDService.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Message } from 'primeng/primeng';
 import { Observable } from 'rxjs/Observable';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MasterDataService } from "app/services/masterdata.service";
@@ -19,10 +19,9 @@ export class UserComponent implements OnInit {
     countries: any = [];
     data: any = {};
     dataList: any = [];
-    msgs: Message[] = [];
     dgUserID;
 
-  constructor(private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {  
+  constructor(private GDService: GDService, private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {  
     route.params.subscribe(p=>{
       if (p['id']!=null)
         this.data.dgUserID = +p['id'];
@@ -39,12 +38,13 @@ export class UserComponent implements OnInit {
         this.data = m;
       }, err => {
         if (err.status == 404)
-          this.msgs = [];
-          this.msgs.push({severity:'error', summary:'Info Message', detail:'Record Not Found!'});
-          this.data = {};
+          this.GDService.openSnackBar('Record Not Found!','Close');
       } );
   }
 
+  onRowSelect(event) {
+    this.router.navigate(['/user/', event.selectedRowKeys[0].dgUserID]);
+  }
   ngOnInit() {
     this.data.active = true;
       this.MasterDataService.GetDGUser()
@@ -74,15 +74,14 @@ export class UserComponent implements OnInit {
     if (this.data.dgUserID){
       this.MasterDataService.UpdateDGUserByID(this.data)
         .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.userFullName + '" Updated Sucessfully!'});
+            this.GDService.openSnackBar('"' + x.userFullName + '" Updated Sucessfully!','Close');
       });
     }
     else
       this.MasterDataService.CreateDGUser(this.data)
         .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.userFullName + '" Created Sucessfully!'});
+            this.GDService.openSnackBar('"' + x.userFullName + '" Created Sucessfully!','Close');
+            
       });
   }
 
