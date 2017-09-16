@@ -11,15 +11,15 @@
       <md-card-content>
 
         <div class="container">
-          <div class="two">
-            
-            <button md-mini-fab (click)="toggleSearch()"><i class="material-icons">search</i></button>
-
+          <div>
             <md-select placeholder="Modality" [(ngModel)]="data.modalityID" name="modality" class="input-full-width">
               <md-option *ngFor="let modality of modalities" [value]="modality.modalityID">
                   {{modality.modalityName}}
               </md-option>
             </md-select>
+          </div>
+          <div>
+            <button md-raised-button color="accent" (click)="toggleSearch()"><i class="material-icons">search</i>Search Radiology Items...</button>
           </div>
           <div>
               <md-radio-group [(ngModel)]="data.priority" class="input-full-width">

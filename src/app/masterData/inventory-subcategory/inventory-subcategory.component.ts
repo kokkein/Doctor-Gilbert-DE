@@ -1,3 +1,4 @@
+import { GDService } from './../../services/GDService.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -18,7 +19,7 @@ export class InventorySubcategoryComponent implements OnInit {
   msgs: Message[] = [];
   inventorySubCategoryID;
 
-  constructor(private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {  
+  constructor(private GDService: GDService, private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {  
     route.params.subscribe(p=>{
       if (p['id']!=null)
         this.data.inventorySubCategoryID = +p['id'];
@@ -28,16 +29,16 @@ export class InventorySubcategoryComponent implements OnInit {
         }
     });
   }
-
+  onRowSelect(event) {
+    this.router.navigate(['/inventory-subcategory/', event.selectedRowKeys[0].inventorySubCategoryID]);
+  }
   retrieveData(){
       this.MasterDataService.GetInventorySubCategoryByID(this.data.inventorySubCategoryID)
       .subscribe(m => {
         this.data = m;
       }, err => {
         if (err.status == 404)
-          this.msgs = [];
-          this.msgs.push({severity:'error', summary:'Info Message', detail:'Record Not Found!'});
-          this.data = {};
+          this.GDService.openSnackBar('Record Not Found!','Close');
       } );
   }
 
@@ -53,16 +54,14 @@ export class InventorySubcategoryComponent implements OnInit {
 
     if (this.data.inventorySubCategoryID){
       this.MasterDataService.UpdateInventorySubCategoryByID(this.data)
-        .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.inventorySubCategoryName + '" Updated Sucessfully!'});
+        .subscribe(x => { 
+            this.GDService.openSnackBar('"' + x.inventorySubCategoryName + '" Updated Sucessfully!','Close');
       });
     }
     else
       this.MasterDataService.CreateInventorySubCategory(this.data)
-        .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.inventorySubCategoryName + '" Created Sucessfully!'});
+        .subscribe(x => { 
+            this.GDService.openSnackBar('"' + x.inventorySubCategoryName + '" Created Sucessfully!','Close');
       });
   }
 

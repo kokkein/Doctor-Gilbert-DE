@@ -28,7 +28,7 @@
           </div>
           <div class="container">
             <div> 
-              <md-select placeholder="Diagnosis Type" [(ngModel)]="diagnosisType" name="diagnosisType">
+              <md-select  class="input-full-width" placeholder="Diagnosis Type" [(ngModel)]="diagnosisType" name="diagnosisType">
                 <md-option *ngFor="let dt of diagnosisTypes" [value]="dt.diagnosisTypeID">
                   {{dt.diagnosisTypeDesc}}
                 </md-option>

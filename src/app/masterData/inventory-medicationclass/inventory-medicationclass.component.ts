@@ -1,7 +1,7 @@
+import { GDService } from './../../services/GDService.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { Message } from 'primeng/primeng';
+import { Component, OnInit } from '@angular/core'; 
 import { Observable } from 'rxjs/Observable';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MasterDataService } from "app/services/masterdata.service";
@@ -14,11 +14,10 @@ import { MasterDataService } from "app/services/masterdata.service";
 export class InventoryMedicationclassComponent implements OnInit {
 
   data: any = {};
-  dataList: any = [];
-  msgs: Message[] = [];
+  dataList: any = []; 
   inventoryGenericID;
 
-  constructor(private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {  
+  constructor(private GDService: GDService, private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {  
     route.params.subscribe(p=>{
       if (p['id']!=null)
         this.data.inventoryMedicationClassID = +p['id'];
@@ -28,16 +27,16 @@ export class InventoryMedicationclassComponent implements OnInit {
         }
     });
   }
-
+  onRowSelect(event) {
+    this.router.navigate(['/inventory-medicationclass/', event.selectedRowKeys[0].inventoryMedicationClassID]);
+  }
   retrieveData(){
       this.MasterDataService.GetInventoryMedicationClassByID(this.data.inventoryMedicationClassID)
       .subscribe(m => {
         this.data = m;
       }, err => {
         if (err.status == 404)
-          this.msgs = [];
-          this.msgs.push({severity:'error', summary:'Info Message', detail:'Record Not Found!'});
-          this.data = {};
+          this.GDService.openSnackBar('Record Not Found!','Close');
       } );
   }
 
@@ -53,16 +52,14 @@ export class InventoryMedicationclassComponent implements OnInit {
 
     if (this.data.inventoryMedicationClassID){
       this.MasterDataService.UpdateInventoryMedicationClassByID(this.data)
-        .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.inventoryMedicationClassName + '" Updated Sucessfully!'});
+        .subscribe(x => { 
+            this.GDService.openSnackBar('"' + x.inventoryMedicationClassName + '" Updated Sucessfully!','Close');
       });
     }
     else
       this.MasterDataService.CreateInventoryMedicationClass(this.data)
-        .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.inventoryMedicationClassName + '" Created Sucessfully!'});
+        .subscribe(x => { 
+            this.GDService.openSnackBar('"' + x.inventoryMedicationClassName + '" Created Sucessfully!','Close');
       });
   }
 

@@ -12,15 +12,15 @@
         <md-card-content>
   
           <div class="container">
-            <div class="two">
-              
-              <button md-mini-fab (click)="toggleSearch()"><i class="material-icons">search</i></button>
-  
+            <div>
               <md-select placeholder="Laboratory" name="laboratory"  class="input-full-width">
                   <md-option *ngFor="let laboratory of laboratories" [value]="laboratory.value">
                       {{laboratory.viewValue}}
                   </md-option>
               </md-select>
+            </div>
+            <div>
+              <button md-raised-button color="accent" (click)="toggleSearch()"><i class="material-icons">search</i>Search Laboratory Items...</button>
             </div>
             <div>
                 <md-radio-group class="input-full-width">

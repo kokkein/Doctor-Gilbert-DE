@@ -1,7 +1,7 @@
+import { GDService } from './../../services/GDService.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { Message } from 'primeng/primeng';
+import { Component, OnInit } from '@angular/core'; 
 import { Observable } from 'rxjs/Observable';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MasterDataService } from "app/services/masterdata.service";
@@ -14,11 +14,10 @@ import { MasterDataService } from "app/services/masterdata.service";
 export class InventoryGenericComponent implements OnInit {
 
   data: any = {};
-  dataList: any = [];
-  msgs: Message[] = [];
+  dataList: any = []; 
   inventoryGenericID;
 
-  constructor(private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {  
+  constructor(private GDService: GDService, private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {  
     route.params.subscribe(p=>{
       if (p['id']!=null)
         this.data.inventoryGenericID = +p['id'];
@@ -35,9 +34,7 @@ export class InventoryGenericComponent implements OnInit {
         this.data = m;
       }, err => {
         if (err.status == 404)
-          this.msgs = [];
-          this.msgs.push({severity:'error', summary:'Info Message', detail:'Record Not Found!'});
-          this.data = {};
+          this.GDService.openSnackBar('Record Not Found!','Close');
       } );
   }
 
@@ -48,21 +45,21 @@ export class InventoryGenericComponent implements OnInit {
           this.dataList =x;
      });
   }
-
+  onRowSelect(event) {
+    this.router.navigate(['/inventory-generic/', event.selectedRowKeys[0].inventoryGenericID]);
+  }
   onSave() {
 
     if (this.data.inventoryGenericID){
       this.MasterDataService.UpdateInventoryGenericByID(this.data)
-        .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.inventoryGenericName + '" Updated Sucessfully!'});
+        .subscribe(x => { 
+            this.GDService.openSnackBar('"' + x.inventoryGenericName + '" Updated Sucessfully!','Close');
       });
     }
     else
       this.MasterDataService.CreateInventoryGeneric(this.data)
-        .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.inventoryGenericName + '" Created Sucessfully!'});
+        .subscribe(x => { 
+            this.GDService.openSnackBar('"' + x.inventoryGenericName + '" Created Sucessfully!','Close');
       });
   }
 

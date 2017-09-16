@@ -11,19 +11,52 @@
     <md-card>
       <md-card-header>
         <md-card-title>Inventory Generic</md-card-title>
-        <md-card-subtitle>New Inventory Generic</md-card-subtitle>
+        <md-card-subtitle>{{data.inventoryGenericID > 0 ? 'Edit Mode' : 'New Mode'}}</md-card-subtitle>
       </md-card-header>
       <md-card-content>
-        <div class="ui-g">
-            <div class="ui-g-6">
+        <div class="container">
+            <div>
                 <md-form-field class="input-full-width">
                   <input mdInput placeholder="Inventory Generic" [(ngModel)]="data.inventoryGenericName" name="inventoryGenericName">
                 </md-form-field>
             </div>
-            <div class="ui-g-6">
+            <div>
               <md-checkbox [(ngModel)]="data.active" name="active">Active</md-checkbox>
             </div>
         </div>
       </md-card-content>
     </md-card>
-</section>
+    <br>
+    
+        <md-card>
+            <md-card-header>
+            <md-card-title>Master Data List</md-card-title>
+            <md-card-subtitle></md-card-subtitle>
+            </md-card-header>
+            <md-card-content>
+                <dx-data-grid style="display:block;" #grid
+                id="gridContainer" 
+                (onSelectionChanged)="onRowSelect($event)"
+                [dataSource]="dataList"
+                [allowColumnResizing]="true"
+                [columnResizingMode]="columnResizingMode"
+                [columnAutoWidth]="true"
+                [allowColumnReordering]="true"
+                [hoverStateEnabled]="true">
+                <dxo-filter-row [visible]="true"></dxo-filter-row>
+                <dxo-paging [pageSize]="30"></dxo-paging>
+                <dxo-pager 
+                    [showPageSizeSelector]="true"
+                    [allowedPageSizes]="[5,10,15,30,50,100]"
+                    [showInfo]="true">
+                </dxo-pager>
+                <dxo-selection mode="single"></dxo-selection>  
+                <dxi-column dataField="inventoryGenericID" [width]="150"></dxi-column>
+                <dxi-column dataField="inventoryGenericName"></dxi-column>
+                <dxi-column dataField="active"></dxi-column>
+  
+                </dx-data-grid>
+    
+            </md-card-content>
+        </md-card>
+    </section>

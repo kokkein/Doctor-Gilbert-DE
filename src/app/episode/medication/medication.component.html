@@ -99,7 +99,7 @@
                             </md-form-field>
                         </div>
                         <div>
-                            <md-select placeholder="UOM" name="uom" formControlName="uom">
+                            <md-select class="input-full-width" placeholder="UOM" name="uom" formControlName="uom">
                               <md-option *ngFor="let uom of uoms" [value]="uom.value" >
                                 {{uom.viewValue}}
                               </md-option>
@@ -135,7 +135,7 @@
                   
                   <div class="container"> 
                       <div>
-                          <md-select placeholder="Route of Adminitration" name="route" formControlName="route">
+                          <md-select class="input-full-width" placeholder="Route of Adminitration" name="route" formControlName="route">
                               <md-option *ngFor="let route of routes" [value]="route.value" >
                                 {{route.viewValue}}
                               </md-option>

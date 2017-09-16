@@ -27,7 +27,7 @@
                       </md-form-field>
                     </div>
                     <div>
-                      <md-select placeholder="Title" name="title" [(ngModel)]="data.titleID">
+                      <md-select class="input-full-width" placeholder="Title" name="title" [(ngModel)]="data.titleID">
                         <md-option *ngFor="let title of titles" [value]="title.titleID">
                           {{title.titleName}}
                         </md-option>
@@ -114,7 +114,7 @@
                       </md-form-field>
                     </div>
                     <div>
-                      <md-select placeholder="Speciality" name="speciality" [(ngModel)]="data.specialityID">
+                      <md-select class="input-full-width" placeholder="Speciality" name="speciality" [(ngModel)]="data.specialityID">
                         <md-option *ngFor="let speciality of specialities" [value]="speciality.specialityID">
                           {{speciality.specialityName}}
                         </md-option>
@@ -171,14 +171,14 @@
                       </md-form-field>
                     </div>
                     <div>
-                      <md-select placeholder="State" name="state"  [(ngModel)]="data.stateID">
+                      <md-select class="input-full-width" placeholder="State" name="state"  [(ngModel)]="data.stateID">
                         <md-option *ngFor="let state of states" [value]="state.stateID">
                           {{state.stateName}}
                         </md-option>
                       </md-select>
                     </div>
                     <div>
-                      <md-select placeholder="Country" name="country" [(ngModel)]="data.countryID">
+                      <md-select class="input-full-width" placeholder="Country" name="country" [(ngModel)]="data.countryID">
                         <md-option *ngFor="let country of countries" [value]="country.countryID">
                           {{country.countryName}}
                         </md-option>
