@@ -40,6 +40,9 @@ export class AppComponent {
   toggleLanding(){
     this.router.navigate(['/landing']);
   }
+  toggleBilling(){
+    this.router.navigate(['/billing']);
+  }
 
   toggleFullscreen() {
     let elem = this._element.nativeElement.querySelector('.demo-content');
