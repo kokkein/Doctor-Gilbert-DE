@@ -36,7 +36,7 @@ export class InventoryMedicationclassComponent implements OnInit {
         this.data = m;
       }, err => {
         if (err.status == 404)
-          this.GDService.openSnackBar('Record Not Found!','Close');
+          this.GDService.openSnackBar('Record Not Found!','Info');
       } );
   }
 
@@ -53,13 +53,13 @@ export class InventoryMedicationclassComponent implements OnInit {
     if (this.data.inventoryMedicationClassID){
       this.MasterDataService.UpdateInventoryMedicationClassByID(this.data)
         .subscribe(x => { 
-            this.GDService.openSnackBar('"' + x.inventoryMedicationClassName + '" Updated Sucessfully!','Close');
+            this.GDService.openSnackBar('"' + x.inventoryMedicationClassName + '" Updated Sucessfully!','Info');
       });
     }
     else
       this.MasterDataService.CreateInventoryMedicationClass(this.data)
         .subscribe(x => { 
-            this.GDService.openSnackBar('"' + x.inventoryMedicationClassName + '" Created Sucessfully!','Close');
+            this.GDService.openSnackBar('"' + x.inventoryMedicationClassName + '" Created Sucessfully!','Info');
       });
   }
 

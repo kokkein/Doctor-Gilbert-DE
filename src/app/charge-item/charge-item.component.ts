@@ -102,7 +102,7 @@ export class ChargeItemComponent implements OnInit {
 
       }, err => {
         if (err.status == 404)
-          this.GDService.openSnackBar('Record Not Found!','Close');
+          this.GDService.openSnackBar('Record Not Found!','Info');
       } );
   }
 
@@ -176,13 +176,13 @@ export class ChargeItemComponent implements OnInit {
     if (this.data.chargeItemID){
       this.MasterDataService.UpdateInventoryByID(this.data)
         .subscribe(x => {
-            this.GDService.openSnackBar('"' + x.inventoryCode + '" Updated Sucessfully!','Close');
+            this.GDService.openSnackBar('"' + x.inventoryCode + '" Updated Sucessfully!','Info');
       });
     }
     else
       this.MasterDataService.CreateInventory(this.data)
         .subscribe(x => {
-            this.GDService.openSnackBar('"' + x.inventoryCode + '" Created Sucessfully!','Close');
+            this.GDService.openSnackBar('"' + x.inventoryCode + '" Created Sucessfully!','Info');
 
       });
   }

@@ -53,7 +53,7 @@ export class InsuranceComponent implements OnInit {
         this.payorCtrl = new FormControl({payorID: m.payorResource.payorID, payorName: m.payorResource.payorName});
       }, err => {
         if (err.status == 404)
-          this.GDService.openSnackBar('Record Not Found!','Close');
+          this.GDService.openSnackBar('Record Not Found!','Info');
       } );
   }
 
@@ -63,13 +63,13 @@ export class InsuranceComponent implements OnInit {
     if (this.data.insuranceID){
       this.MasterDataService.UpdateInsuranceByID(this.data)
         .subscribe(x => {
-            this.GDService.openSnackBar('"' + x.insuranceName + '" Updated Sucessfully!','Close');
+            this.GDService.openSnackBar('"' + x.insuranceName + '" Updated Sucessfully!','Info');
       });
     }
     else
       this.MasterDataService.CreateInsurance(this.data)
         .subscribe(x => {
-            this.GDService.openSnackBar('"' + x.insuranceName + '" Created Sucessfully!','Close');
+            this.GDService.openSnackBar('"' + x.insuranceName + '" Created Sucessfully!','Info');
       });
   }
   

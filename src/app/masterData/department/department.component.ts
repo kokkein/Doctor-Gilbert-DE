@@ -38,7 +38,7 @@ export class DepartmentComponent implements OnInit {
         this.data = m;
       }, err => {
         if (err.status == 404)
-          this.GDService.openSnackBar('Record Not Found!','Close');
+          this.GDService.openSnackBar('Record Not Found!','Info');
       } );
   }
 
@@ -55,13 +55,13 @@ export class DepartmentComponent implements OnInit {
     if (this.data.departmentID){
       this.MasterDataService.UpdateDepartmentByID(this.data)
         .subscribe(x => {
-            this.GDService.openSnackBar('"' + x.departmentName + '" Updated Sucessfully!','Close');
+            this.GDService.openSnackBar('"' + x.departmentName + '" Updated Sucessfully!','Info');
       });
     }
     else
       this.MasterDataService.CreateDepartment(this.data)
         .subscribe(x => {
-            this.GDService.openSnackBar('"' + x.departmentName + '" Created Sucessfully!','Close');
+            this.GDService.openSnackBar('"' + x.departmentName + '" Created Sucessfully!','Info');
       });
   }
 

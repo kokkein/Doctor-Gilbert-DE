@@ -30,9 +30,9 @@
         </button>
 
         
-        <a href="https://doctorgilbert.auth0.com/login?client=RBjWPle3E8LoA5xr9AyrTZ84Mt6zzUYn"><button md-button title="Toggle between RTL and LTR">
-          <i class="material-icons">swap_horiz</i> 
-        </button></a>
+        <button md-button (click)="toggleLanding()" title="Landing Page">
+          <i class="material-icons">home</i> Landing Page
+        </button>
 
         <button md-button title="Login"
           *ngIf="!AuthService.isAuthenticated()"

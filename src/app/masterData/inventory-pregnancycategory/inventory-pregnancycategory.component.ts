@@ -36,7 +36,7 @@ export class InventoryPregnancycategoryComponent implements OnInit {
         this.data = m;
       }, err => {
         if (err.status == 404)
-            this.GDService.openSnackBar('Record Not Found!','Close');
+            this.GDService.openSnackBar('Record Not Found!','Info');
       } );
   }
 
@@ -53,13 +53,13 @@ export class InventoryPregnancycategoryComponent implements OnInit {
     if (this.data.inventoryPregnancyCategoryID){
       this.MasterDataService.UpdateInventoryPregnancyCategoryByID(this.data)
         .subscribe(x => { 
-            this.GDService.openSnackBar('"' + x.inventoryPregnancyCategoryName + '" Updated Sucessfully!','Close');
+            this.GDService.openSnackBar('"' + x.inventoryPregnancyCategoryName + '" Updated Sucessfully!','Info');
       });
     }
     else
       this.MasterDataService.CreateInventoryPregnancyCategory(this.data)
         .subscribe(x => { 
-            this.GDService.openSnackBar('"' + x.inventoryPregnancyCategoryName + '" Created Sucessfully!','Close');
+            this.GDService.openSnackBar('"' + x.inventoryPregnancyCategoryName + '" Created Sucessfully!','Info');
       });
   }
 

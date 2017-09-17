@@ -5,11 +5,10 @@
         <button md-raised-button (click)="onSave()">Save</button>
         <button md-raised-button>New</button>
       </div>
-    </div>
-
+    </div> 
     <md-card>
       <md-card-content>
-
+{{data|json}}
         <div class="container">
           <div>
             <md-select placeholder="Modality" [(ngModel)]="data.modalityID" name="modality" class="input-full-width">
@@ -108,7 +107,7 @@
             <dxi-column dataField="chargeItemCode"></dxi-column>
             <dxi-column dataField="chargeItemDescription"></dxi-column>
             <dxi-column dataField="analysis"></dxi-column>
-            <dxi-column *ngIf="toShow" dataField="BillPrice" dataType="number"></dxi-column>
+            <dxi-column *ngIf="toShow" dataField="billPrice" dataType="number"></dxi-column>
             </dx-data-grid>
       
           </div>     
@@ -116,93 +115,90 @@
         <div class="container">
             <div>
               <md-form-field class="input-full-width">
-                <input mdInput placeholder="Allergy" [(ngModel)]="data.Allergy" name="Allergy">
+                <input mdInput placeholder="Allergy" [(ngModel)]="data.allergy" name="allergy">
               </md-form-field>
             </div>
             <div>
               <md-form-field class="input-full-width">
-                <input mdInput placeholder="Special Instruction" [(ngModel)]="data.special" name="special">
+                <input mdInput placeholder="Special Instruction" [(ngModel)]="data.instruction" name="instruction">
               </md-form-field>
             </div>
             <div>
-                <md-checkbox [(ngModel)]="data.Pregnant" name="Pregnant">Pregnant</md-checkbox>
-                <md-checkbox [(ngModel)]="data.BreastFeeding" name="BreastFeeding">Breast Feeding</md-checkbox>
+                <md-checkbox [(ngModel)]="data.pregnant" name="pregnant">Pregnant</md-checkbox>
+                <md-checkbox [(ngModel)]="data.breastFeeding" name="breastFeeding">Breast Feeding</md-checkbox>
             </div>
           </div>
         <div class="container">
               <md-form-field class="input-full-width">
-                <textarea mdInput [(ngModel)]="data.Remark" name="Remark" placeholder="Medical Note"></textarea>
+                <textarea mdInput [(ngModel)]="data.remark" name="remark" placeholder="Medical Note"></textarea>
               </md-form-field>
         </div>
       </md-card-content>
     </md-card>
+    <p>
+      <md-accordion>
+        <md-expansion-panel *ngFor="let historyList of historyRecord" >
+
+            <md-expansion-panel-header>
+              <mat-panel-description></mat-panel-description>
+              <mat-panel-title>
+                <strong><h4 md-line><i class="material-icons">timer</i> {{historyList.created | date:'medium'}} - <strong>{{historyList.radiologyOrderNo}}</strong></h4></strong>
+              </mat-panel-title>
+            </md-expansion-panel-header>
+                <md-list>
+                  <md-list-item>
+                    <p md-line>
+                      <span> <small>Ordered By: </small><small class="highlighter">{{historyList.orderedByResource.userFullName}}</small> </span>
+                      <span> <small>Reply To: </small><small class="highlighter">{{historyList.replyToResource.userFullName}}</small> </span>
+                      <span> <small>Reported By: </small><small class="highlighter">{{historyList.reportedByResource.userFullName}}</small> </span>
+                    </p>
+                    <p md-line>
+                      <span> <small>Priority: </small><small class="highlighter">{{historyList.priority}}</small> </span>
+                    </p>
+                    <p md-line>
+                      <span> <small class="highlighter">{{historyList.remark}}</small> </span>
+                    </p> 
+                    <p md-line>
+                        <span> 
+                        <table class="orderTable">
+                            <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Catalog</th>
+                              <th>Radiology Code</th>
+                              <th>Analysis</th>
+                              <th>Price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let orderList of historyList.radiologyLnResource; let i=index">
+                            <td>{{i+1}}</td>
+                            <td>{{orderList.chargeItemResource.catalog}}</td>
+                            <td>{{orderList.chargeItemResource.chargeItemCode}}</td>
+                            <td>{{orderList.chargeItemResource.analysis}}</td>
+                            <td>{{orderList.billPrice}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                      </span>
+                    </p> 
+                  </md-list-item>
+                </md-list>
+                <md-action-row>
+                    <span>Current Version: <small class="highlighter">{{historyList.version}}</small></span>  
+                    <span>, Updated: <small class="highlighter">{{historyList.created | date:'medium'}}</small> </span>
+                    <span>, By: <small class="highlighter">{{historyList.createdByResource.userFullName}}</small></span>
+                    <span>, Created: <small class="highlighter">{{historyList.created | date:'medium'}}</small> </span>
+                    <span>, By: <small class="highlighter">{{historyList.createdByResource.userFullName}}</small></span>
+                    <span> </span>
+                    <button md-raised-button (click)="loadDatabyID(historyList.radiologyHdrID)"><i class="material-icons">mode_edit</i>Edit</button>
+                    <button md-raised-button (click)="loadDatabyID(historyList.radiologyHdrID)"><i class="material-icons">delete</i>Delete</button>
+                  </md-action-row>
+        </md-expansion-panel>
+      </md-accordion>
   </section>
 
-  <md-expansion-panel  #myPanel>
-    <md-expansion-panel-header>
-      <mat-panel-description></mat-panel-description>
-      <mat-panel-title>
-        <strong>Medical History</strong>
-      </mat-panel-title>
-    </md-expansion-panel-header>
-      <md-list>
-        <md-list-item *ngFor="let historyList of historyRecord" >
-          <h4 md-line><i class="material-icons">timer</i> {{historyList.created | date:'medium'}} - <strong>{{historyList.radiologyOrderNo}}</strong></h4>
-            <button md-icon-button (click)="open()">
-              <i class="material-icons">mode_edit</i>
-            </button>
-            <button md-icon-button (click)="open()">
-              <i class="material-icons">delete</i>
-            </button>
-          <p md-line>
-            <span> <small>Ordered By: </small><b>{{historyList.orderedByResource.userFullName}}</b> </span>
-            <span> <small>Reply To: </small><b>{{historyList.replyToResource.userFullName}}</b> </span>
-            <span> <small>Reported By: </small><b>{{historyList.reportedByResource.userFullName}}</b> </span>
-          </p>
-          <p md-line>
-            <span> <small>Priority: </small><b>{{historyList.priority}}</b> </span>
-          </p>
-          <p md-line>
-            <span> <b>{{historyList.remark}}</b> </span>
-          </p>
-          <p md-line>
-            <span>
-              <div class="tablerow">
-                  <div><b>#</b></div>
-                  <div><b>Catalog</b></div>
-                  <div><b>Radiology Code</b></div>
-                  <div><b>Analysis</b></div>
-                  <div><b>Price</b></div>
-              </div>
-              <div class="tablerow" *ngFor="let orderList of historyList.radiologyLnResource; let i=index">
-                <div>{{i+1}}</div>
-                <div>{{orderList.LaboratoryItemResource.catalog}}</div>
-                <div>{{orderList.LaboratoryItemResource.labCode}}</div>
-                <div>{{orderList.LaboratoryItemResource.analysis}}</div>
-                <div>{{orderList.billPrice}}</div>
-              </div>
-            </span>
-          </p>
-          <p md-line class="pRight"> 
-            <small>
-              <span>Current Version: <b><i>{{historyList.version}}</i></b></span>
-            </small>
-          </p>
-          <p md-line class="pRight">
-            <small>      
-              <span>Updated: <b><i>{{historyList.created | date:'medium'}}</i></b> </span>
-              <span>, By: <b><i>{{historyList.createdByResource.userFullName}}</i></b></span>
-            </small>
-          </p>
-          <p md-line class="pRight">
-            <small>
-              <span>Created: <b><i>{{historyList.created | date:'medium'}}</i></b> </span>
-              <span>, By: <b><i>{{historyList.createdByResource.userFullName}}</i></b></span>
-            </small>
-          </p>
-        </md-list-item>
-      </md-list>
-  </md-expansion-panel>
+
 
 
 

@@ -167,7 +167,7 @@ export class VisitComponent implements OnInit {
       if (this.visitdata.visitID){
         this.MasterDataService.UpdateVisitByID(this.visitdata)
           .subscribe(x => {
-            this.GDService.openSnackBar('"' + x.visitNo + '" Updated Sucessfully!','Close');
+            this.GDService.openSnackBar('"' + x.visitNo + '" Updated Sucessfully!','Info');
         });
         if (goToEpisode) {
           this.router.navigate(['/episode/', this.visitdata.visitID]);
@@ -176,7 +176,7 @@ export class VisitComponent implements OnInit {
       else
         this.MasterDataService.CreateVisit(this.visitdata)
           .subscribe(x => {
-            this.GDService.openSnackBar('"' + x.visitNo + '" Created Sucessfully!','Close');
+            this.GDService.openSnackBar('"' + x.visitNo + '" Created Sucessfully!','Info');
             if (goToEpisode) {
               this.router.navigate(['/episode/', x.visitID]);
             }
@@ -197,7 +197,7 @@ export class VisitComponent implements OnInit {
 
       }, err => {
         if (err.status == 404)
-          this.GDService.openSnackBar('Record Not Found!','Close');
+          this.GDService.openSnackBar('Record Not Found!','Info');
       } );
   }
 

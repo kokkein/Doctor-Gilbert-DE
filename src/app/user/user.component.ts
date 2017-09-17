@@ -38,7 +38,7 @@ export class UserComponent implements OnInit {
         this.data = m;
       }, err => {
         if (err.status == 404)
-          this.GDService.openSnackBar('Record Not Found!','Close');
+          this.GDService.openSnackBar('Record Not Found!','Info');
       } );
   }
 
@@ -74,13 +74,13 @@ export class UserComponent implements OnInit {
     if (this.data.dgUserID){
       this.MasterDataService.UpdateDGUserByID(this.data)
         .subscribe(x => {
-            this.GDService.openSnackBar('"' + x.userFullName + '" Updated Sucessfully!','Close');
+            this.GDService.openSnackBar('"' + x.userFullName + '" Updated Sucessfully!','Info');
       });
     }
     else
       this.MasterDataService.CreateDGUser(this.data)
         .subscribe(x => {
-            this.GDService.openSnackBar('"' + x.userFullName + '" Created Sucessfully!','Close');
+            this.GDService.openSnackBar('"' + x.userFullName + '" Created Sucessfully!','Info');
             
       });
   }

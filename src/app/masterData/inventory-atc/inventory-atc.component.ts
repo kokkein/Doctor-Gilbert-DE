@@ -36,7 +36,7 @@ export class InventoryAtcComponent implements OnInit {
         this.data = m;
       }, err => {
         if (err.status == 404)
-          this.GDService.openSnackBar('Record Not Found!','Close');
+          this.GDService.openSnackBar('Record Not Found!','Info');
       } );
   }
 
@@ -53,13 +53,13 @@ export class InventoryAtcComponent implements OnInit {
     if (this.data.inventoryATCClassificationID){
       this.MasterDataService.UpdateInventoryATCClassificationByID(this.data)
         .subscribe(x => { 
-            this.GDService.openSnackBar('"' + x.inventoryATCClassificationCode + '" Updated Sucessfully!','Close');
+            this.GDService.openSnackBar('"' + x.inventoryATCClassificationCode + '" Updated Sucessfully!','Info');
       });
     }
     else
       this.MasterDataService.CreateInventoryATCClassification(this.data)
         .subscribe(x => { 
-            this.GDService.openSnackBar('"' + x.inventoryATCClassificationCode + '" Created Sucessfully!','Close');
+            this.GDService.openSnackBar('"' + x.inventoryATCClassificationCode + '" Created Sucessfully!','Info');
       });
   }
 

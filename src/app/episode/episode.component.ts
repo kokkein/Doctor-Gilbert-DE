@@ -47,7 +47,7 @@ export class EpisodeComponent implements OnInit {
       //this.patientVisit = [{patientID: this.data.patientID ,visitID: this.data.visitID}];
     }, err => {
       if (err.status == 404)
-        this.GDService.openSnackBar(err,'Close');
+        this.GDService.openSnackBar(err,'Info');
     } );
 
 }

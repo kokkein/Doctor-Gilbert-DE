@@ -35,7 +35,7 @@ export class SpecialityComponent implements OnInit {
         this.data = m;
       }, err => {
         if (err.status == 404)
-          this.GDService.openSnackBar('Record Not Found!','Close');
+          this.GDService.openSnackBar('Record Not Found!','Info');
       } );
   }
 
@@ -52,13 +52,13 @@ export class SpecialityComponent implements OnInit {
     if (this.data.specialityID){
       this.MasterDataService.UpdateSpecialityByID(this.data)
         .subscribe(x => {
-            this.GDService.openSnackBar('"' + x.specialityName + '" Updated Sucessfully!','Close');
+            this.GDService.openSnackBar('"' + x.specialityName + '" Updated Sucessfully!','Info');
       });
     }
     else
       this.MasterDataService.CreateSpeciality(this.data)
         .subscribe(x => {
-            this.GDService.openSnackBar('"' + x.specialityName + '" Created Sucessfully!','Close');
+            this.GDService.openSnackBar('"' + x.specialityName + '" Created Sucessfully!','Info');
       });
   }
 

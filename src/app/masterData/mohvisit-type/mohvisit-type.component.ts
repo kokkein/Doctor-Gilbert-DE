@@ -33,7 +33,7 @@ export class MOHVisitTypeComponent implements OnInit {
         this.data = m;
       }, err => {
         if (err.status == 404)
-          this.GDService.openSnackBar('Record Not Found!','Close');
+          this.GDService.openSnackBar('Record Not Found!','Info');
       } );
   }
 
@@ -55,13 +55,13 @@ export class MOHVisitTypeComponent implements OnInit {
     if (this.data.mohVisitTypeID){
       this.MasterDataService.UpdateMOHVisitTypeByID(this.data)
         .subscribe(x => {
-            this.GDService.openSnackBar('"' + x.mohVisitTypeName + '" Updated Sucessfully!','Close');
+            this.GDService.openSnackBar('"' + x.mohVisitTypeName + '" Updated Sucessfully!','Info');
       });
     }
     else
       this.MasterDataService.CreateMOHVisitType(this.data)
         .subscribe(x => {
-            this.GDService.openSnackBar('"' + x.mohVisitTypeName + '" Created Sucessfully!','Close');
+            this.GDService.openSnackBar('"' + x.mohVisitTypeName + '" Created Sucessfully!','Info');
       });
   }
 }

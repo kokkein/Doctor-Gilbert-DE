@@ -37,6 +37,9 @@ export class AppComponent {
   toggleMasterData(){
     this.router.navigate(['/master-data']);
   }
+  toggleLanding(){
+    this.router.navigate(['/landing']);
+  }
 
   toggleFullscreen() {
     let elem = this._element.nativeElement.querySelector('.demo-content');

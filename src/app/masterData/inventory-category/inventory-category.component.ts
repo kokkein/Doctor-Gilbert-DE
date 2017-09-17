@@ -36,7 +36,7 @@ export class InventoryCategoryComponent implements OnInit {
         this.data = m;
       }, err => {
         if (err.status == 404)
-          this.GDService.openSnackBar('Record Not Found!','Close');
+          this.GDService.openSnackBar('Record Not Found!','Info');
       } );
   }
 
@@ -53,13 +53,13 @@ export class InventoryCategoryComponent implements OnInit {
     if (this.data.inventoryCategoryID){
       this.MasterDataService.UpdateInventoryCategoryByID(this.data)
         .subscribe(x => { 
-            this.GDService.openSnackBar('"' + x.inventoryCategoryName + '" Updated Sucessfully!','Close');
+            this.GDService.openSnackBar('"' + x.inventoryCategoryName + '" Updated Sucessfully!','Info');
       });
     }
     else
       this.MasterDataService.CreateInventoryCategory(this.data)
         .subscribe(x => { 
-          this.GDService.openSnackBar('"' + x.inventoryCategoryName + '" Created Sucessfully!','Close');
+          this.GDService.openSnackBar('"' + x.inventoryCategoryName + '" Created Sucessfully!','Info');
       });
   }
 

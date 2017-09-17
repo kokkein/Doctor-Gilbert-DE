@@ -34,7 +34,7 @@ export class InventoryBrandComponent implements OnInit {
         this.data = m;
       }, err => {
         if (err.status == 404)
-          this.GDService.openSnackBar('Record Not Found!','Close');
+          this.GDService.openSnackBar('Record Not Found!','Info');
       } );
   }
 
@@ -53,13 +53,13 @@ export class InventoryBrandComponent implements OnInit {
     if (this.data.inventoryBrandID){
       this.MasterDataService.UpdateInventoryBrandByID(this.data)
         .subscribe(x => {
-            this.GDService.openSnackBar('"' + x.inventoryBrandName + '" Updated Sucessfully!','Close');
+            this.GDService.openSnackBar('"' + x.inventoryBrandName + '" Updated Sucessfully!','Info');
       });
     }
     else
       this.MasterDataService.CreateInventoryBrand(this.data)
         .subscribe(x => {
-            this.GDService.openSnackBar('"' + x.inventoryBrandName + '" Created Sucessfully!','Close');
+            this.GDService.openSnackBar('"' + x.inventoryBrandName + '" Created Sucessfully!','Info');
       });
   }
 

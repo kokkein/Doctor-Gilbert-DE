@@ -54,6 +54,7 @@ export class RadiologyComponent implements OnInit {
   }
   
     onSave() {
+      this.data.RadiologyLnResource = null;
       this.data.RadiologyLnResource = this.returnedResult;
       
       this.data.orderedByID = this.orderedByCtrl.value.dgUserID;
@@ -66,23 +67,46 @@ export class RadiologyComponent implements OnInit {
       this.data.CreatedByID = 1;
 
       if (this.data.radiologyHdrID){
-        this.MasterDataService.UpdateRadiologyRecordByID(this.data)
+        this.MasterDataService.CreateRadiologyRecord(this.data)
           .subscribe(x => {
-              this.GDService.openSnackBar(x.radiologyOrderNo + '" Updated Sucessfully!','Close');
-        });
+              this.GDService.openSnackBar(x.radiologyOrderNo + '" Updated Sucessfully!','Info');
+              this.getHistory();
+        }, err => {
+              this.GDService.openSnackBar(err ,'Info');
+        } );
       }
       else
         this.MasterDataService.CreateRadiologyRecord(this.data)
           .subscribe(x => {
-            this.GDService.openSnackBar(x.radiologyOrderNo + '" Created Sucessfully!','Close');
-        });
+            this.GDService.openSnackBar(x.radiologyOrderNo + '" Created Sucessfully!','Info');
+            this.getHistory();
+        }, err => {
+              this.GDService.openSnackBar(err,'Info');
+        } );
     }
+
+  loadDatabyID(id){
+    this.MasterDataService.GetRadiologyByID(id).subscribe(hr => {
+      this.data = hr;
+
+      for (let modLn of hr.radiologyLnResource)
+      {
+        modLn.catalog = modLn.chargeItemResource.catalog;
+        modLn.chargeItemCode = modLn.chargeItemResource.chargeItemCode;
+        modLn.analysis = modLn.chargeItemResource.analysis;
+        modLn.chargeItemDescription = modLn.chargeItemResource.chargeItemDescription;
+      }
+
+      this.returnedResult = hr.radiologyLnResource;
+    }, err => {
+      this.GDService.openSnackBar(err,'Info');
+    } );
+  }
 
   ngOnInit() {
 
       this.MasterDataService.GetDGUser().subscribe(doctor => {
         this.doctors = doctor;
-        //here only start filter
         this.filteredOrderedBy = this.orderedByCtrl.valueChanges
             .startWith(this.orderedByCtrl.value)
             .map(val => this.displayDoctorFn(val))
@@ -100,15 +124,18 @@ export class RadiologyComponent implements OnInit {
             .map(val => this.displayDoctorFn(val))
             .map(name => this.filterDoctors(name));
         });
-      this.MasterDataService.GetModality().subscribe(modality => {
-        this.modalities = modality;
+        this.MasterDataService.GetModality().subscribe(modality => {
+          this.modalities = modality;
         });
-      this.MasterDataService.GetRadiologyByVisit(this.visitID).subscribe(hr => {
-        this.historyRecord = hr;
-        });
+        this.getHistory();
 
   }
 
+  getHistory(){
+      this.MasterDataService.GetRadiologyByVisit(this.visitID).subscribe(hr => {
+        this.historyRecord = hr;
+      });
+  }
 
   toggleSearch() {
     let dialogRef = this.dialog.open(DialogResultRadiologySearch, {
@@ -138,7 +165,7 @@ export class DialogResultRadiologySearch {
 
   constructor(public dialogRef: MdDialogRef<DialogResultRadiologySearch>, private MasterDataService: MasterDataService, @Inject(MD_DIALOG_DATA) public data: any) {
 
-    this.MasterDataService.GetChargeItemRadiology()
+    this.MasterDataService.GetChargeItemListingByType("RADIOLOGY")
     .subscribe(x => {
       this.dataSource  = x;
     });
