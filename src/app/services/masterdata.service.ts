@@ -20,6 +20,10 @@ export class MasterDataService {
         return this.http.get(this.sURL + 'Modality')
                     .map(res => res.json());
     }
+    GetLaboratoryUnit() {
+        return this.http.get(this.sURL + 'LaboratoryUnit')
+                    .map(res => res.json());
+    }
     GetIdentificationType() {
         return this.http.get(this.sURL + 'identificationtype')
                     .map(res => res.json());
@@ -34,6 +38,10 @@ export class MasterDataService {
     }
     GetModalityByID(id) {
         return this.http.get(this.sURL + 'Modality/' + id)
+                    .map(res => res.json());
+    }
+    GetLaboratoryUnitByID(id) {
+        return this.http.get(this.sURL + 'LaboratoryUnit/' + id)
                     .map(res => res.json());
     }
     GetVisit() {
@@ -208,6 +216,18 @@ export class MasterDataService {
         return this.http.get(this.sURL + 'DiagnosisSearch/' + searchKey)
                     .map(res => res.json());
     }
+    GetLaboratory() {
+        return this.http.get(this.sURL + 'medicalRecord/Laboratory')
+                    .map(res => res.json());
+    }
+    GetLaboratoryByID(id) {
+        return this.http.get(this.sURL + 'medicalRecord/Laboratory/' + id)
+                    .map(res => res.json());
+    }
+    GetLaboratoryByVisit(visitID) {
+        return this.http.get(this.sURL + 'medicalRecord/LaboratoryByVisit/' + visitID)
+                    .map(res => res.json());
+    }
     GetRadiology() {
         return this.http.get(this.sURL + 'medicalRecord/Radiology')
                     .map(res => res.json());
@@ -244,6 +264,10 @@ export class MasterDataService {
     }
     CreateModality(Modality) {
         return this.http.post(this.sURL + 'Modality', Modality)
+                    .map(res => res.json());
+    }
+    CreateLaboratoryUnit(LaboratoryUnit) {
+        return this.http.post(this.sURL + 'LaboratoryUnit', LaboratoryUnit)
                     .map(res => res.json());
     }
     CreateVisit(Visit) {
@@ -330,6 +354,10 @@ export class MasterDataService {
         return this.http.post(this.sURL + 'MedicalRecord/CreateRadiology', RadiologyHdr)
                     .map(res => res.json());
     }
+    CreateLaboratoryRecord(LaboratoryHdr) {
+        return this.http.post(this.sURL + 'MedicalRecord/CreateLaboratory', LaboratoryHdr)
+                    .map(res => res.json());
+    }
 
 //Update Data
     UpdateMOHVisitTypeByID(MOHVisitType) {
@@ -346,6 +374,10 @@ export class MasterDataService {
     }
     UpdateModalityByID(Modality) {
         return this.http.put(this.sURL + 'Modality/' + Modality.modalityID, Modality)
+                    .map(res => res.json());
+    }
+    UpdateLaboratoryUnitByID(LaboratoryUnit) {
+        return this.http.put(this.sURL + 'LaboratoryUnit/' + LaboratoryUnit.laboratoryUnitID, LaboratoryUnit)
                     .map(res => res.json());
     }
     UpdateDepartmentByID(Department) {
@@ -422,6 +454,10 @@ export class MasterDataService {
     }
     UpdateRadiologyRecordByID(Radiology) {
         return this.http.put(this.sURL + 'MedicalRecord/Radiology/' + Radiology.radiologyHdrID, Radiology)
+                    .map(res => res.json());
+    }
+    UpdateLaboratoryRecordByID(Laboratory) {
+        return this.http.put(this.sURL + 'MedicalRecord/Laboratory/' + Laboratory.laboratoryHdrID, Laboratory)
                     .map(res => res.json());
     }
 }

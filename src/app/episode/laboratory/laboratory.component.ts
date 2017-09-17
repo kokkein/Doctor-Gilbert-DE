@@ -1,3 +1,4 @@
+import { GDService } from './../../services/GDService.service';
 import { MasterDataService } from 'app/services/masterdata.service';
 import { Component, OnInit, Inject, ViewChild, Input } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormArray, FormBuilder  } from '@angular/forms';
@@ -13,25 +14,27 @@ import { DxDataGridComponent } from "devextreme-angular";
 })
 export class LaboratoryComponent implements OnInit {
   @Input() patientID: number;
-  @Input() visitID: number;
+  @Input() visitID: number
   @Input() invoiceHdrID: number;
 
   returnedResult: any = {};
+  data: any = {laboratoryLnResource:{}};
 
   displayDialog: boolean;
   selectedOption: string;
   toShow: boolean = true;
 
+  historyRecord;
+  laboratoryUnit;
   doctors;
-  //doctorCtrl: FormControl;
   orderedByCtrl: FormControl;
   referredByCtrl: FormControl;
   replyToCtrl: FormControl;
-  reportedByCtrl: FormControl;
+  reportedByCtrl: FormControl; 
   filteredOrderedBy: any;
   filteredReferredBy: any;
   filteredReplyTo: any;
-  filteredReportedBy: any;
+  filteredReportedBy: any; 
 
   displayDoctorFn(value: any): string {
     return value && typeof value === 'object' ? value.userFullName : value;
@@ -41,18 +44,67 @@ export class LaboratoryComponent implements OnInit {
     return val ? this.doctors.filter((s) => new RegExp(val, 'gi').test(s.userFullName))
                : this.doctors;
   }
-  constructor(private MasterDataService: MasterDataService, private _element: ElementRef, public dialog: MdDialog, private router: Router) {
+  constructor(private GDService: GDService, private MasterDataService: MasterDataService, private _element: ElementRef, public dialog: MdDialog, private router: Router) {
     this.orderedByCtrl = new FormControl({dgUserID: 0, userFullName: ''});
     this.referredByCtrl = new FormControl({dgUserID: 0, userFullName: ''});
     this.replyToCtrl = new FormControl({dgUserID: 0, userFullName: ''});
-    this.reportedByCtrl = new FormControl({dgUserID: 0, userFullName: ''});
+    this.reportedByCtrl = new FormControl({dgUserID: 0, userFullName: ''}); 
   }
   
+    onSave() {
+      //clear editing cached
+      this.data.laboratoryLnResource = this.returnedResult;
+      
+      this.data.orderedByID = this.orderedByCtrl.value.dgUserID;
+      this.data.referredByID = this.referredByCtrl.value.dgUserID;
+      this.data.replyToID = this.replyToCtrl.value.dgUserID;
+      this.data.reportedByID = this.reportedByCtrl.value.dgUserID; 
+      this.data.patientID = this.patientID;
+      this.data.visitID = this.visitID;
+      this.data.invoiceHdrID = this.invoiceHdrID;
+      this.data.CreatedByID = 1;
+
+      if (this.data.laboratoryHdrID){
+        this.MasterDataService.CreateLaboratoryRecord(this.data)
+          .subscribe(x => {
+              this.GDService.openSnackBar(x.laboratoryOrderNo + '" Updated Sucessfully!','Info');
+              this.getHistory();
+        }, err => {
+              this.GDService.openSnackBar(err ,'Info');
+        } );
+      }
+      else
+        this.MasterDataService.CreateLaboratoryRecord(this.data)
+          .subscribe(x => {
+            this.GDService.openSnackBar(x.laboratoryOrderNo + '" Created Sucessfully!','Info');
+            this.getHistory();
+        }, err => {
+              this.GDService.openSnackBar(err,'Info');
+        } );
+    }
+
+  loadDatabyID(id){
+    this.MasterDataService.GetLaboratoryByID(id).subscribe(hr => {
+      this.data = hr;
+
+      for (let modLn of hr.laboratoryLnResource)
+      {
+        modLn.catalog = modLn.chargeItemResource.catalog;
+        modLn.chargeItemCode = modLn.chargeItemResource.chargeItemCode;
+        modLn.analysis = modLn.chargeItemResource.analysis;
+        modLn.chargeItemDescription = modLn.chargeItemResource.chargeItemDescription;
+      }
+
+      this.returnedResult = hr.laboratoryLnResource;
+    }, err => {
+      this.GDService.openSnackBar(err,'Info');
+    } );
+  }
+
   ngOnInit() {
 
       this.MasterDataService.GetDGUser().subscribe(doctor => {
         this.doctors = doctor;
-        //here only start filter
         this.filteredOrderedBy = this.orderedByCtrl.valueChanges
             .startWith(this.orderedByCtrl.value)
             .map(val => this.displayDoctorFn(val))
@@ -70,9 +122,18 @@ export class LaboratoryComponent implements OnInit {
             .map(val => this.displayDoctorFn(val))
             .map(name => this.filterDoctors(name));
         });
+        this.MasterDataService.GetLaboratoryUnit().subscribe(laboratoryUnit => {
+          this.laboratoryUnit = laboratoryUnit;
+        });
+        this.getHistory();
 
   }
 
+  getHistory(){
+      this.MasterDataService.GetLaboratoryByVisit(this.visitID).subscribe(hr => {
+        this.historyRecord = hr;
+      });
+  }
 
   toggleSearch() {
     let dialogRef = this.dialog.open(DialogResultLaboratorySearch, {
@@ -87,67 +148,8 @@ export class LaboratoryComponent implements OnInit {
     });
 
   }
- 
-
-  priorities = [ 'Urgent', 'Stat', 'Routine' ];
-
-  laboratories = [
-      {value: '1', viewValue: 'Quantum Laboratory (Shah Alam) Sdn. Bhd.'},
-      {value: '2', viewValue: 'Wellness lab Cheras Taman Midah Sdn. Bhd'},
-      {value: '3', viewValue: 'BP Lab Sdn. Bhd.'}
-    ];
-
-
-    laboratoryRecord = [
-    {
-      id: 'LAB-0003',
-      laboratory: 'Wellness lab Cheras Taman Midah Sdn. Bhd',
-      refferedBy: 'Doctor Lai from LAI Clinic',
-      replyTo: '',
-      reportedBy: 'Doctor Joo',
-      priority: 'Routine',
-      sampleDateTime: new Date('1/1/16'),
-      note: 'This is a dangerous drug, take more to get more dangerous. take less also dangerous.',
-      orderBy: 'Doctor Gilbert Chin',
-      created: new Date('1/1/16'),
-      createdBy: 'Doctor Gilbert',
-      version: 2,
-      updated: new Date('1/1/16'),
-      updatedBy: 'Doctor Chin',
-    },
-    {
-      id: 'LAB-0004',
-      laboratory: 'Quantum Laboratory (Shah Alam) Sdn. Bhd.',
-      refferedBy: 'Doctor Lai from LAI Clinic',
-      replyTo: '',
-      reportedBy: 'Doctor Khoo',
-      priority: 'Routine',
-      sampleDateTime: new Date('1/1/16'),
-      note: 'This Patient is pregnant!',
-      orderBy: 'Doctor Gilbert Chin',
-      created: new Date('1/1/16'),
-      createdBy: 'Doctor Gilbert',
-      version: 2,
-      updated: new Date('1/1/16'),
-      updatedBy: 'Doctor Chin',
-    },
-    {
-      id: 'LAB-0005',
-      laboratory: 'Wellness lab Cheras Taman Midah Sdn. Bhd',
-      refferedBy: 'Doctor Lai from LAI Clinic',
-      replyTo: 'Ward A',
-      reportedBy: 'Doctor Khoo',
-      priority: 'Stat',
-      sampleDateTime: new Date('1/1/16'),
-      note: 'This is a dangerous drug, take more to get more dangerous. take less also dangerous.',
-      orderBy: 'Doctor Gilbert Chin',
-      created: new Date('1/1/16'),
-      createdBy: 'Doctor Gilbert',
-      version: 2,
-      updated: new Date('1/1/16'),
-      updatedBy: 'Doctor Chin',
-    },
-    ];
+  
+  priorities = ['Urgent','Stat','Routine'];
 }
 
 @Component({
@@ -156,19 +158,19 @@ export class LaboratoryComponent implements OnInit {
 })
 export class DialogResultLaboratorySearch {
   dataSource: any;
-
-  constructor(public dialogRef: MdDialogRef<DialogResultLaboratorySearch>, private MasterDataService: MasterDataService, @Inject(MD_DIALOG_DATA) public data: any) {
-
-    this.MasterDataService.GetLaboratoryItem()
-    .subscribe(x => {
-      this.dataSource  = x;
-    });
-  }
-
-  @ViewChild(DxDataGridComponent) dataGrid: DxDataGridComponent
-    
-  getSelectedItem() {
-    this.data.returnedResult = this.dataGrid.instance.getSelectedRowKeys();
-  }
+  
+    constructor(public dialogRef: MdDialogRef<DialogResultLaboratorySearch>, private MasterDataService: MasterDataService, @Inject(MD_DIALOG_DATA) public data: any) {
+  
+      this.MasterDataService.GetChargeItemListingByType("LABORATORY")
+      .subscribe(x => {
+        this.dataSource  = x;
+      });
+    }
+  
+    @ViewChild(DxDataGridComponent) dataGrid: DxDataGridComponent
+      
+    getSelectedItem() {
+      this.data.returnedResult = this.dataGrid.instance.getSelectedRowKeys();
+    }
 
 }

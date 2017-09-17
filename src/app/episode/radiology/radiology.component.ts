@@ -20,7 +20,7 @@ export class RadiologyComponent implements OnInit {
   @Input() invoiceHdrID: number;
 
   returnedResult: any = {};
-  data: any = {RadiologyLnResource:{}};
+  data: any = {radiologyLnResource:{}};
 
   displayDialog: boolean;
   selectedOption: string;
@@ -33,10 +33,12 @@ export class RadiologyComponent implements OnInit {
   referredByCtrl: FormControl;
   replyToCtrl: FormControl;
   reportedByCtrl: FormControl;
+  radiologistCtrl: FormControl;
   filteredOrderedBy: any;
   filteredReferredBy: any;
   filteredReplyTo: any;
   filteredReportedBy: any;
+  filteredRadiologist: any;
 
   displayDoctorFn(value: any): string {
     return value && typeof value === 'object' ? value.userFullName : value;
@@ -51,16 +53,18 @@ export class RadiologyComponent implements OnInit {
     this.referredByCtrl = new FormControl({dgUserID: 0, userFullName: ''});
     this.replyToCtrl = new FormControl({dgUserID: 0, userFullName: ''});
     this.reportedByCtrl = new FormControl({dgUserID: 0, userFullName: ''});
+    this.radiologistCtrl = new FormControl({dgUserID: 0, userFullName: ''});
   }
   
     onSave() {
-      this.data.RadiologyLnResource = null;
-      this.data.RadiologyLnResource = this.returnedResult;
+      //clear editing cached
+      this.data.radiologyLnResource = this.returnedResult;
       
       this.data.orderedByID = this.orderedByCtrl.value.dgUserID;
       this.data.referredByID = this.referredByCtrl.value.dgUserID;
       this.data.replyToID = this.replyToCtrl.value.dgUserID;
       this.data.reportedByID = this.reportedByCtrl.value.dgUserID;
+      this.data.radiologistID = this.radiologistCtrl.value.dgUserID;
       this.data.patientID = this.patientID;
       this.data.visitID = this.visitID;
       this.data.invoiceHdrID = this.invoiceHdrID;
@@ -117,6 +121,10 @@ export class RadiologyComponent implements OnInit {
             .map(name => this.filterDoctors(name));
         this.filteredReplyTo = this.replyToCtrl.valueChanges
             .startWith(this.replyToCtrl.value)
+            .map(val => this.displayDoctorFn(val))
+            .map(name => this.filterDoctors(name));
+        this.filteredRadiologist = this.radiologistCtrl.valueChanges
+            .startWith(this.radiologistCtrl.value)
             .map(val => this.displayDoctorFn(val))
             .map(name => this.filterDoctors(name));
         this.filteredReportedBy = this.reportedByCtrl.valueChanges
