@@ -87,6 +87,11 @@ export class LaboratoryComponent implements OnInit {
     this.MasterDataService.GetLaboratoryByID(id).subscribe(hr => {
       this.data = hr;
 
+      this.orderedByCtrl = new FormControl({dgUserID: hr.orderedByResource.dgUserID, userFullName: hr.orderedByResource.userFullName});
+      this.referredByCtrl = new FormControl({dgUserID: hr.referredByResource.dgUserID, userFullName: hr.referredByResource.userFullName});
+      this.replyToCtrl = new FormControl({dgUserID: hr.replyToResource.dgUserID, userFullName: hr.replyToResource.userFullName});
+      this.reportedByCtrl = new FormControl({dgUserID: hr.reportedByResource.dgUserID, userFullName: hr.reportedByResource.userFullName});
+
       for (let modLn of hr.laboratoryLnResource)
       {
         modLn.catalog = modLn.chargeItemResource.catalog;

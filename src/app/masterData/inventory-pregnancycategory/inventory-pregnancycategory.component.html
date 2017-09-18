@@ -6,8 +6,7 @@
     </div>
 </div>
 
-<section>
-  <p-growl [(value)]="msgs" life=3000></p-growl>
+<section> 
     <md-card>
       <md-card-header>
         <md-card-title>Inventory Pregnancy Category</md-card-title>
@@ -39,7 +38,7 @@
                 (onSelectionChanged)="onRowSelect($event)"
                 [dataSource]="dataList"
                 [allowColumnResizing]="true"
-                [columnResizingMode]="columnResizingMode"
+                 
                 [columnAutoWidth]="true"
                 [allowColumnReordering]="true"
                 [hoverStateEnabled]="true">

@@ -39,6 +39,11 @@
 
         <div class="container">
             <div>
+                <md-form-field class="input-full-width">
+                  <input mdInput placeholder="Visit No" disabled [(ngModel)]="visitdata.visitNo" name="visitNo">
+                </md-form-field>
+            </div>
+            <div>
               <md-form-field class="input-full-width">
                 <input mdInput [mdDatepicker]="picker" placeholder="Visit Date-Time" [(ngModel)]="visitdata.visitDateTime" name="VisitDateTime">
                 <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>

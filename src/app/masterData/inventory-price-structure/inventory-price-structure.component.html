@@ -1,11 +1,10 @@
 <div class="toolbar">
   <div>
-      <button md-raised-button (click)="onSave()">Save</button>
+      <button md-raised-button>Save</button>
   </div>
 </div>
 
-<section>
-<p-growl [(value)]="msgs" life=3000></p-growl>
+<section> 
   <md-card>
     <md-card-header>
       <md-card-title>Inventory Price Strcuture</md-card-title>
@@ -45,7 +44,7 @@
           id="gridContainer" 
           [dataSource]="dataSource"
           [allowColumnResizing]="true"
-          [columnResizingMode]="columnResizingMode"
+           
           [columnAutoWidth]="true"
           [allowColumnReordering]="true">  
           <dxo-filter-row

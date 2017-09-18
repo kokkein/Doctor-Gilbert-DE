@@ -21,15 +21,16 @@ export class MedicationComponent implements OnInit {
   @Input() visitID: number;
   @Input() invoiceHdrID: number;
 
-    medicationCtrl: FormControl;
-    filteredMedications: any;
-    medicationTemplateCtrl: FormControl;
-    filteredMedicationTemplates: any;
-    orderByCtrl: FormControl;
-    filteredOrderBys: any;
-    displayDrug;
-    medications: any[] = [];
-    public myForm: FormGroup; // our form model
+  returnedResult: any = {};
+  medicationCtrl: FormControl;
+  filteredMedications: any;
+  medicationTemplateCtrl: FormControl;
+  filteredMedicationTemplates: any;
+  orderByCtrl: FormControl;
+  filteredOrderBys: any;
+  displayDrug;
+  medications: any[] = [];
+//    public myForm: FormGroup; // our form model
     
     visible: boolean = true;
     color: string = '';
@@ -62,13 +63,13 @@ export class MedicationComponent implements OnInit {
       console.log(model);
   }
   ngOnInit() {
-    this.myForm = this._fb.group({
+  /*  this.myForm = this._fb.group({
       name: ['', [Validators.required, Validators.minLength(5)]],
       prescribeList: this._fb.array([
               //this.initAddress(),
           ])
       });
-
+*/
       this.medicationCtrl = new FormControl({inventoryCode: 0, inventoryDescription: ''});
       this.filteredMedications = this.medicationCtrl.valueChanges
       .debounceTime(400)
@@ -105,14 +106,14 @@ export class MedicationComponent implements OnInit {
 
 addAddress(event) {
 // add address to the list
-const control = <FormArray>this.myForm.controls['prescribeList'];
-control.push(this.initAddress(event.source.value.inventoryCode + ', ' +event.source.value.inventoryDescription));
+//const control = <FormArray>this.myForm.controls['prescribeList'];
+//control.push(this.initAddress(event.source.value.inventoryCode + ', ' +event.source.value.inventoryDescription));
 }
 
 removeAddress(i: number) {
 // remove address from the list
-const control = <FormArray>this.myForm.controls['prescribeList'];
-control.removeAt(i);
+//const control = <FormArray>this.myForm.controls['prescribeList'];
+//control.removeAt(i);
 }
 
   uoms = [

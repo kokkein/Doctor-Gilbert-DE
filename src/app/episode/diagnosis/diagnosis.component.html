@@ -28,28 +28,28 @@
           </div>
           <div class="container">
             <div> 
-              <md-select  class="input-full-width" placeholder="Diagnosis Type" [(ngModel)]="diagnosisType" name="diagnosisType">
+              <md-select  class="input-full-width" placeholder="Diagnosis Type" [(ngModel)]="diagnosisTypes" name="diagnosisType">
                 <md-option *ngFor="let dt of diagnosisTypes" [value]="dt.diagnosisTypeID">
                   {{dt.diagnosisTypeDesc}}
                 </md-option>
               </md-select>
             </div>
             <div>
-              <md-checkbox [(ngModel)]="checked">Contact Diagnosis</md-checkbox>
+              <md-checkbox  >Contact Diagnosis</md-checkbox>
             </div>
             <div>
-              <md-checkbox [(ngModel)]="checked">Main Diagnosis</md-checkbox>
+              <md-checkbox  >Main Diagnosis</md-checkbox>
             </div>
             <div>
-              <md-checkbox [(ngModel)]="checked">Secondary Diagnosis</md-checkbox>
+              <md-checkbox  >Secondary Diagnosis</md-checkbox>
             </div>
           </div>
           <div class="container">
             <div>
-              <md-checkbox [(ngModel)]="checked">External Cause</md-checkbox>
+              <md-checkbox  >External Cause</md-checkbox>
             </div>
             <div>
-              <md-checkbox [(ngModel)]="checked">Chronic</md-checkbox>
+              <md-checkbox  >Chronic</md-checkbox>
             </div>
             <div>
               <md-form-field class="input-full-width">

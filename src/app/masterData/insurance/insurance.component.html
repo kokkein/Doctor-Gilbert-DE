@@ -1,7 +1,7 @@
 <div class="toolbar">
     <div>
         <button md-raised-button (click)="onSave()">Save</button>
-        <button md-raised-button (click)="onload()">New</button>
+        <button md-raised-button >New</button>
         <button md-raised-button>Save + New</button>
     </div>
 </div>
@@ -52,7 +52,7 @@
                 (onSelectionChanged)="onRowSelect($event)"
                 [dataSource]="dataList"
                 [allowColumnResizing]="true"
-                [columnResizingMode]="columnResizingMode"
+                 
                 [columnAutoWidth]="true"
                 [allowColumnReordering]="true"
                 [hoverStateEnabled]="true">

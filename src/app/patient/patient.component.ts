@@ -1,7 +1,6 @@
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { Message } from 'primeng/primeng';
+import { Component, OnInit } from '@angular/core'; 
 import { Observable } from 'rxjs/Observable';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MasterDataService } from "app/services/masterdata.service";
@@ -21,8 +20,7 @@ export class PatientComponent implements OnInit {
       patientResource: {}
     };
     datat: any;
-    dataList: any = [];
-    msgs: Message[] = [];
+    dataList: any = []; 
     dgUserID;
     inUse = true;
     countries;
@@ -123,15 +121,15 @@ export class PatientComponent implements OnInit {
     if (this.data.patientID){
       this.MasterDataService.UpdatePatientByID(this.data)
         .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.name + '" Updated Sucessfully!'});
+          //  this.msgs = [];
+          //  this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.name + '" Updated Sucessfully!'});
       });
     }
     else
       this.MasterDataService.CreatePatient(this.data)
         .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.name + '" Created Sucessfully!'});
+          //  this.msgs = [];
+           // this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.name + '" Created Sucessfully!'});
       });
   }
   retrieveData(){
@@ -162,8 +160,8 @@ export class PatientComponent implements OnInit {
 
       }, err => {
         if (err.status == 404)
-          this.msgs = [];
-          this.msgs.push({severity:'error', summary:'Info Message', detail:'Record Not Found!'});
+         // this.msgs = [];
+        //  this.msgs.push({severity:'error', summary:'Info Message', detail:'Record Not Found!'});
           this.data = {};
       } );
   }

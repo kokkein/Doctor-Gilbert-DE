@@ -9,7 +9,7 @@
     <md-card-content>
       <div class="container">
         <div>
-          <md-select placeholder="Laboratory" [(ngModel)]="data.laboratoryUnit" name="laboratoryUnit" class="input-full-width">
+          <md-select placeholder="Laboratory" [(ngModel)]="data.laboratoryUnitID" name="laboratoryUnitID" class="input-full-width">
             <md-option *ngFor="let lu of laboratoryUnit" [value]="lu.laboratoryUnitID">
                 {{lu.laboratoryUnitName}}
             </md-option>
@@ -93,7 +93,7 @@
           id="gridContainer" 
           [dataSource]="returnedResult"
           [allowColumnResizing]="true"
-          [columnResizingMode]="columnResizingMode"
+           
           [columnAutoWidth]="true"
           [allowColumnReordering]="true">  
           <dxo-editing 
@@ -124,7 +124,7 @@
           <md-expansion-panel-header>
             <mat-panel-description></mat-panel-description>
             <mat-panel-title>
-              <strong><h4 md-line><i class="material-icons">timer</i> {{historyList.created | date:'medium'}} - <strong>{{historyList.radiologyOrderNo}}</strong></h4></strong>
+              <strong><h4 md-line><i class="material-icons">timer</i> {{historyList.created | date:'medium'}} - <strong>{{historyList.laboratoryOrderNo}}</strong></h4></strong>
             </mat-panel-title>
           </md-expansion-panel-header>
               <md-list>
@@ -153,7 +153,7 @@
                           </tr>
                           </thead>
                           <tbody>
-                          <tr *ngFor="let orderList of historyList.radiologyLnResource; let i=index">
+                          <tr *ngFor="let orderList of historyList.laboratoryLnResource; let i=index">
                           <td>{{i+1}}</td>
                           <td>{{orderList.chargeItemResource.catalog}}</td>
                           <td>{{orderList.chargeItemResource.chargeItemCode}}</td>
@@ -173,8 +173,8 @@
                   <span>, Created: <small class="highlighter">{{historyList.created | date:'medium'}}</small> </span>
                   <span>, By: <small class="highlighter">{{historyList.createdByResource.userFullName}}</small></span>
                   <span> </span>
-                  <button md-raised-button (click)="loadDatabyID(historyList.radiologyHdrID)"><i class="material-icons">mode_edit</i>Edit</button>
-                  <button md-raised-button (click)="loadDatabyID(historyList.radiologyHdrID)"><i class="material-icons">delete</i>Delete</button>
+                  <button md-raised-button (click)="loadDatabyID(historyList.laboratoryHdrID)"><i class="material-icons">mode_edit</i>Edit</button>
+                  <button md-raised-button (click)="loadDatabyID(historyList.laboratoryHdrID)"><i class="material-icons">delete</i>Delete</button>
                 </md-action-row>
       </md-expansion-panel>
     </md-accordion>

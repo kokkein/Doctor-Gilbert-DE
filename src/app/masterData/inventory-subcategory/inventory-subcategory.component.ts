@@ -1,8 +1,7 @@
 import { GDService } from './../../services/GDService.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { Message } from 'primeng/primeng';
+import { Component, OnInit } from '@angular/core'; 
 import { Observable } from 'rxjs/Observable';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MasterDataService } from "app/services/masterdata.service";
@@ -15,8 +14,7 @@ import { MasterDataService } from "app/services/masterdata.service";
 export class InventorySubcategoryComponent implements OnInit {
 
   data: any = {};
-  dataList: any = [];
-  msgs: Message[] = [];
+  dataList: any = []; 
   inventorySubCategoryID;
 
   constructor(private GDService: GDService, private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {  

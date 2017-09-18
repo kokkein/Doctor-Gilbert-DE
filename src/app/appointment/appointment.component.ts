@@ -263,15 +263,15 @@ export class AppointmentComponent implements OnInit {
         if (this.data.appointmentID){
           this.MasterDataService.UpdateAppointmentByID(this.data)
             .subscribe(x => {
-                this.msgs = [];
-                this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.title + '" Updated Sucessfully!'});
+               // this.msgs = [];
+               // this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.title + '" Updated Sucessfully!'});
           });
         }
         else
           this.MasterDataService.CreateAppointment(this.data)
             .subscribe(x => {
-                this.msgs = [];
-                this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.title + '" Created Sucessfully!'});
+               // this.msgs = [];
+               // this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.title + '" Created Sucessfully!'});
           });
         
         //Reset value, else keep in cache

@@ -56,7 +56,7 @@
       </div>
 
 <br>
-
+<!--
 <form [formGroup]="myForm" novalidate (ngSubmit)="save(myForm)">
         <div formArrayName="prescribeList">
           <div *ngFor="let address of myForm.controls.prescribeList.controls; let i=index" >
@@ -163,14 +163,14 @@
           </div>
         </div>
       </form><br>
-
+    -->
 
       <div>
           <dx-data-grid style="display:block;" #grid
           id="gridContainer" 
           [dataSource]="returnedResult"
           [allowColumnResizing]="true"
-          [columnResizingMode]="columnResizingMode"
+           
           [columnAutoWidth]="true"
           [allowColumnReordering]="true">  
           <dxo-editing 

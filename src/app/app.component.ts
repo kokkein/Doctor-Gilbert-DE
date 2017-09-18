@@ -23,7 +23,7 @@ export class AppComponent {
 
   selectedOption: string;
 
-  constructor(private AuthService: AuthService, private _element: ElementRef, public dialog: MdDialog, private router: Router) {
+  constructor(public AuthService: AuthService, private _element: ElementRef, public dialog: MdDialog, private router: Router) {
     AuthService.handleAuthentication();
   }
 

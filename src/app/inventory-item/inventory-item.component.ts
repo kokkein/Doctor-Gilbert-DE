@@ -101,8 +101,8 @@ export class InventoryItemComponent implements OnInit {
 
       }, err => {
         if (err.status == 404)
-          this.msgs = [];
-          this.msgs.push({severity:'error', summary:'Info Message', detail:'Record Not Found!'});
+         // this.msgs = [];
+         // this.msgs.push({severity:'error', summary:'Info Message', detail:'Record Not Found!'});
           this.data = {};
       } );
   }
@@ -173,15 +173,15 @@ export class InventoryItemComponent implements OnInit {
     if (this.data.inventoryID){
       this.MasterDataService.UpdateInventoryByID(this.data)
         .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.inventoryCode + '" Updated Sucessfully!'});
+          //  this.msgs = [];
+           // this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.inventoryCode + '" Updated Sucessfully!'});
       });
     }
     else
       this.MasterDataService.CreateInventory(this.data)
         .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.inventoryCode + '" Created Sucessfully!'});
+           // this.msgs = [];
+           // this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.inventoryCode + '" Created Sucessfully!'});
       });
   }
 

@@ -1,7 +1,6 @@
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { Message } from 'primeng/primeng';
+import { Component, OnInit } from '@angular/core'; 
 import { Observable } from 'rxjs/Observable';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MasterDataService } from "app/services/masterdata.service";
@@ -15,8 +14,7 @@ import { MasterDataService } from "app/services/masterdata.service";
 export class PriceStructureComponent implements OnInit {
 
   data: any = {};
-  dataList: any = [];
-  msgs: Message[] = [];
+  dataList: any = []; 
   priceStructureID;
 
   constructor(private MasterDataService: MasterDataService, private route: ActivatedRoute, private router: Router) {  
@@ -36,8 +34,8 @@ export class PriceStructureComponent implements OnInit {
         this.data = m;
       }, err => {
         if (err.status == 404)
-          this.msgs = [];
-          this.msgs.push({severity:'error', summary:'Info Message', detail:'Record Not Found!'});
+         // this.msgs = [];
+         // this.msgs.push({severity:'error', summary:'Info Message', detail:'Record Not Found!'});
           this.data = {};
       } );
   }
@@ -55,15 +53,15 @@ export class PriceStructureComponent implements OnInit {
     if (this.data.priceStructureID){
       this.MasterDataService.UpdatePriceStructureByID(this.data)
         .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.priceStructureName + '" Updated Sucessfully!'});
+           // this.msgs = [];
+           // this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.priceStructureName + '" Updated Sucessfully!'});
       });
     }
     else
       this.MasterDataService.CreatePriceStructure(this.data)
         .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.priceStructureName + '" Created Sucessfully!'});
+         //   this.msgs = [];
+         //   this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.priceStructureName + '" Created Sucessfully!'});
       });
   }
 

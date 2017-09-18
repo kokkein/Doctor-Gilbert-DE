@@ -93,6 +93,14 @@ export class RadiologyComponent implements OnInit {
     this.MasterDataService.GetRadiologyByID(id).subscribe(hr => {
       this.data = hr;
 
+      this.orderedByCtrl = new FormControl({dgUserID: hr.orderedByResource.dgUserID, userFullName: hr.orderedByResource.userFullName});
+      this.referredByCtrl = new FormControl({dgUserID: hr.referredByResource.dgUserID, userFullName: hr.referredByResource.userFullName});
+      this.replyToCtrl = new FormControl({dgUserID: hr.replyToResource.dgUserID, userFullName: hr.replyToResource.userFullName});
+      this.reportedByCtrl = new FormControl({dgUserID: hr.reportedByResource.dgUserID, userFullName: hr.reportedByResource.userFullName});
+      this.radiologistCtrl = new FormControl({dgUserID: hr.radiologistResource.dgUserID, userFullName: hr.radiologistResource.userFullName});
+
+
+
       for (let modLn of hr.radiologyLnResource)
       {
         modLn.catalog = modLn.chargeItemResource.catalog;

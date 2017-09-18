@@ -51,9 +51,9 @@ export class DiagnosisMasterComponent implements OnInit {
       this.data = m;
     }, err => {
       if (err.status == 404)
-        this.msgs = [];
-        this.msgs.push({severity:'error', summary:'Info Message', detail:'Record Not Found!'});
-        this.data = {};
+       // this.msgs = [];
+       // this.msgs.push({severity:'error', summary:'Info Message', detail:'Record Not Found!'});
+       this.data = {};
     } );
   }
 
@@ -66,15 +66,15 @@ onSave() {
     if (this.data.diagnosisID){
       this.MasterDataService.UpdateDiagnosisByID(this.data)
         .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.diagnosisCode + '" Updated Sucessfully!'});
+          //  this.msgs = [];
+          //  this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.diagnosisCode + '" Updated Sucessfully!'});
       });
     }
     else
       this.MasterDataService.CreateDiagnosis(this.data)
         .subscribe(x => {
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.diagnosisCode + '" Created Sucessfully!'});
+          //  this.msgs = [];
+           // this.msgs.push({severity:'success', summary:'Info Message', detail:'"' + x.diagnosisCode + '" Created Sucessfully!'});
       });
   }
   
