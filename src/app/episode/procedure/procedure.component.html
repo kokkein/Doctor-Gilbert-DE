@@ -1,3 +1,152 @@
-<p>
-  procedure works!
-</p>
+<section>
+    <div class="toolbar">
+      <div>
+        <button md-raised-button (click)="onSave()">Save</button>
+        <button md-raised-button>New</button>
+      </div>
+    </div> 
+    <md-card>
+      <md-card-content>
+        <div class="container">
+          <div>
+            <button md-raised-button color="accent" (click)="toggleSearch()"><i class="material-icons">search</i>Search Procedure Items...</button>
+          </div>
+          <div>
+              <md-radio-group [(ngModel)]="data.priority" class="input-full-width">
+                  <md-radio-button *ngFor="let priority of priorities" [value]="priority" [checked]="priority==data.priority">
+                      {{priority}}
+                  </md-radio-button>
+              </md-radio-group>
+          </div>
+        </div>
+  
+        <div class="container">
+            <div>
+                <md-form-field class="input-full-width">
+                  <input mdInput placeholder="Ordered By" [mdAutocomplete]="orderedBy" [formControl]="orderedByCtrl">
+                  
+                  <md-autocomplete #orderedBy="mdAutocomplete" [displayWith]="displayDoctorFn">
+                  <md-option *ngFor="let doctor of filteredOrderedBy | async" [value]="doctor">
+                    <span>{{ doctor.userFullName }}, </span>
+                    <small><strong>Initial:</strong>{{doctor.userInitial}}, <strong>Speciality:</strong>{{doctor.specialityID}}</small>
+                  </md-option>
+                  </md-autocomplete>
+                </md-form-field>
+            </div>
+            <div>
+                <md-form-field class="input-full-width">
+                  <input mdInput placeholder="Referred By" [mdAutocomplete]="referredBy" [formControl]="referredByCtrl">
+                  
+                  <md-autocomplete #referredBy="mdAutocomplete" [displayWith]="displayDoctorFn">
+                  <md-option *ngFor="let doctor of filteredReferredBy | async" [value]="doctor">
+                    <span>{{ doctor.userFullName }}, </span>
+                    <small><strong>Initial:</strong>{{doctor.userInitial}}, <strong>Speciality:</strong>{{doctor.specialityID}}</small>
+                  </md-option>
+                  </md-autocomplete>
+                </md-form-field>
+            </div>
+        </div>
+  
+          <div>
+            <dx-data-grid style="display:block;" #grid
+            id="gridContainer" 
+            [dataSource]="returnedResult"
+            [allowColumnResizing]="true"
+             
+            [columnAutoWidth]="true"
+            [allowColumnReordering]="true">  
+            <dxo-editing 
+                mode="cell"
+                [allowUpdating]="true"
+                [allowDeleting]="true">
+            </dxo-editing>
+            <dxi-column dataField="catalog"></dxi-column>
+            <dxi-column dataField="chargeItemCode"></dxi-column>
+            <dxi-column dataField="chargeItemDescription"></dxi-column>
+            <dxi-column dataField="analysis"></dxi-column>
+            <dxi-column *ngIf="toShow" dataField="billPrice" dataType="number"></dxi-column>
+            </dx-data-grid>
+      
+          </div>     
+  
+        <div class="container">
+              <md-form-field class="input-full-width">
+                <textarea mdInput [(ngModel)]="data.remark" name="remark" placeholder="Medical Note"></textarea>
+              </md-form-field>
+        </div>
+      </md-card-content>
+    </md-card>
+    <p>
+      <md-accordion>
+        <md-expansion-panel *ngFor="let historyList of historyRecord" >
+  
+            <md-expansion-panel-header>
+              <mat-panel-description></mat-panel-description>
+              <mat-panel-title>
+                <strong><h4 md-line><i class="material-icons">timer</i> {{historyList.created | date:'medium'}} - <strong>{{historyList.laboratoryOrderNo}}</strong></h4></strong>
+              </mat-panel-title>
+            </md-expansion-panel-header>
+                <md-list>
+                  <md-list-item>
+                    <p md-line>
+                        <span> <small>Ordered By: </small><small class="highlighter">{{historyList.orderedByResource?.userFullName}}</small> </span>
+                        <span> <small>Referred By: </small><small class="highlighter">{{historyList.referredByResource?.userFullName}}</small> </span>
+ 
+                    </p>
+                    <p md-line>
+                      <span> <small>Priority: </small><small class="highlighter">{{historyList.priority}}</small> </span>
+                    </p>
+                    <p md-line>
+                      <span> <small>Medical Note:  </small><small class="highlighter">{{historyList.remark}}</small> </span>
+                    </p> 
+                    <p md-line>
+                        <span> 
+                        <table class="orderTable">
+                            <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Catalog</th>
+                              <th>Procedure Code</th>
+                              <th>Description</th>
+                              <th>Price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let orderList of historyList.laboratoryLnResource; let i=index">
+                            <td>{{i+1}}</td>
+                            <td>{{orderList.chargeItemResource.catalog}}</td>
+                            <td>{{orderList.chargeItemResource.chargeItemCode}}</td>
+                            <td>{{orderList.chargeItemResource.analysis}}</td>
+                            <td>{{orderList.billPrice}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                      </span>
+                    </p> 
+                  </md-list-item>
+                </md-list>
+                <md-action-row>
+                    <span>Current Version: <small class="highlighter">{{historyList.version}}</small></span>  
+                    <span>, Updated: <small class="highlighter">{{historyList.created | date:'medium'}}</small> </span>
+                    <span>, By: <small class="highlighter">{{historyList.createdByResource.userFullName}}</small></span>
+                    <span>, Created: <small class="highlighter">{{historyList.created | date:'medium'}}</small> </span>
+                    <span>, By: <small class="highlighter">{{historyList.createdByResource.userFullName}}</small></span>
+                    <span> </span>
+                    <button md-raised-button (click)="loadDatabyID(historyList.laboratoryHdrID)"><i class="material-icons">mode_edit</i>Edit</button>
+                    <button md-raised-button (click)="loadDatabyID(historyList.laboratoryHdrID)"><i class="material-icons">delete</i>Delete</button>
+                  </md-action-row>
+        </md-expansion-panel>
+      </md-accordion>
+  </section>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

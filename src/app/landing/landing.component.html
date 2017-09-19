@@ -1,57 +1,106 @@
-        <div class="container">
-            <div>
-                <md-list>
-                    <h3 md-subheader>To Do Appointment</h3>
-                    <md-list-item>
-                      <md-icon md-list-icon>folder</md-icon>
-                      <h4 md-line>Appointment #1</h4>
-                      <p md-line> 2:30PM - 3:30PM </p>
-                    </md-list-item>
-                    <md-list-item>
-                      <md-icon md-list-icon>folder</md-icon>
-                      <h4 md-line>Appointment #2</h4>
-                      <p md-line> 3:30PM - 4:30PM </p>
-                    </md-list-item>
-                    <md-list-item>
-                      <md-icon md-list-icon>folder</md-icon>
-                      <h4 md-line>Appointment #3</h4>
-                      <p md-line> 4:30PM - 5:30PM </p>
-                    </md-list-item>
-                    <md-list-item>
-                      <md-icon md-list-icon>folder</md-icon>
-                      <h4 md-line>Appointment #4</h4>
-                      <p md-line> 5:30PM - 6:30PM </p>
-                    </md-list-item>
-                  </md-list>
+
+          <div class="containerheader">
+              <div>
+                  <md-card>
+                      <md-card-header> 
+                        <md-card-title><Strong>Today Appointments</Strong></md-card-title>
+                        <md-card-subtitle></md-card-subtitle>
+                      </md-card-header> 
+                      <md-card-content>
+                        <h1 style="text-align:center">15</h1>
+                      </md-card-content>
+                    </md-card>
+              </div>
+              <div>
+                  <md-card>
+                      <md-card-header> 
+                        <md-card-title><Strong>Tomorrow Appointments</Strong></md-card-title>
+                        <md-card-subtitle></md-card-subtitle>
+                      </md-card-header> 
+                      <md-card-content>
+                          <h1 style="text-align:center">12</h1>
+                      </md-card-content> 
+                    </md-card>
+              </div>
+              <div>
+                  <md-card>
+                      <md-card-header> 
+                        <md-card-title><Strong>My Patients in Queue</Strong></md-card-title>
+                        <md-card-subtitle></md-card-subtitle>
+                      </md-card-header> 
+                      <md-card-content>
+                          <h1 style="text-align:center">8</h1>
+                      </md-card-content>
+                    </md-card>
+              </div>
+              <div>
+                  <md-card>
+                      <md-card-header> 
+                        <md-card-title><Strong>Unassigned Patients In Queue</Strong></md-card-title>
+                        <md-card-subtitle></md-card-subtitle>
+                      </md-card-header> 
+                      <md-card-content>
+                          <h1 style="text-align:center">3</h1>
+                      </md-card-content> 
+                    </md-card>
+              </div>
             </div>
-            <div>
-                <md-list>
-                    <h3 md-subheader>To Do List</h3>
-                    <md-list-item>
-                      <md-icon md-list-icon>note</md-icon>
-                      <h4 md-line>To do #1</h4>
-                      <p md-line> 20-09-2017 </p>
-                    </md-list-item>
-                    <md-list-item>
-                      <md-icon md-list-icon>note</md-icon>
-                      <h4 md-line>To do #2</h4>
-                      <p md-line> 20-09-2017 </p>
-                    </md-list-item>
-                    <md-list-item>
-                      <md-icon md-list-icon>note</md-icon>
-                      <h4 md-line>To do #3</h4>
-                      <p md-line> 20-09-2017 </p>
-                    </md-list-item>
-                  </md-list>
-            </div>
-            <div>
-                <md-form-field class="input-full-width">
-                    <input mdInput placeholder="Search Patient..." [(ngModel)]="patient">
-                  </md-form-field>
-                  <button md-mini-fab (click)="searchPatient()"><i class="material-icons">search</i></button>
-                  <md-form-field class="input-full-width">
-                      <input mdInput placeholder="Search Episode..." [(ngModel)]="episode">
-                  </md-form-field>
-                  <button md-mini-fab (click)="searchEpisode()"><i class="material-icons">search</i></button>
-            </div>
-        </div>
+
+          <div class="containerheader">
+              <div>
+                    <md-card>
+                        <md-card-header> 
+                          <md-card-title><Strong>To Do List</Strong></md-card-title>
+                          <md-card-subtitle></md-card-subtitle>
+                        </md-card-header> 
+                        <md-card-content>
+                            <md-selection-list>
+                              <md-list-option>
+                                Contact Dr Leong for Laboratory Result
+                              </md-list-option>
+                              <md-list-option>
+                                Issue referal letter to mr Wong
+                              </md-list-option>
+                              <md-list-option checked>
+                                Replenish stock level
+                              </md-list-option>
+                              <md-list-option>
+                                Important appointment at 4pm
+                              </md-list-option>
+                              <md-list-option>
+                                Locum Interview at 5pm
+                              </md-list-option>
+                              <md-list-option>
+                                Onsite visit @ 2pm - KPJ 
+                              </md-list-option>
+                              <md-list-option>
+                                Onsite visit @ 7pm - Sunway medical centre
+                              </md-list-option>
+                            </md-selection-list>
+                        </md-card-content> 
+                      </md-card>
+
+              </div>
+              <div>
+                  <md-card>
+                      <md-card-header> 
+                        <md-card-title><Strong>Quick Search</Strong></md-card-title>
+                        <md-card-subtitle></md-card-subtitle>
+                      </md-card-header> 
+                      <md-card-content>
+                          <md-form-field class="input-80-width">
+                              <input mdInput placeholder="Search Patient..." [(ngModel)]="patient">
+                            </md-form-field>
+                            <button md-mini-fab (click)="searchPatient()"><i class="material-icons">search</i></button>
+                            <md-form-field class="input-80-width">
+                                <input mdInput placeholder="Search Episode..." [(ngModel)]="episode">
+                            </md-form-field>
+                            <button md-mini-fab (click)="searchEpisode()"><i class="material-icons">search</i></button>
+                      </md-card-content> 
+                    </md-card>
+                    
+              </div>
+
+          </div>
+
+      

@@ -1,3 +1,4 @@
+import { VisitComponent } from './visit/visit.component';
 import { GDService } from './services/GDService.service';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { AuthService } from './services/auth.service';
@@ -27,9 +28,8 @@ import { DxDataGridModule } from 'devextreme-angular';
 import 'hammerjs';
 
 //Project Component
-import { PatientComponent } from './patient/patient.component';
-import { VisitComponent } from './visit/visit.component';
-import { VitalComponent } from './vital/vital.component';
+import { PatientComponent } from './patient/patient.component'; 
+import { VitalComponent } from './episode/vital/vital.component';
 import { InventoryComponent } from './inventory/inventory.component';
 import { InventoryItemComponent } from './inventory-item/inventory-item.component';
 import { UserComponent } from './user/user.component';
@@ -71,7 +71,7 @@ import { InventoryMedicationclassComponent } from './masterData/inventory-medica
 import { InventoryPregnancycategoryComponent } from './masterData/inventory-pregnancycategory/inventory-pregnancycategory.component';
 import { DiagnosisMasterComponent } from './masterData/diagnosis-master/diagnosis-master.component';
 import { LandingComponent } from './landing/landing.component';
-import { ProcedureComponent } from './episode/procedure/procedure.component';
+import { ProcedureComponent, DialogResultProcedureSearch } from './episode/procedure/procedure.component';
 import { PriceStructureComponent } from './masterData/price-structure/price-structure.component';
 import { InventoryPriceStructureComponent } from './masterData/inventory-price-structure/inventory-price-structure.component';
 import { Auth0UserProfileComponent } from './auth0-user-profile/auth0-user-profile.component';
@@ -153,7 +153,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     LaboratoryComponent,
     MedicationComponent,
     TimelineComponent, 
-    DiagnosisComponent, DialogResultRadiologySearch, DialogResultLaboratorySearch,
+    DiagnosisComponent, DialogResultRadiologySearch, DialogResultLaboratorySearch, DialogResultProcedureSearch,
     VitalSignsComponent, DialogResultExampleDialog, AppointmentComponent, DepartmentComponent, InsuranceComponent, PayorComponent, MOHVisitTypeComponent, PurposeOfVisitComponent, MasterDataComponent, InventoryBrandComponent, InventoryGenericComponent, InventoryAtcComponent, InventoryCategoryComponent, InventorySubcategoryComponent, InventoryMedicationclassComponent, InventoryPregnancycategoryComponent, SpecialityComponent, DiagnosisMasterComponent, LandingComponent, ProcedureComponent, PriceStructureComponent, InventoryPriceStructureComponent, Auth0UserProfileComponent, BillingComponent, ChargeItemComponent
   ],
   imports: [
@@ -175,7 +175,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
       deps: [Http, RequestOptions]
     }
   ],
-  entryComponents: [DialogResultExampleDialog, DialogResultRadiologySearch, DialogResultLaboratorySearch],
+  entryComponents: [DialogResultExampleDialog, DialogResultRadiologySearch, DialogResultProcedureSearch, DialogResultLaboratorySearch],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

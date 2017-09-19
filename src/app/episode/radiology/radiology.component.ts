@@ -16,7 +16,7 @@ import { MdSnackBar } from '@angular/material';
 })
 export class RadiologyComponent implements OnInit {
   @Input() patientID: number;
-  @Input() visitID: number
+  @Input() visitID: number;
   @Input() invoiceHdrID: number;
 
   returnedResult: any = {};
