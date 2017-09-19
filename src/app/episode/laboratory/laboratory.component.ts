@@ -54,11 +54,16 @@ export class LaboratoryComponent implements OnInit {
     onSave() {
       //clear editing cached
       this.data.laboratoryLnResource = this.returnedResult;
-      
-      this.data.orderedByID = this.orderedByCtrl.value.dgUserID;
-      this.data.referredByID = this.referredByCtrl.value.dgUserID;
-      this.data.replyToID = this.replyToCtrl.value.dgUserID;
-      this.data.reportedByID = this.reportedByCtrl.value.dgUserID; 
+
+      if (this.orderedByCtrl.value.dgUserID > 0) 
+        this.data.orderedByID = this.orderedByCtrl.value.dgUserID;
+      if (this.referredByCtrl.value.dgUserID > 0) 
+        this.data.referredByID = this.referredByCtrl.value.dgUserID;
+      if (this.replyToCtrl.value.dgUserID > 0) 
+        this.data.replyToID = this.replyToCtrl.value.dgUserID;
+      if (this.reportedByCtrl.value.dgUserID > 0) 
+        this.data.reportedByID = this.reportedByCtrl.value.dgUserID;
+
       this.data.patientID = this.patientID;
       this.data.visitID = this.visitID;
       this.data.invoiceHdrID = this.invoiceHdrID;
@@ -87,10 +92,15 @@ export class LaboratoryComponent implements OnInit {
     this.MasterDataService.GetLaboratoryByID(id).subscribe(hr => {
       this.data = hr;
 
-      this.orderedByCtrl = new FormControl({dgUserID: hr.orderedByResource.dgUserID, userFullName: hr.orderedByResource.userFullName});
-      this.referredByCtrl = new FormControl({dgUserID: hr.referredByResource.dgUserID, userFullName: hr.referredByResource.userFullName});
-      this.replyToCtrl = new FormControl({dgUserID: hr.replyToResource.dgUserID, userFullName: hr.replyToResource.userFullName});
-      this.reportedByCtrl = new FormControl({dgUserID: hr.reportedByResource.dgUserID, userFullName: hr.reportedByResource.userFullName});
+      if (this.data.orderedByID != null)
+        this.orderedByCtrl = new FormControl({dgUserID: hr.orderedByResource.dgUserID, userFullName: hr.orderedByResource.userFullName});
+      if (this.data.referredByID != null)
+        this.referredByCtrl = new FormControl({dgUserID: hr.referredByResource.dgUserID, userFullName: hr.referredByResource.userFullName});
+      if (this.data.replyToID != null)
+        this.replyToCtrl = new FormControl({dgUserID: hr.replyToResource.dgUserID, userFullName: hr.replyToResource.userFullName});
+      if (this.data.reportedByID != null)
+        this.reportedByCtrl = new FormControl({dgUserID: hr.reportedByResource.dgUserID, userFullName: hr.reportedByResource.userFullName});
+
 
       for (let modLn of hr.laboratoryLnResource)
       {

@@ -130,9 +130,11 @@
               <md-list>
                 <md-list-item>
                   <p md-line>
-                    <span> <small>Ordered By: </small><small class="highlighter">{{historyList.orderedByResource.userFullName}}</small> </span>
-                    <span> <small>Reply To: </small><small class="highlighter">{{historyList.replyToResource.userFullName}}</small> </span>
-                    <span> <small>Reported By: </small><small class="highlighter">{{historyList.reportedByResource.userFullName}}</small> </span>
+                      <span> <small>Ordered By: </small><small class="highlighter">{{historyList.orderedByResource?.userFullName}}</small> </span>
+                      <span> <small>Referred By: </small><small class="highlighter">{{historyList.referredByResource?.userFullName}}</small> </span>
+                      <span> <small>Reply To: </small><small class="highlighter">{{historyList.replyToResource?.userFullName}}</small> </span>
+                      <span> <small>Reported By: </small><small class="highlighter">{{historyList.reportedByResource?.userFullName}}</small> </span>
+
                   </p>
                   <p md-line>
                     <span> <small>Priority: </small><small class="highlighter">{{historyList.priority}}</small> </span>
