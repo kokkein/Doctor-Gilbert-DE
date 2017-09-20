@@ -240,6 +240,18 @@ export class MasterDataService {
         return this.http.get(this.sURL + 'medicalRecord/RadiologyByVisit/' + visitID)
                     .map(res => res.json());
     }
+    GetProcedure() {
+        return this.http.get(this.sURL + 'medicalRecord/Procedure')
+                    .map(res => res.json());
+    }
+    GetProcedureByID(id) {
+        return this.http.get(this.sURL + 'medicalRecord/Procedure/' + id)
+                    .map(res => res.json());
+    }
+    GetProcedureByVisit(visitID) {
+        return this.http.get(this.sURL + 'medicalRecord/ProcedureByVisit/' + visitID)
+                    .map(res => res.json());
+    }
     GetLaboratoryItem() {
         return this.http.get(this.sURL + 'LaboratoryItem')
                     .map(res => res.json());
@@ -358,6 +370,10 @@ export class MasterDataService {
         return this.http.post(this.sURL + 'MedicalRecord/CreateLaboratory', LaboratoryHdr)
                     .map(res => res.json());
     }
+    CreateProcedureRecord(ProcedureHdr) {
+        return this.http.post(this.sURL + 'MedicalRecord/CreateProcedure', ProcedureHdr)
+                    .map(res => res.json());
+    }
 
 //Update Data
     UpdateMOHVisitTypeByID(MOHVisitType) {
@@ -458,6 +474,10 @@ export class MasterDataService {
     }
     UpdateLaboratoryRecordByID(Laboratory) {
         return this.http.put(this.sURL + 'MedicalRecord/Laboratory/' + Laboratory.laboratoryHdrID, Laboratory)
+                    .map(res => res.json());
+    }
+    UpdateProcedureRecordByID(Procedure) {
+        return this.http.put(this.sURL + 'MedicalRecord/Procedure/' + Procedure.procedureHdrID, Procedure)
                     .map(res => res.json());
     }
 }

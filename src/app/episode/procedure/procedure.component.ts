@@ -18,14 +18,13 @@ export class ProcedureComponent implements OnInit {
   @Input() invoiceHdrID: number;
   
   returnedResult: any = {};
-  data: any = {laboratoryLnResource:{}};
+  data: any = {procedureLnResource:{}};
 
   displayDialog: boolean;
   selectedOption: string;
   toShow: boolean = true;
 
-  historyRecord;
-  laboratoryUnit;
+  historyRecord; 
   doctors;
   orderedByCtrl: FormControl;
   referredByCtrl: FormControl; 
@@ -47,7 +46,7 @@ export class ProcedureComponent implements OnInit {
   
     onSave() {
       //clear editing cached
-      this.data.laboratoryLnResource = this.returnedResult;
+      this.data.procedureLnResource = this.returnedResult;
 
       if (this.orderedByCtrl.value.dgUserID > 0) 
         this.data.orderedByID = this.orderedByCtrl.value.dgUserID;
@@ -59,19 +58,19 @@ export class ProcedureComponent implements OnInit {
       this.data.invoiceHdrID = this.invoiceHdrID;
       this.data.CreatedByID = 1;
 
-      if (this.data.laboratoryHdrID){
-        this.MasterDataService.CreateLaboratoryRecord(this.data)
+      if (this.data.procedureHdrID){
+        this.MasterDataService.CreateProcedureRecord(this.data)
           .subscribe(x => {
-              this.GDService.openSnackBar(x.laboratoryOrderNo + '" Updated Sucessfully!','Info');
+              this.GDService.openSnackBar(x.procedureOrderNo + '" Updated Sucessfully!','Info');
               this.getHistory();
         }, err => {
               this.GDService.openSnackBar(err ,'Info');
         } );
       }
       else
-        this.MasterDataService.CreateLaboratoryRecord(this.data)
+        this.MasterDataService.CreateProcedureRecord(this.data)
           .subscribe(x => {
-            this.GDService.openSnackBar(x.laboratoryOrderNo + '" Created Sucessfully!','Info');
+            this.GDService.openSnackBar(x.procedureOrderNo + '" Created Sucessfully!','Info');
             this.getHistory();
         }, err => {
               this.GDService.openSnackBar(err,'Info');
@@ -79,7 +78,7 @@ export class ProcedureComponent implements OnInit {
     }
 
   loadDatabyID(id){
-    this.MasterDataService.GetLaboratoryByID(id).subscribe(hr => {
+    this.MasterDataService.GetProcedureByID(id).subscribe(hr => {
       this.data = hr;
 
       if (this.data.orderedByID != null)
@@ -88,7 +87,7 @@ export class ProcedureComponent implements OnInit {
         this.referredByCtrl = new FormControl({dgUserID: hr.referredByResource.dgUserID, userFullName: hr.referredByResource.userFullName});
        
 
-      for (let modLn of hr.laboratoryLnResource)
+      for (let modLn of hr.procedureLnResource)
       {
         modLn.catalog = modLn.chargeItemResource.catalog;
         modLn.chargeItemCode = modLn.chargeItemResource.chargeItemCode;
@@ -96,7 +95,7 @@ export class ProcedureComponent implements OnInit {
         modLn.chargeItemDescription = modLn.chargeItemResource.chargeItemDescription;
       }
 
-      this.returnedResult = hr.laboratoryLnResource;
+      this.returnedResult = hr.procedureLnResource;
     }, err => {
       this.GDService.openSnackBar(err,'Info');
     } );
@@ -115,15 +114,13 @@ export class ProcedureComponent implements OnInit {
             .map(val => this.displayDoctorFn(val))
             .map(name => this.filterDoctors(name)); 
         });
-        this.MasterDataService.GetLaboratoryUnit().subscribe(laboratoryUnit => {
-          this.laboratoryUnit = laboratoryUnit;
-        });
+
         this.getHistory();
 
   }
 
   getHistory(){
-      this.MasterDataService.GetLaboratoryByVisit(this.visitID).subscribe(hr => {
+      this.MasterDataService.GetProcedureByVisit(this.visitID).subscribe(hr => {
         this.historyRecord = hr;
       });
   }

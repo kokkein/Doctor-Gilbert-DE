@@ -22,7 +22,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppComponent, DialogResultExampleDialog } from './app.component';
 import { MaterialModule, MdNativeDateModule, MdChipsModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { DxCheckBoxModule } from 'devextreme-angular';
+import { DxCheckBoxModule, DxChartModule } from 'devextreme-angular';
 import { DxDataGridModule } from 'devextreme-angular';
 
 import 'hammerjs';
@@ -164,7 +164,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     BrowserAnimationsModule, FlexLayoutModule, GrowlModule, TieredMenuModule,
     InputMaskModule, ChipsModule, EditorModule, SharedModule, CheckboxModule,
     Ng2GoogleChartsModule, TreeTableModule, DataTableModule, DialogModule, ScheduleModule, CalendarModule,
-    DxCheckBoxModule, DxSelectBoxModule, DxTextBoxModule, DxTemplateModule, DxBoxModule, DxTextAreaModule,
+    DxCheckBoxModule, DxSelectBoxModule, DxTextBoxModule, DxTemplateModule, DxBoxModule, DxTextAreaModule, DxChartModule,
     DxDataGridModule, CommonModule
   ],
   providers: [NodeService, CarService, EventService, MasterDataService, SpeechRecognitionService,Service, Company, AuthService, GDService,

@@ -22,13 +22,10 @@ export class LandingComponent implements OnInit {
   ngOnInit() {
   }
 
-  searchPatient() {
+  quickSearch() {
     if (this.patient) {
       this.router.navigate(['/patient/', this.patient]);
-    }
-  }
-  searchEpisode() {
-    if (this.episode) {
+    } else if (this.episode) {
       this.router.navigate(['/episode/', this.episode]);
     }
   }
