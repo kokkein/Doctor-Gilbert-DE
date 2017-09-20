@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DxTreeMapModule } from 'devextreme-angular';
 
 @Component({
   selector: 'app-landing',
@@ -9,6 +10,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class LandingComponent implements OnInit {
   patient;
   episode;
+  citiesPopulations:any;
+  citiesPopulations1:any;
+  citiesPopulations2:any;
+  citiesPopulations3:any;
 
   tiles = [
     {text: 'One', cols: 3, rows: 1, color: 'lightblue'},
@@ -17,7 +22,73 @@ export class LandingComponent implements OnInit {
     {text: 'Four', cols: 2, rows: 1, color: '#DDBDF1'},
   ];
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private route: ActivatedRoute, private router: Router) { 
+
+    this.citiesPopulations = [{
+      name: "Total: 12",
+      items: [{
+          value: 1,
+          name: "New Visit",
+          country: "New Visit"
+      }, {
+          value: 2,
+          name: "Routine Visit",
+          country: "Routine Visit"
+      }, {
+          value: 6,
+          name: "FOMEMA",
+          country: "FOMEMA"
+      }]
+  }];
+    this.citiesPopulations1 = [{
+      name: "Total: 16",
+      items: [{
+          value: 12,
+          name: "New Visit",
+          country: "New Visit"
+      }, {
+          value: 2,
+          name: "Routine Visit",
+          country: "Routine Visit"
+      }, {
+          value: 2,
+          name: "FOMEMA",
+          country: "FOMEMA"
+      }]
+  }];
+    this.citiesPopulations2 = [{
+      name: "Total: 8",
+      items: [{
+          value: 2,
+          name: "New Visit",
+          country: "New Visit"
+      }, {
+          value: 2,
+          name: "Routine Visit",
+          country: "Routine Visit"
+      }, {
+          value: 6,
+          name: "FOMEMA",
+          country: "FOMEMA"
+      }]
+  }];
+    this.citiesPopulations3 = [{
+      name: "Total: 3",
+      items: [{
+          value: 1,
+          name: "New Visit",
+          country: "New Visit"
+      }, {
+          value: 2,
+          name: "Routine Visit",
+          country: "Routine Visit"
+      }, {
+          value: 3,
+          name: "FOMEMA",
+          country: "FOMEMA"
+      }]
+  }];
+  }
 
   ngOnInit() {
   }

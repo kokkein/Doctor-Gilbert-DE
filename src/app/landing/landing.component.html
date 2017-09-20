@@ -7,7 +7,14 @@
                         <md-card-subtitle></md-card-subtitle>
                       </md-card-header> 
                       <md-card-content>
-                        <h1 style="text-align:center">15</h1>
+
+                        <dx-tree-map
+                        [dataSource]="citiesPopulations"
+                        resolveLabelOverflow="ellipsis">
+                        <dxo-size
+                        [height]="150"></dxo-size>
+                        </dx-tree-map>
+
                       </md-card-content>
                     </md-card>
               </div>
@@ -18,7 +25,12 @@
                         <md-card-subtitle></md-card-subtitle>
                       </md-card-header> 
                       <md-card-content>
-                          <h1 style="text-align:center">12</h1>
+                        <dx-tree-map
+                        [dataSource]="citiesPopulations1"
+                        resolveLabelOverflow="ellipsis">
+                        <dxo-size
+                        [height]="150"></dxo-size>
+                        </dx-tree-map>
                       </md-card-content> 
                     </md-card>
               </div>
@@ -29,7 +41,12 @@
                         <md-card-subtitle></md-card-subtitle>
                       </md-card-header> 
                       <md-card-content>
-                          <h1 style="text-align:center">8</h1>
+                        <dx-tree-map
+                        [dataSource]="citiesPopulations2"
+                        resolveLabelOverflow="ellipsis">
+                        <dxo-size
+                        [height]="150"></dxo-size>
+                        </dx-tree-map>
                       </md-card-content>
                     </md-card>
               </div>
@@ -40,7 +57,12 @@
                         <md-card-subtitle></md-card-subtitle>
                       </md-card-header> 
                       <md-card-content>
-                          <h1 style="text-align:center">3</h1>
+                        <dx-tree-map
+                        [dataSource]="citiesPopulations3"
+                        resolveLabelOverflow="ellipsis">
+                        <dxo-size
+                        [height]="150"></dxo-size>
+                        </dx-tree-map>
                       </md-card-content> 
                     </md-card>
               </div>
@@ -104,5 +126,3 @@
               </div>
 
           </div>
-
-      
