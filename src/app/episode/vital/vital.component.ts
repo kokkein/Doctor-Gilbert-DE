@@ -18,88 +18,77 @@ export class VitalComponent implements OnInit {
   @Input() patientID: number;
   @Input() visitID: number;
   @Input() invoiceHdrID: number;
-  weatherData:any;
+
+  weatherData:any; 
+  data: any = {};
+ 
+  toShow: boolean = true;
+
+  historyRecord;  
+
   constructor(private GDService: GDService, private MasterDataService: MasterDataService, private _element: ElementRef, public dialog: MdDialog, private router: Router) { 
-    this.weatherData =  [{
-      month: "January",
-      avgT: 9.8,
-      minT: 4.1,
-      maxT: 15.5,
-      prec: 109
-  }, {
-      month: "February",
-      avgT: 11.8,
-      minT: 5.8,
-      maxT: 17.8,
-      prec: 104
-  }, {
-      month: "March",
-      avgT: 13.4,
-      minT: 7.2,
-      maxT: 19.6,
-      prec: 92
-  }, {
-      month: "April",
-      avgT: 15.4,
-      minT: 8.1,
-      maxT: 22.8,
-      prec: 30
-  }, {
-      month: "May",
-      avgT: 18,
-      minT: 10.3,
-      maxT: 25.7,
-      prec: 10
-  }, {
-      month: "June",
-      avgT: 20.6,
-      minT: 12.2,
-      maxT: 29,
-      prec: 2
-  }, {
-      month: "July",
-      avgT: 22.2,
-      minT: 13.2,
-      maxT: 31.3,
-      prec: 2
-  }, {
-      month: "August",
-      avgT: 22.2,
-      minT: 13.2,
-      maxT: 31.1,
-      prec: 1
-  }, {
-      month: "September",
-      avgT: 21.2,
-      minT: 12.4,
-      maxT: 29.9,
-      prec: 8
-  }, {
-      month: "October",
-      avgT: 17.9,
-      minT: 9.7,
-      maxT: 26.1,
-      prec: 24
-  }, {
-      month: "November",
-      avgT: 12.9,
-      minT: 6.2,
-      maxT: 19.6,
-      prec: 64
-  }, {
-      month: "December",
-      avgT: 9.6,
-      minT: 3.4,
-      maxT: 15.7,
-      prec: 76
-  }];
+
   }
+    customizeTooltip(arg: any) {
+        var items = arg.valueText.split("\n"),
+            color = arg.point.getColor();
+        items.forEach(function(item, index) {
+            if(item.indexOf(arg.seriesName) === 0) {
+                items[index] = $("<b>")
+                                .text(item)
+                                .css("color", color)
+                                .prop("outerHTML");
+            }
+        });
+        return { text: items.join("\n") };
+    }
+    calculateBMI(){
+        if (this.data.weight > 0 && this.data.height > 0 )
+            this.data.bMI = this.data.weight / ((this.data.height/100) * 2)
+    }
 
+    onSave() { 
 
+        this.data.patientID = this.patientID;
+        this.data.visitID = this.visitID; 
+        this.data.CreatedByID = 1;
+    
+        if (this.data.vitalSignID){
+          this.MasterDataService.CreateVitalSignRecord(this.data)
+            .subscribe(x => {
+                this.GDService.openSnackBar('Updated Sucessfully!','Info');
+                this.getHistory();
+          }, err => {
+                this.GDService.openSnackBar(err ,'Info');
+          } );
+        }
+        else
+          this.MasterDataService.CreateVitalSignRecord(this.data)
+            .subscribe(x => {
+              this.GDService.openSnackBar('Created Sucessfully!','Info');
+              this.getHistory();
+          }, err => {
+                this.GDService.openSnackBar(err,'Info');
+          } );
+    }
 
-
-
-  ngOnInit() {
-  }
+    loadDatabyID(id){
+      this.MasterDataService.GetVitalSignByID(id).subscribe(hr => {
+        this.data = hr;
+    
+      }, err => {
+        this.GDService.openSnackBar(err,'Info');
+      } );
+    }
+    
+    ngOnInit() {
+        this.getHistory();
+    }
+    
+    getHistory(){
+        this.MasterDataService.GetVitalSignByVisit(this.visitID).subscribe(hr => {
+          this.historyRecord = hr;
+        });
+    }
 
 }

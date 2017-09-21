@@ -216,6 +216,18 @@ export class MasterDataService {
         return this.http.get(this.sURL + 'DiagnosisSearch/' + searchKey)
                     .map(res => res.json());
     }
+    GetVitalSign() {
+        return this.http.get(this.sURL + 'medicalRecord/VitalSign')
+                    .map(res => res.json());
+    }
+    GetVitalSignByID(id) {
+        return this.http.get(this.sURL + 'medicalRecord/VitalSign/' + id)
+                    .map(res => res.json());
+    }
+    GetVitalSignByVisit(visitID) {
+        return this.http.get(this.sURL + 'medicalRecord/VitalSignByVisit/' + visitID)
+                    .map(res => res.json());
+    }
     GetLaboratory() {
         return this.http.get(this.sURL + 'medicalRecord/Laboratory')
                     .map(res => res.json());
@@ -374,6 +386,10 @@ export class MasterDataService {
         return this.http.post(this.sURL + 'MedicalRecord/CreateProcedure', ProcedureHdr)
                     .map(res => res.json());
     }
+    CreateVitalSignRecord(VitalSignBy) {
+        return this.http.post(this.sURL + 'MedicalRecord/CreateVitalSign', VitalSignBy)
+                    .map(res => res.json());
+    }
 
 //Update Data
     UpdateMOHVisitTypeByID(MOHVisitType) {
@@ -478,6 +494,10 @@ export class MasterDataService {
     }
     UpdateProcedureRecordByID(Procedure) {
         return this.http.put(this.sURL + 'MedicalRecord/Procedure/' + Procedure.procedureHdrID, Procedure)
+                    .map(res => res.json());
+    }
+    UpdateVitalSignRecordByID(VitalSign) {
+        return this.http.put(this.sURL + 'MedicalRecord/VitalSign/' + VitalSign.vitalSignID, VitalSign)
                     .map(res => res.json());
     }
 }

@@ -14,15 +14,14 @@ export class LandingComponent implements OnInit {
   citiesPopulations1:any;
   citiesPopulations2:any;
   citiesPopulations3:any;
-
-  tiles = [
-    {text: 'One', cols: 3, rows: 1, color: 'lightblue'},
-    {text: 'Two', cols: 1, rows: 2, color: 'lightgreen'},
-    {text: 'Three', cols: 1, rows: 1, color: 'lightpink'},
-    {text: 'Four', cols: 2, rows: 1, color: '#DDBDF1'},
-  ];
+  option:any;
 
   constructor(private route: ActivatedRoute, private router: Router) { 
+
+    this.option={ 
+        palette: "harmony light",
+        colorizeGroups: false 
+    };
 
     this.citiesPopulations = [{
       name: "Total: 12",
@@ -91,6 +90,15 @@ export class LandingComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  customizeTooltip(arg) {
+    var data = arg.node.data;
+
+    return {
+        text: arg.node.isLeaf() ? ("<b>" + data.name +
+            "</b><br/>Number of Patient: " + arg.valueText) : null
+    };
   }
 
   quickSearch() {

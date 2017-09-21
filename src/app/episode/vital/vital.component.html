@@ -4,7 +4,7 @@
   <form>
     <div class="toolbar">
       <div>
-        <button md-raised-button>Save</button>
+        <button md-raised-button (click)="onSave()">Save</button>
         <button md-raised-button>New</button>
       </div>
     </div>
@@ -18,57 +18,60 @@
           <div class="container">
               <div> 
                   <md-form-field class="input-full-width">
-                    <input mdInput placeholder="Height" >
+                    <input mdInput placeholder="Height" (change)="calculateBMI()" [(ngModel)]="data.height" name="Height">
                   </md-form-field>
               </div>
               <div> 
                   <md-form-field class="input-full-width">
-                    <input mdInput placeholder="Weight" >
+                    <input mdInput placeholder="Weight" (change)="calculateBMI()" [(ngModel)]="data.weight" name="Weight">
                   </md-form-field>
               </div>
               <div> 
                   <md-form-field class="input-full-width">
-                    <input mdInput placeholder="Body Mass Index (BMI)" >
+                    <input mdInput placeholder="Body Mass Index (BMI)" disabled [(ngModel)]="data.bMI" name="BMI">
                   </md-form-field>
               </div>
           </div>
           <div class="container">
             <div> 
               <md-form-field class="input-full-width">
-                <input mdInput placeholder="Temperature" >
+                <input mdInput placeholder="Temperature °C" [(ngModel)]="data.temperature" name="Temperature">
               </md-form-field>
             </div>
             <div> 
                 <md-form-field class="input-full-width">
-                  <input mdInput placeholder="Blood Pressure" >
+                  <input mdInput placeholder="Blood Pressure - Systolic" [(ngModel)]="data.systolic" name="Systolic">
                 </md-form-field>
             </div>
             <div> 
                 <md-form-field class="input-full-width">
-                  <input mdInput placeholder="Heart Rate" >
+                  <input mdInput placeholder="Blood Pressure - Diastolic" [(ngModel)]="data.diastolic" name="Diastolic">
                 </md-form-field>
             </div>
+
           </div>
           <div class="container">
             <div> 
+                <md-form-field class="input-full-width">
+                  <input mdInput placeholder="Heart Rate" [(ngModel)]="data.heartRate" name="HeartRate">
+                </md-form-field>
+            </div>
+            <div> 
               <md-form-field class="input-full-width">
-                <input mdInput placeholder="Respiratory Rate" >
+                <input mdInput placeholder="Respiratory Rate" [(ngModel)]="data.respiratoryRate" name="RespiratoryRate">
               </md-form-field>
             </div>
             <div> 
                 <md-form-field class="input-full-width">
-                  <input mdInput placeholder="O2 Saturation" >
+                  <input mdInput placeholder="O2 Saturation" [(ngModel)]="data.saturation" name="Saturation">
                 </md-form-field>
             </div>
-
-            <div>
-
-            </div>
+ 
           </div>
           <div class="container">
               <div> 
                 <md-form-field class="input-full-width">
-                  <input mdInput placeholder="Medical Note" >
+                  <input mdInput placeholder="Medical Note" [(ngModel)]="data.remark" name="Remark">
                 </md-form-field>
               </div>
           </div>
@@ -82,6 +85,61 @@
       <md-card-subtitle></md-card-subtitle>
     </md-card-header>
     <md-card-content>
+  <dx-chart
+  id="chart" [dataSource]="historyRecord" style="width:1200px;display:block" defaultPane="bottomPane" title="Vital Signs History">
+  <dxi-series pane="topPane" color="#b0daff" type="rangeBar" rangeValue1Field="systolic" rangeValue2Field="diastolic" name="Blood Pressure Ranges">
+  </dxi-series>
+
+  <dxi-series pane="topPane" valueField="heartRate" name="Heart Rate">
+      <dxo-label [visible]="true" [customizeText]="precipitationCustomizeText">
+      </dxo-label>
+  </dxi-series>
+
+  <dxi-series type="spline" valueField="temperature" name="Temperature °C">
+      <dxo-label [visible]="true" [customizeText]="precipitationCustomizeText">
+      </dxo-label>
+  </dxi-series>
+
+  <dxi-series type="spline" valueField="respiratoryRate" name="respiratory Rate">
+      <dxo-label [visible]="true" [customizeText]="precipitationCustomizeText">
+      </dxo-label>
+  </dxi-series>
+
+  <dxi-series type="spline" valueField="bmi" name="BMI">
+      <dxo-label [visible]="true" [customizeText]="precipitationCustomizeText">
+      </dxo-label>
+  </dxi-series>
+
+  <dxo-common-series-settings argumentField="created">
+    <dxo-label>
+      <dxo-format
+          type="shortdate" >
+      </dxo-format>
+  </dxo-label>
+  </dxo-common-series-settings>
+  <dxi-pane name="topPane"></dxi-pane>
+  <dxi-pane name="bottomPane"></dxi-pane>
+
+  <dxi-value-axis pane="topPane" [min]="50" [max]="150">
+      <dxo-grid [visible]="true"></dxo-grid>
+      <dxo-title text="Blood Pressure, mmHg"></dxo-title>
+  </dxi-value-axis>
+
+  <dxi-value-axis pane="bottomPane">
+    <dxo-grid [visible]="true"></dxo-grid>
+    <dxo-title text="Temperature, BMI"></dxo-title>
+  </dxi-value-axis>
+
+  <dxo-legend verticalAlignment="bottom" horizontalAlignment="center"> </dxo-legend>
+  <dxo-export [enabled]="true"></dxo-export>
+  <dxo-tooltip
+    [enabled]="true"
+    [shared]="true"
+    [customizeTooltip]="customizeTooltip">
+    <dxo-format type="largeNumber" [precision]="1"></dxo-format>
+  </dxo-tooltip>
+</dx-chart>
+<!--
   <dx-chart
   id="chart"
   [dataSource]="weatherData"
@@ -135,6 +193,7 @@
   </dxo-legend>
   <dxo-export [enabled]="true"></dxo-export>
 </dx-chart>
+-->
 </md-card-content>
 </md-card>
 </section>

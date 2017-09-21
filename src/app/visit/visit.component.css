@@ -19,7 +19,7 @@
   margin-bottom: 15px;
   margin-left: 1px;
 }
-
+ 
 :host /deep/ .mat-checkbox {
   font-size: 12px;
   margin-top: 2px;

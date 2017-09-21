@@ -10,7 +10,11 @@
 
                         <dx-tree-map
                         [dataSource]="citiesPopulations"
+                        [colorizer]="option"
                         resolveLabelOverflow="ellipsis">
+                        <dxo-tooltip
+                        [enabled]="true" 
+                        [customizeTooltip]="customizeTooltip"></dxo-tooltip>
                         <dxo-size
                         [height]="150"></dxo-size>
                         </dx-tree-map>
@@ -27,7 +31,11 @@
                       <md-card-content>
                         <dx-tree-map
                         [dataSource]="citiesPopulations1"
+                        [colorizer]="option"
                         resolveLabelOverflow="ellipsis">
+                        <dxo-tooltip
+                        [enabled]="true" 
+                        [customizeTooltip]="customizeTooltip"></dxo-tooltip>
                         <dxo-size
                         [height]="150"></dxo-size>
                         </dx-tree-map>
@@ -43,7 +51,11 @@
                       <md-card-content>
                         <dx-tree-map
                         [dataSource]="citiesPopulations2"
+                        [colorizer]="option"
                         resolveLabelOverflow="ellipsis">
+                        <dxo-tooltip
+                        [enabled]="true" 
+                        [customizeTooltip]="customizeTooltip"></dxo-tooltip>
                         <dxo-size
                         [height]="150"></dxo-size>
                         </dx-tree-map>
@@ -59,7 +71,11 @@
                       <md-card-content>
                         <dx-tree-map
                         [dataSource]="citiesPopulations3"
+                        [colorizer]="option"
                         resolveLabelOverflow="ellipsis">
+                        <dxo-tooltip
+                        [enabled]="true" 
+                        [customizeTooltip]="customizeTooltip"></dxo-tooltip>
                         <dxo-size
                         [height]="150"></dxo-size>
                         </dx-tree-map>
@@ -83,15 +99,15 @@
                               <md-list-option>
                                 Issue referal letter to mr Wong
                               </md-list-option>
-                              <md-list-option checked>
+                              <md-list-option selected="true">
                                 Replenish stock level
                               </md-list-option>
                               <md-list-option>
                                 Important appointment at 4pm
                               </md-list-option>
-                              <md-list-option>
+                              <md-list-option selected="true">
                                 Locum Interview at 5pm
-                              </md-list-option>
+                              </md-list-option > 
                               <md-list-option>
                                 Onsite visit @ 2pm - KPJ 
                               </md-list-option>
