@@ -86,7 +86,7 @@
     </md-card-header>
     <md-card-content>
   <dx-chart
-  id="chart" [dataSource]="historyRecord" style="width:1200px;display:block" defaultPane="bottomPane" title="Vital Signs History">
+  id="chart" (onPointClick)="pointClick($event)" [dataSource]="historyRecord" style="width:1200px;display:block" defaultPane="bottomPane" title="Vital Signs History">
   <dxi-series pane="topPane" color="#b0daff" type="rangeBar" rangeValue1Field="systolic" rangeValue2Field="diastolic" name="Blood Pressure Ranges">
   </dxi-series>
 

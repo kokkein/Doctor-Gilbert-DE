@@ -37,7 +37,7 @@ import { EpisodeComponent } from './episode/episode.component';
 import { DocumentComponent } from './episode/document/document.component';
 import { RadiologyComponent, DialogResultRadiologySearch } from './episode/radiology/radiology.component';
 import { LaboratoryComponent, DialogResultLaboratorySearch } from './episode/laboratory/laboratory.component';
-import { MedicationComponent } from './episode/medication/medication.component';
+import { MedicationComponent, DialogResultMedicationSearch } from './episode/medication/medication.component';
 import { TimelineComponent } from './episode/timeline/timeline.component';
 import { DiagnosisComponent } from './episode/diagnosis/diagnosis.component';
 import { VitalSignsComponent } from './episode/vital-signs/vital-signs.component';
@@ -153,7 +153,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     LaboratoryComponent,
     MedicationComponent,
     TimelineComponent, 
-    DiagnosisComponent, DialogResultRadiologySearch, DialogResultLaboratorySearch, DialogResultProcedureSearch,
+    DiagnosisComponent, DialogResultRadiologySearch, DialogResultLaboratorySearch, DialogResultProcedureSearch, DialogResultMedicationSearch,
     VitalSignsComponent, DialogResultExampleDialog, AppointmentComponent, DepartmentComponent, InsuranceComponent, PayorComponent, MOHVisitTypeComponent, PurposeOfVisitComponent, MasterDataComponent, InventoryBrandComponent, InventoryGenericComponent, InventoryAtcComponent, InventoryCategoryComponent, InventorySubcategoryComponent, InventoryMedicationclassComponent, InventoryPregnancycategoryComponent, SpecialityComponent, DiagnosisMasterComponent, LandingComponent, ProcedureComponent, PriceStructureComponent, InventoryPriceStructureComponent, Auth0UserProfileComponent, BillingComponent, ChargeItemComponent
   ],
   imports: [
@@ -175,7 +175,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
       deps: [Http, RequestOptions]
     }
   ],
-  entryComponents: [DialogResultExampleDialog, DialogResultRadiologySearch, DialogResultProcedureSearch, DialogResultLaboratorySearch],
+  entryComponents: [DialogResultExampleDialog, DialogResultRadiologySearch, DialogResultProcedureSearch, DialogResultLaboratorySearch, DialogResultMedicationSearch],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

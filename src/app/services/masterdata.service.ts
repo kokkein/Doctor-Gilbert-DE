@@ -120,8 +120,8 @@ export class MasterDataService {
         return this.http.get(this.sURL + 'Inventory/' + id)
                     .map(res => res.json());
     }
-    GetInventoryBySearch(keyword) {
-        return this.http.get(this.sURL + 'InventorySearch/' + keyword)
+    GetMedicationBySearch(keyword) {
+        return this.http.get(this.sURL + 'MedicationSearch/' + keyword)
                     .map(res => res.json());
     }
     GetInventoryBrand() {

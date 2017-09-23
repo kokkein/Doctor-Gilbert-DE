@@ -1,0 +1,36 @@
+<h2 md-dialog-title>Medication Listing</h2>
+<md-dialog-content>
+    <div>
+        <dx-data-grid  #grid
+        id="gridContainer" 
+        [dataSource]="dataSource"
+        [allowColumnResizing]="true"
+         
+        [columnAutoWidth]="true"
+        [allowColumnReordering]="true"
+        (onSelectionChanged)="getSelectedItem()">    
+        <dxo-selection
+        
+        mode="multiple"></dxo-selection>
+        <dxo-filter-row
+        [visible]="true"></dxo-filter-row>
+        <dxo-paging [pageSize]="10"></dxo-paging>
+        <dxo-pager 
+            [showPageSizeSelector]="true"
+            [allowedPageSizes]="[5,10]"
+            [showInfo]="true">
+        </dxo-pager>
+        <dxo-group-panel [visible]="true"></dxo-group-panel>
+        <dxo-grouping #expand [autoExpandAll]="true"></dxo-grouping>
+        <dxi-column dataField="catalog" [groupIndex]="0"></dxi-column>
+        <dxi-column dataField="chargeItemCode"></dxi-column>
+        <dxi-column dataField="chargeItemDescription"></dxi-column>
+        <dxi-column dataField="analysis"></dxi-column>
+        </dx-data-grid>
+  
+      </div>
+      
+</md-dialog-content>
+<md-dialog-actions>
+  <button md-button [md-dialog-close]="data.returnedResult">Close</button>
+</md-dialog-actions>

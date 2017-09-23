@@ -1,6 +1,6 @@
 import { GDService } from './../../services/GDService.service';
 import { MasterDataService } from 'app/services/masterdata.service';
-import { Component, OnInit, Inject, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, Input, enableProdMode } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormArray, FormBuilder  } from '@angular/forms';
 import { AnimationTransitionEvent, ViewEncapsulation, ElementRef } from '@angular/core';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
@@ -46,7 +46,16 @@ export class VitalComponent implements OnInit {
         if (this.data.weight > 0 && this.data.height > 0 )
             this.data.bMI = this.data.weight / ((this.data.height/100) * 2)
     }
-
+    pointClick(e: any) {
+      console.log(e);
+      
+      var point = e.target;
+      if(point.isSelected()) {
+          point.clearSelection();
+      } else { 
+          point.select();
+      }
+  }
     onSave() { 
 
         this.data.patientID = this.patientID;
