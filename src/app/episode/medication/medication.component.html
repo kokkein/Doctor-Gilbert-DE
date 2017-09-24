@@ -3,7 +3,7 @@
       <button md-raised-button>Save</button>
       <button md-raised-button>New</button>
   </div>
-
+  <!--{{myForm.value|json}}-->
   <md-form-field class="input-full-width">
       <md-chip-list mdPrefix #chipList1>
           <md-chip *ngFor="let medication of medicationList" [selectable]="selectable"
@@ -74,23 +74,23 @@
                   <div class="container">
                       <div class="two">
                           <md-form-field class="input-full-width">
-                              <input mdInput placeholder="Dosage" formControlName="dosage" (ngModelChange)="mychange($event)">
+                              <input mdInput placeholder="Dosage" formControlName="dosage" (ngModelChange)="calculateQty(i)">
                               <md-hint align="end">1 tablet(s) 1 times(s) a day for 1 days(s)</md-hint>
                             </md-form-field>
                       </div>
                       <div>
                           <md-form-field class="input-full-width">
-                            <input mdInput type="number" placeholder="Take/Apply" formControlName="take">
+                            <input mdInput type="number" placeholder="Take/Apply" formControlName="take" (ngModelChange)="calculateQty(i)">
                           </md-form-field>
                         </div>
                         <div>
                           <md-form-field class="input-full-width">
-                            <input mdInput type="number" placeholder="Time per Day" formControlName="time">
+                            <input mdInput type="number" placeholder="Time per Day" formControlName="time" (ngModelChange)="calculateQty(i)">
                           </md-form-field>
                         </div>
                         <div>
                           <md-form-field class="input-full-width">
-                            <input mdInput type="number" placeholder="Number of Day" formControlName="day">
+                            <input mdInput type="number" placeholder="Number of Day" formControlName="day" (ngModelChange)="calculateQty(i)">
                           </md-form-field>
                         </div>
                         <div>
@@ -115,13 +115,13 @@
                   <div class="container">
                       <div>
                           <md-form-field class="input-full-width">
-                            <input mdInput type="number" placeholder="Total Quantity" formControlName="totalQty" >
+                            <input mdInput type="number" placeholder="Total Quantity" formControlName="totalQty" (ngModelChange)="calculatePrice(i)">
                             <md-hint align="end">Avail Qty: 503</md-hint>
                           </md-form-field>
                       </div>
                       <div>
                           <md-form-field class="input-full-width">
-                            <input mdInput type="number" placeholder="Price" name="price" value="103.00" formControlName="price">
+                            <input mdInput type="number" placeholder="Price" name="price" formControlName="price" (ngModelChange)="calculatePrice(i)">
                           </md-form-field>
                         </div>
                         <div>

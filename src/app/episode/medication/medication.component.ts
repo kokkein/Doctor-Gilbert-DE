@@ -45,14 +45,55 @@ export class MedicationComponent implements OnInit {
   addOnBlur: boolean = true;
   message: string = '';
   
-  mychange(e){
-    (<FormArray>this.myForm.controls['prescribeList']).at(0).patchValue({
-      totalQty: '18'
-    });
+  calculateQty(index){
+    const control = <FormArray>this.myForm.controls['prescribeList'];
+    const cc = control.at(index);
     
+    if (cc.get("take").value && cc.get("day").value && cc.get("time").value)
+      (<FormArray>this.myForm.controls['prescribeList']).at(index).patchValue({
+        totalQty: cc.get("take").value * cc.get("day").value * cc.get("time").value
+      });
  
     //console.log((<FormArray>this.myForm.controls['prescribeList']).at(0).discAmt.value);
   }
+  calculatePrice(index){
+    const control = <FormArray>this.myForm.controls['prescribeList'];
+    const cc = control.at(index);
+    
+    if (cc.get("totalQty").value && cc.get("price").value)
+      (<FormArray>this.myForm.controls['prescribeList']).at(index).patchValue({
+        totalPrice: cc.get("totalQty").value * cc.get("price").value
+      });
+  }
+
+  addMedication(event) {
+    // add Medication to the list
+    const control = <FormArray>this.myForm.controls['prescribeList'];
+    control.push(this.initMedication(event.source.value.chargeItemCode + ', ' +event.source.value.chargeItemDescription));
+    /*
+    control.valueChanges.subscribe(c => {
+      let index = 0;
+      for (let cc of c) {
+        //console.log(cc.take); 
+        if (cc.take && cc.day && cc.time)
+          //console.log(cc.take * cc.day * cc.time);
+          cc.totalQty= '18';
+          index++;
+
+    }
+
+      //console.log("form value updates to", c.length)
+      //console.log("form value updates to", c["0"].take)
+    });
+    
+*/    
+    }
+    
+    removeMedication(i: number) {
+    // remove Medication from the list
+    const control = <FormArray>this.myForm.controls['prescribeList'];
+    control.removeAt(i);
+    }
 
   displayMedicationFn(value: any): string {
     return value && typeof value === 'object' ? value.chargeItemDescription : value;
@@ -124,18 +165,7 @@ export class MedicationComponent implements OnInit {
     });
 }
 
-addMedication(event) {
-// add Medication to the list
-const control = <FormArray>this.myForm.controls['prescribeList'];
-control.push(this.initMedication(event.source.value.chargeItemCode + ', ' +event.source.value.chargeItemDescription));
-control.valueChanges.subscribe(c => console.log("form value updates to", c["0"].take));
-}
 
-removeMedication(i: number) {
-// remove Medication from the list
-const control = <FormArray>this.myForm.controls['prescribeList'];
-control.removeAt(i);
-}
 
 update(e) {
   console.log(e.component.cellValue(e.component.getRowIndexByKey(e.key)));
