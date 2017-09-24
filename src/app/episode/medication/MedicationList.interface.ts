@@ -21,5 +21,6 @@ export interface Prescription {
     instructionOne: string;
     instructionTwo: string;
     indication: string;
+    availQty: number;
 
 }

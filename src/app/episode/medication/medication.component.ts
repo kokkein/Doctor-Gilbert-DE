@@ -69,24 +69,15 @@ export class MedicationComponent implements OnInit {
   addMedication(event) {
     // add Medication to the list
     const control = <FormArray>this.myForm.controls['prescribeList'];
-    control.push(this.initMedication(event.source.value.chargeItemCode + ', ' +event.source.value.chargeItemDescription));
-    /*
-    control.valueChanges.subscribe(c => {
-      let index = 0;
-      for (let cc of c) {
-        //console.log(cc.take); 
-        if (cc.take && cc.day && cc.time)
-          //console.log(cc.take * cc.day * cc.time);
-          cc.totalQty= '18';
-          index++;
 
-    }
+    this.MasterDataService.GetQRStockBalanceByID(event.source.value.chargeItemID)
+      .subscribe(res => { 
+          control.push(this.initMedication(event.source.value.chargeItemCode + ', ' +event.source.value.chargeItemDescription, res.totalRemainingQuantity)); 
+       }, err => {
+          control.push(this.initMedication(event.source.value.chargeItemCode + ', ' +event.source.value.chargeItemDescription, 0)); 
+      }); 
 
-      //console.log("form value updates to", c.length)
-      //console.log("form value updates to", c["0"].take)
-    });
     
-*/    
     }
     
     removeMedication(i: number) {
@@ -142,7 +133,7 @@ export class MedicationComponent implements OnInit {
        }).delay(500).map(() => this.medications);
   }
 
-  initMedication(drugName: string) {
+  initMedication(drugName: string, availQty: number) {
     // initialize our Medication
     return this._fb.group({
         drugCode:[''],
@@ -162,6 +153,7 @@ export class MedicationComponent implements OnInit {
         instructionOne: [''],
         instructionTwo: [''],
         indication: [''],
+        availQty: [availQty],
     });
 }
 

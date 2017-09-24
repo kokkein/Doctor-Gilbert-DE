@@ -281,6 +281,10 @@ export class MasterDataService {
         return this.http.get(this.sURL + 'ChargeItemList/' + ChargeItemType)
                     .map(res => res.json());
     }
+    GetQRStockBalanceByID(ChargeItemID) {
+        return this.http.get(this.sURL + 'Transaction/QRStockBalance/' + ChargeItemID)
+                    .map(res => res.json());
+    }
 //Add Data
     CreatePurposeOfVisit(PurposeOfVisit) {
         return this.http.post(this.sURL + 'VisitPurpose', PurposeOfVisit)
