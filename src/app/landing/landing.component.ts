@@ -31,28 +31,44 @@ export class LandingComponent implements OnInit {
           country: "New Visit"
       }, {
           value: 2,
-          name: "Routine Visit",
-          country: "Routine Visit"
+          name: "Follow-up Visit",
+          country: "Follow-up Visit"
       }, {
+        value: 4,
+        name: "Walk-In",
+        country: "Walk-In"
+      }, {
+        value: 3,
+        name: "FOMEMA",
+        country: "FOMEMA"
+      },{
           value: 6,
-          name: "FOMEMA",
-          country: "FOMEMA"
+          name: "Referral",
+          country: "Referral"
       }]
   }];
     this.citiesPopulations1 = [{
       name: "Total: 16",
       items: [{
           value: 12,
-          name: "New Visit",
-          country: "New Visit"
+          name: "Walk-In",
+          country: "Walk-In"
+      }, {
+        value: 2,
+        name: "Follow-up Visit",
+        country: "Follow-up Visit"
+      }, {
+        value: 3,
+        name: "Lab test",
+        country: "Lab test"
+     }, {
+          value: 1,
+          name: "Collect Report",
+          country: "Collect Report"
       }, {
           value: 2,
-          name: "Routine Visit",
-          country: "Routine Visit"
-      }, {
-          value: 2,
-          name: "FOMEMA",
-          country: "FOMEMA"
+          name: "Referral",
+          country: "Referral"
       }]
   }];
     this.citiesPopulations2 = [{
@@ -66,9 +82,17 @@ export class LandingComponent implements OnInit {
           name: "Routine Visit",
           country: "Routine Visit"
       }, {
+        value: 2,
+        name: "Follow-up Visit",
+        country: "Follow-up Visit"
+      }, {
+        value: 3,
+        name: "Lab test",
+        country: "Lab test"
+      }, {
           value: 6,
-          name: "FOMEMA",
-          country: "FOMEMA"
+          name: "Referral",
+          country: "Referral"
       }]
   }];
     this.citiesPopulations3 = [{
@@ -79,12 +103,16 @@ export class LandingComponent implements OnInit {
           country: "New Visit"
       }, {
           value: 2,
-          name: "Routine Visit",
-          country: "Routine Visit"
+          name: "Follow-up Visit",
+          country: "Follow-up Visit"
+      }, {
+            value: 3,
+            name: "Lab test",
+            country: "Lab test"
       }, {
           value: 3,
-          name: "FOMEMA",
-          country: "FOMEMA"
+          name: "Collect Report",
+          country: "Collect Report"
       }]
   }];
   }

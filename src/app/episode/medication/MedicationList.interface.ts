@@ -4,6 +4,8 @@ export interface MedicationList {
 }
 
 export interface Prescription {
+    chargeItemID: number;  // required field
+    stockLockingID: number;
     drugCode: string;  // required field
     drugName: string;  // required field
     dosage: string;  // required field

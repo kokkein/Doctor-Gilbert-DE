@@ -394,6 +394,10 @@ export class MasterDataService {
         return this.http.post(this.sURL + 'MedicalRecord/CreateVitalSign', VitalSignBy)
                     .map(res => res.json());
     }
+    CreateStockLocking(StockLocking) {
+        return this.http.post(this.sURL + 'Transaction/StockLocking', StockLocking)
+                    .map(res => res.json());
+    }
 
 //Update Data
     UpdateMOHVisitTypeByID(MOHVisitType) {

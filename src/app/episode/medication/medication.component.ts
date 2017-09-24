@@ -27,6 +27,7 @@ export class MedicationComponent implements OnInit {
 
   returnedResult: any = {};
   data: any = {};
+  stockLocking: any = {};
   medicationCtrl: FormControl;
   filteredMedications: any;
   medicationTemplateCtrl: FormControl;
@@ -49,12 +50,24 @@ export class MedicationComponent implements OnInit {
     const control = <FormArray>this.myForm.controls['prescribeList'];
     const cc = control.at(index);
     
-    if (cc.get("take").value && cc.get("day").value && cc.get("time").value)
+    if (cc.get("take").value && cc.get("day").value && cc.get("time").value){
       (<FormArray>this.myForm.controls['prescribeList']).at(index).patchValue({
-        totalQty: cc.get("take").value * cc.get("day").value * cc.get("time").value
-      });
+        totalQty: cc.get("take").value * cc.get("day").value * cc.get("time").value});
+
+      //Locking the stock to prevent over issue
+      this.stockLocking.ChargeItemID = cc.get("chargeItemID").value;
+      this.stockLocking.Quantity = cc.get("take").value * cc.get("day").value * cc.get("time").value;
+
+      this.MasterDataService.CreateStockLocking(this.stockLocking)
+        .subscribe(x => {
+          (<FormArray>this.myForm.controls['prescribeList']).at(index).patchValue({
+            stockLockingID: x.stockLockingID});
+        }, err => {
+              this.GDService.openSnackBar(err ,'Info');
+        } );
+
+    }
  
-    //console.log((<FormArray>this.myForm.controls['prescribeList']).at(0).discAmt.value);
   }
   calculatePrice(index){
     const control = <FormArray>this.myForm.controls['prescribeList'];
@@ -72,19 +85,19 @@ export class MedicationComponent implements OnInit {
 
     this.MasterDataService.GetQRStockBalanceByID(event.source.value.chargeItemID)
       .subscribe(res => { 
-          control.push(this.initMedication(event.source.value.chargeItemCode + ', ' +event.source.value.chargeItemDescription, res.totalRemainingQuantity)); 
+          control.push(this.initMedication(event.source.value.chargeItemID, event.source.value.chargeItemCode + ', ' +event.source.value.chargeItemDescription, res.totalRemainingQuantity)); 
        }, err => {
-          control.push(this.initMedication(event.source.value.chargeItemCode + ', ' +event.source.value.chargeItemDescription, 0)); 
+          control.push(this.initMedication(event.source.value.chargeItemID, event.source.value.chargeItemCode + ', ' +event.source.value.chargeItemDescription, 0)); 
       }); 
 
     
-    }
+  }
     
-    removeMedication(i: number) {
-    // remove Medication from the list
-    const control = <FormArray>this.myForm.controls['prescribeList'];
-    control.removeAt(i);
-    }
+  removeMedication(i: number) {
+  // remove Medication from the list
+  const control = <FormArray>this.myForm.controls['prescribeList'];
+  control.removeAt(i);
+  }
 
   displayMedicationFn(value: any): string {
     return value && typeof value === 'object' ? value.chargeItemDescription : value;
@@ -133,9 +146,11 @@ export class MedicationComponent implements OnInit {
        }).delay(500).map(() => this.medications);
   }
 
-  initMedication(drugName: string, availQty: number) {
+  initMedication(chargeItemID: number, drugName: string, availQty: number) {
     // initialize our Medication
     return this._fb.group({
+        chargeItemID: [chargeItemID],  // required field
+        stockLockingID: [''],
         drugCode:[''],
         drugName: [drugName],
         dosage: [''],
