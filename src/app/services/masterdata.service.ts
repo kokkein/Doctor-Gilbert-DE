@@ -508,4 +508,9 @@ export class MasterDataService {
         return this.http.put(this.sURL + 'MedicalRecord/VitalSign/' + VitalSign.vitalSignID, VitalSign)
                     .map(res => res.json());
     }
+    UpdateStockLockingByID(StockLocking) {
+        console.log(StockLocking);
+        return this.http.put(this.sURL + 'Transaction/StockLocking/'+ StockLocking.StockLockingID, StockLocking)
+                    .map(res => res.json());
+    }
 }

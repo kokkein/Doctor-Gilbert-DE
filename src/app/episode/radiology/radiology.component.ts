@@ -49,13 +49,19 @@ export class RadiologyComponent implements OnInit {
                : this.doctors;
   }
   constructor(private GDService: GDService, private MasterDataService: MasterDataService, private _element: ElementRef, public dialog: MdDialog, private router: Router) {
+    this.resetForm();
+  }
+  
+  resetForm(){
+    this.data ={};
+    this.returnedResult={};
     this.orderedByCtrl = new FormControl({dgUserID: 0, userFullName: ''});
     this.referredByCtrl = new FormControl({dgUserID: 0, userFullName: ''});
     this.replyToCtrl = new FormControl({dgUserID: 0, userFullName: ''});
     this.reportedByCtrl = new FormControl({dgUserID: 0, userFullName: ''});
     this.radiologistCtrl = new FormControl({dgUserID: 0, userFullName: ''});
   }
-  
+
     onSave() {
       //clear editing cached
       this.data.radiologyLnResource = this.returnedResult;
@@ -80,6 +86,7 @@ export class RadiologyComponent implements OnInit {
           .subscribe(x => {
               this.GDService.openSnackBar(x.radiologyOrderNo + '" Updated Sucessfully!','Info');
               this.getHistory();
+              this.resetForm();
         }, err => {
               this.GDService.openSnackBar(err ,'Info');
         } );
@@ -89,6 +96,7 @@ export class RadiologyComponent implements OnInit {
           .subscribe(x => {
             this.GDService.openSnackBar(x.radiologyOrderNo + '" Created Sucessfully!','Info');
             this.getHistory();
+            this.resetForm();
         }, err => {
               this.GDService.openSnackBar(err,'Info');
         } );

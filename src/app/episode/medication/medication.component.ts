@@ -57,14 +57,30 @@ export class MedicationComponent implements OnInit {
       //Locking the stock to prevent over issue
       this.stockLocking.ChargeItemID = cc.get("chargeItemID").value;
       this.stockLocking.Quantity = cc.get("take").value * cc.get("day").value * cc.get("time").value;
-
-      this.MasterDataService.CreateStockLocking(this.stockLocking)
+      
+      if (!cc.get("stockLockingID").value)
+      {
+        console.log("to create");
+        this.MasterDataService.CreateStockLocking(this.stockLocking)
+          .subscribe(x => {
+            (<FormArray>this.myForm.controls['prescribeList']).at(index).patchValue({
+              stockLockingID: x.stockLockingID});
+          }, err => {
+                this.GDService.openSnackBar(err ,'Info');
+          } );
+      }
+      else
+      {
+        console.log("to update");
+        this.stockLocking.StockLockingID = cc.get("stockLockingID").value;
+        this.MasterDataService.UpdateStockLockingByID(this.stockLocking)
         .subscribe(x => {
           (<FormArray>this.myForm.controls['prescribeList']).at(index).patchValue({
             stockLockingID: x.stockLockingID});
         }, err => {
               this.GDService.openSnackBar(err ,'Info');
         } );
+      }
 
     }
  
