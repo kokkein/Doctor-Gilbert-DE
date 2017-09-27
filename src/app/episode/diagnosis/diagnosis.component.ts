@@ -1,7 +1,6 @@
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit, Input } from '@angular/core';
-import { Message } from 'primeng/primeng';
+import { Component, OnInit, Input } from '@angular/core'; 
 import { Observable } from 'rxjs/Observable';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MasterDataService } from "app/services/masterdata.service";

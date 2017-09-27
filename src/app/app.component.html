@@ -19,8 +19,11 @@
       </button>
       <div class="demo-toolbar">
         <h1>Doctor G</h1>
-        <button md-button (click)="toggleFullscreen()" title="Toggle fullscreen">
+       <!-- <button md-button (click)="toggleFullscreen()" title="Toggle fullscreen">
           <i class="material-icons">fullscreen</i> Fullscreen
+        </button>-->
+        <button md-button (click)="toggleAppointment()" title="Appointment">
+          <i class="material-icons">event</i> Appointment
         </button>
         <button md-button (click)="toggleMenu()" title="Toggle Main Menu">
           <i class="material-icons">apps</i> Menu
@@ -33,8 +36,8 @@
         </button>
 
         
-        <button md-button (click)="toggleLanding()" title="Landing Page">
-          <i class="material-icons">home</i> Landing Page
+        <button md-button (click)="toggleLanding()" title="Home">
+          <i class="material-icons">home</i> Home
         </button>
 
         <button md-button title="Login"

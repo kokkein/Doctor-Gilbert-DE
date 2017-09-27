@@ -126,13 +126,30 @@
                         <md-card-subtitle></md-card-subtitle>
                       </md-card-header> 
                       <md-card-content>
+                        <div> 
                           <md-form-field class="input-full-width">
-                              <input mdInput placeholder="Search Patient..." [(ngModel)]="patient">
-                            </md-form-field>
+                            <input mdInput placeholder="Search Patient..." [mdAutocomplete]="reactivePatient" [formControl]="patientCtrl" name="patientID">
+                          </md-form-field>
+              
+                          <md-autocomplete #reactivePatient="mdAutocomplete" [displayWith]="displayPatientFn">
+                            <md-option *ngFor="let patient of filteredPatients | async" [value]="patient">
+                              <span>{{patient.name}}, </span>
+                              <small class="highlighter"><strong>NRIC:</strong>{{patient.identificationValue}}, <strong>Gender:</strong>{{patient.gender}}, <strong>D.O.B:</strong>{{patient.dob | date: 'dd/MM/yyyy'}}</small>
+                            </md-option>
+                          </md-autocomplete>
+                        </div>
                             
-                            <md-form-field class="input-full-width">
-                                <input mdInput placeholder="Search Episode..." [(ngModel)]="episode">
-                            </md-form-field>
+                            <div> 
+                              <md-form-field class="input-full-width">
+                                <input mdInput placeholder="Search Episode..." [mdAutocomplete]="autoEpisode" [formControl]="episodeCtrl">
+                              </md-form-field>
+                              <md-autocomplete #autoEpisode="mdAutocomplete" [displayWith]="displayEpisodeFn">
+                                <md-option *ngFor="let episode of filteredEpisode | async" [value]="episode">
+                                  <span>{{episode.visitNo}} </span>
+                                  <small class="highlighter"> - ({{episode.patientResource.patientID}},{{episode.patientResource.name}}, D.O.B:{{episode.patientResource.dob | date: 'dd/MM/yyyy'}}) </small>
+                                </md-option>
+                              </md-autocomplete>
+                            </div>
                       </md-card-content> 
                       <md-card-actions>
                         <button md-raised-button color="accent" (click)="quickSearch()"><i class="material-icons">search</i>Search...</button>

@@ -43,6 +43,9 @@ export class AppComponent {
   toggleBilling(){
     this.router.navigate(['/billing']);
   }
+  toggleAppointment(){
+    this.router.navigate(['/appointment']);
+  }
 
   toggleFullscreen() {
     let elem = this._element.nativeElement.querySelector('.demo-content');

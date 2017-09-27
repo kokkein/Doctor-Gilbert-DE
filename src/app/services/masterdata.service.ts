@@ -52,6 +52,10 @@ export class MasterDataService {
         return this.http.get(this.sURL + 'MedicalRecord/Visit/' + id)
                     .map(res => res.json());
     }
+    GetVisitBySearch(visitNo) {
+        return this.http.get(this.sURL + 'MedicalRecord/VisitSearch/' + visitNo)
+                    .map(res => res.json());
+    }
     GetPayor() {
         return this.http.get(this.sURL + 'payor')
                     .map(res => res.json());
@@ -78,6 +82,10 @@ export class MasterDataService {
     }
     GetPatientByID(id) {
         return this.http.get(this.sURL + 'Patient/Patient/' + id)
+                    .map(res => res.json());
+    }
+    GetPatientBySearch(name) {
+        return this.http.get(this.sURL + 'patient/PatientSearch/' + name)
                     .map(res => res.json());
     }
     GetMOHVisitType() {
