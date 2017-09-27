@@ -12,16 +12,16 @@ export interface Prescription {
     take: number;
     time: number;
     day: number;
-    totalQty: number;
-    uom: string;
-    price: number;
-    discPerc: number;
-    discAmt: number;
-    totalPrice: number;
+    totalQuantity: number;
+    inventoryUOMID: string;
+    originalPrice: number;
+    discountPerc: number;
+    discountAmount: number;
+    billPrice: number;
     route: string;
-    necessary: boolean;
-    instructionOne: string;
-    instructionTwo: string;
+    whenNecessary: boolean;
+    instruction1: string;
+    instruction2: string;
     indication: string;
     availQty: number;
 

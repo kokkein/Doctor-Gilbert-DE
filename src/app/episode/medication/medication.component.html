@@ -1,9 +1,10 @@
 <div class="toolbar">
   <div>
-      <button md-raised-button>Save</button>
+      <button md-raised-button (click)="onSave()">Save</button>
       <button md-raised-button>New</button>
   </div>
   <!--{{myForm.value|json}}-->
+{{data|json}}
   <md-form-field class="input-full-width">
       <md-chip-list mdPrefix #chipList1>
           <md-chip *ngFor="let medication of medicationList" [selectable]="selectable"
@@ -59,8 +60,8 @@
       </div>
 
 <form [formGroup]="myForm" novalidate (ngSubmit)="save(myForm)">
-        <div formArrayName="prescribeList">
-          <div *ngFor="let medication of myForm.controls.prescribeList.controls; let i=index" >
+        <div formArrayName="medicationLnResource">
+          <div *ngFor="let medication of myForm.controls.medicationLnResource.controls; let i=index" >
 
         <md-expansion-panel #myPanel expanded="true">
             <md-expansion-panel-header>
@@ -94,9 +95,9 @@
                           </md-form-field>
                         </div>
                         <div>
-                            <md-select class="input-full-width" placeholder="UOM" name="uom" formControlName="uom">
-                              <md-option *ngFor="let uom of uoms" [value]="uom.value" >
-                                {{uom.viewValue}}
+                            <md-select class="input-full-width" placeholder="UOM" name="inventoryUOMID" formControlName="inventoryUOMID">
+                              <md-option *ngFor="let uom of uoms" [value]="uom.inventoryUOMID" >
+                                {{uom.uomName}}
                               </md-option>
                             </md-select>
                         </div>
@@ -108,35 +109,35 @@
                           </md-select>
                         </div>
                         <div>
-                            <md-checkbox formControlName="necessary">When Necessary</md-checkbox>
+                            <md-checkbox formControlName="whenNecessary">When Necessary</md-checkbox>
                         </div>
                   </div>
                 
                   <div class="container">
                       <div>
                           <md-form-field class="input-full-width">
-                            <input mdInput type="number" placeholder="Total Quantity" formControlName="totalQty" (ngModelChange)="calculatePrice(i)">
+                            <input mdInput type="number" placeholder="Total Quantity" formControlName="totalQuantity" (ngModelChange)="calculatePrice(i)">
                             <md-hint align="end">Avail Quantity: <b class="highlighter">{{medication.controls["availQty"].value}}</b></md-hint>
                           </md-form-field>
                       </div>
                       <div>
                           <md-form-field class="input-full-width">
-                            <input mdInput type="number" placeholder="Price" name="price" formControlName="price" (ngModelChange)="calculatePrice(i)">
+                            <input mdInput type="number" placeholder="Price" name="originalPrice" formControlName="originalPrice" (ngModelChange)="calculatePrice(i)">
                           </md-form-field>
                         </div>
                         <div>
                             <md-form-field class="input-full-width">
-                              <input mdInput type="number" placeholder="Discount Apply (%)" formControlName="discPerc">
+                              <input mdInput type="number" placeholder="Discount Apply (%)" formControlName="discountPerc">
                             </md-form-field>
                         </div>
                         <div>
                             <md-form-field class="input-full-width">
-                              <input mdInput type="number" placeholder="Discount Apply (Amount)" formControlName="discAmt">
+                              <input mdInput type="number" placeholder="Discount Apply (Amount)" formControlName="discountAmount">
                             </md-form-field>
                         </div>
                         <div>
                           <md-form-field class="input-full-width">
-                            <input mdInput type="number" placeholder="Total Price" name="totalPrice" value="403.00" formControlName="totalPrice">
+                            <input mdInput type="number" placeholder="Total Price" name="billPrice" value="403.00" formControlName="billPrice">
                           </md-form-field>
                         </div>
                   </div>
@@ -144,12 +145,12 @@
                   <div class="container"> 
                       <div>
                         <md-form-field class="input-full-width">
-                          <input mdInput placeholder="Instruction #1" formControlName="instructionOne">
+                          <input mdInput placeholder="Instruction #1" formControlName="instruction1">
                         </md-form-field>
                       </div>
                       <div>
                         <md-form-field class="input-full-width">
-                          <input mdInput placeholder="Instruction #2" formControlName="instructionTwo">
+                          <input mdInput placeholder="Instruction #2" formControlName="instruction2">
                         </md-form-field>
                       </div>
                       <div>
@@ -224,63 +225,100 @@
       </div>
   </md-card-content>
 </md-card>
+<p>
+  <md-accordion>
+    <md-expansion-panel *ngFor="let historyList of historyRecord">
+        <md-expansion-panel-header>
+          <mat-panel-description></mat-panel-description>
+          <mat-panel-title>
+            <strong><h4 md-line><i class="material-icons">timer</i> {{historyList.created | date:'medium'}} - <strong>{{historyList.medicationOrderNo}}</strong></h4></strong>
+          </mat-panel-title>
+        </md-expansion-panel-header>
+            <md-list>
+              <md-list-item>
+                <p md-line>
+                    <span> <small>Ordered By: </small><small class="highlighter">{{historyList.orderedByResource?.userFullName}}</small> </span>
+                </p>
+                <p md-line>
+                  <span> <small>Medical Note: </small><small class="highlighter">{{historyList.remark}}</small> </span>
+                </p> 
+                <p md-line>
+                    <span> 
+                    <table class="orderTable">
+                        <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Code</th>
+                          <th>Description</th>
+                          <th>Dosage</th>
+                          <th>Take</th>
+                          <th>Time</th>
+                          <th>Day</th>
+                          <th>UOM</th>
+                          <th>Route</th>
+                          <th>When Necessary</th>
+                          <th>Total Quantity</th>
+                        <!--  <th>Price</th>
+                          <th>Discount (%)</th>
+                          <th>Discount (Amount)</th>
+                          <th>Total Price</th>
+                        -->
+                          <th>Instruction #1</th>
+                          <th>Instruction #2</th>
+                          <th>Indication</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let orderList of historyList.medicationLnResource; let i=index">
+                        <td>{{i+1}}</td>
+                        <td>{{orderList.chargeItemResource.chargeItemCode}}</td>
+                        <td>{{orderList.chargeItemResource.chargeItemDescription}}</td>
+                        <td>{{orderList.dosage}}</td>
+                        <td>{{orderList.take}}</td>
+                        <td>{{orderList.time}}</td>
+                        <td>{{orderList.day}}</td>
+                        <td>{{orderList.inventoryUOMID}}</td>
+                        <td>{{orderList.route}}</td>
+                        <td>{{orderList.whenNecessary}}</td>
+                        <td>{{orderList.totalQuantity}}</td>
+                        <!--
+                        <td>{{orderList.originalPrice}}</td>
+                        <td>{{orderList.discountPerc}}</td>
+                        <td>{{orderList.discountAmount}}</td>
+                        
+                        <td>{{orderList.billPrice}}</td>
+                        -->
+                        <td>{{orderList.instruction1}}</td>
+                        <td>{{orderList.instruction2}}</td>
+                        <td>{{orderList.indication}}</td>
 
-<md-list>
-  <h3 md-subheader>Medical History</h3>
-  <md-list-item *ngFor="let medication of medicationRecord" >
-    <h4 md-line><i class="material-icons">timer</i> {{medication.id}} <strong>{{medication.medicationCode}}</strong></h4>
-      <button md-icon-button (click)="open()">
-        <i class="material-icons">mode_edit</i>
-      </button>
-      <button md-icon-button (click)="open()">
-        <i class="material-icons">delete</i>
-      </button>
-    <p md-line>
-      <span> <small>Dosage: </small><b>{{medication.dosage}}</b> </span>
-      <span> <small>UOM: </small><b>{{medication.uom}}</b> </span>
-      <span> <small>Route: </small><b>{{medication.route}}</b> </span>
-      <span> <small>Dosage Label: </small><b>{{medication.dosageLabel}}</b> </span>
-    </p>
-    <p md-line>
-      <span> <small>Take/Apply: </small><b>{{medication.take}}</b></span>
-      <span> <small>Time per Day: </small><b>{{medication.time}}</b></span>
-      <span> <small>Number of Day: </small><b>{{medication.numberOfDay}}</b> </span>
-      <span> <small>Total Quantity: </small><b>{{medication.totalQty}}</b> </span>
-    </p>
-    <p md-line>
-      <span> <small>Instruction #1: </small><b>{{medication.instruction1}}</b> </span>
-      <span> <small>Instruction #2: </small><b>{{medication.instruction2}}</b> </span>
-      <span> <small>Indication: </small><b>{{medication.indication}}</b> </span>
-    </p>
-    <p md-line>
-      <span> <small>Selling Price: </small><b>{{medication.price}}</b> </span>
-      <span> <small>Total Price: </small><b>{{medication.totalPrice}}</b> </span>
-      <span> <small>Discount Apply: </small><b>{{medication.discount}}</b> </span>
-      <span> <small>Ordered By: </small><b>{{medication.orderBy}}</b> </span>
-    </p>
-    <p md-line>
-      <span> <b>{{medication.note}} </b></span>
-    </p>
-    <p md-line class="pRight"> 
-      <small>
-        <span><i>Current Version: </i><b>{{medication.version}}</b></span>
-      </small>
-    </p>
-    <p md-line class="pRight">
-      <small>      
-        <span><i>Updated: </i><b>{{medication.updated | date:'medium'}}</b> </span>
-        <span>, <i>By: </i><b>{{medication.updatedBy}}</b></span>
-      </small>
-    </p>
-    <p md-line class="pRight">
-      <small>
-        <span><i>Created: </i><b>{{medication.created | date:'medium'}}</b> </span>
-        <span>, <i>By: </i><b>{{medication.createdBy}}</b></span>
-      </small>
-    </p>
-
-  </md-list-item>
-</md-list>
-
+                        </tr>
+                        </tbody>
+                    </table>
+                  </span>
+                </p> 
+              </md-list-item>
+            </md-list>
+            <md-action-row>
+                <span>Current Version: <small class="highlighter">{{historyList.version}}</small></span>  
+                <span>, Updated: <small class="highlighter">{{historyList.created | date:'medium'}}</small> </span>
+                <span>, By: <small class="highlighter">{{historyList.createdByResource.userFullName}}</small></span>
+                <span>, Created: <small class="highlighter">{{historyList.created | date:'medium'}}</small> </span>
+                <span>, By: <small class="highlighter">{{historyList.createdByResource.userFullName}}</small></span>
+                <span> </span>
+                <button md-raised-button (click)="loadDatabyID(historyList.medicationHdrID)"><i class="material-icons">mode_edit</i>Edit</button>
+                <button md-raised-button (click)="loadDatabyID(historyList.medicationHdrID)"><i class="material-icons">delete</i>Delete</button>
+              </md-action-row>
+    </md-expansion-panel>
+  </md-accordion>
 </section>
+
+
+
+
+
+
+
+
+
 

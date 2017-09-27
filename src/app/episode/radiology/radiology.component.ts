@@ -62,45 +62,45 @@ export class RadiologyComponent implements OnInit {
     this.radiologistCtrl = new FormControl({dgUserID: 0, userFullName: ''});
   }
 
-    onSave() {
-      //clear editing cached
-      this.data.radiologyLnResource = this.returnedResult;
-      
-      if (this.orderedByCtrl.value.dgUserID > 0) 
-        this.data.orderedByID = this.orderedByCtrl.value.dgUserID;
-      if (this.referredByCtrl.value.dgUserID > 0) 
-        this.data.referredByID = this.referredByCtrl.value.dgUserID;
-      if (this.replyToCtrl.value.dgUserID > 0) 
-        this.data.replyToID = this.replyToCtrl.value.dgUserID;
-      if (this.reportedByCtrl.value.dgUserID > 0) 
-        this.data.reportedByID = this.reportedByCtrl.value.dgUserID;
-      if (this.radiologistCtrl.value.dgUserID > 0) 
-        this.data.radiologistID = this.radiologistCtrl.value.dgUserID;
-      this.data.patientID = this.patientID;
-      this.data.visitID = this.visitID;
-      this.data.invoiceHdrID = this.invoiceHdrID;
-      this.data.CreatedByID = 1;
+  onSave() {
+    //clear editing cached
+    this.data.radiologyLnResource = this.returnedResult;
+    
+    if (this.orderedByCtrl.value.dgUserID > 0) 
+      this.data.orderedByID = this.orderedByCtrl.value.dgUserID;
+    if (this.referredByCtrl.value.dgUserID > 0) 
+      this.data.referredByID = this.referredByCtrl.value.dgUserID;
+    if (this.replyToCtrl.value.dgUserID > 0) 
+      this.data.replyToID = this.replyToCtrl.value.dgUserID;
+    if (this.reportedByCtrl.value.dgUserID > 0) 
+      this.data.reportedByID = this.reportedByCtrl.value.dgUserID;
+    if (this.radiologistCtrl.value.dgUserID > 0) 
+      this.data.radiologistID = this.radiologistCtrl.value.dgUserID;
+    this.data.patientID = this.patientID;
+    this.data.visitID = this.visitID;
+    this.data.invoiceHdrID = this.invoiceHdrID;
+    this.data.CreatedByID = 1;
 
-      if (this.data.radiologyHdrID){
-        this.MasterDataService.CreateRadiologyRecord(this.data)
-          .subscribe(x => {
-              this.GDService.openSnackBar(x.radiologyOrderNo + '" Updated Sucessfully!','Info');
-              this.getHistory();
-              this.resetForm();
-        }, err => {
-              this.GDService.openSnackBar(err ,'Info');
-        } );
-      }
-      else
-        this.MasterDataService.CreateRadiologyRecord(this.data)
-          .subscribe(x => {
-            this.GDService.openSnackBar(x.radiologyOrderNo + '" Created Sucessfully!','Info');
+    if (this.data.radiologyHdrID){
+      this.MasterDataService.CreateRadiologyRecord(this.data)
+        .subscribe(x => {
+            this.GDService.openSnackBar(x.radiologyOrderNo + '" Updated Sucessfully!','Info');
             this.getHistory();
             this.resetForm();
-        }, err => {
-              this.GDService.openSnackBar(err,'Info');
-        } );
+      }, err => {
+            this.GDService.openSnackBar(err ,'Info');
+      } );
     }
+    else
+      this.MasterDataService.CreateRadiologyRecord(this.data)
+        .subscribe(x => {
+          this.GDService.openSnackBar(x.radiologyOrderNo + '" Created Sucessfully!','Info');
+          this.getHistory();
+          this.resetForm();
+      }, err => {
+            this.GDService.openSnackBar(err,'Info');
+      } );
+  }
 
   loadDatabyID(id){
     this.MasterDataService.GetRadiologyByID(id).subscribe(hr => {

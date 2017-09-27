@@ -118,6 +118,7 @@ export class LandingComponent implements OnInit {
   }
 
   ngOnInit() {
+    
   }
 
   customizeTooltip(arg) {

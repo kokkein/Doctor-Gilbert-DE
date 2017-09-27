@@ -25,8 +25,9 @@ export class MedicationComponent implements OnInit {
   @Input() visitID: number;
   @Input() invoiceHdrID: number;
 
+  historyRecord:any;
   returnedResult: any = {};
-  data: any = {};
+  data: any = {medicationLnResource:{}};
   stockLocking: any = {};
   medicationCtrl: FormControl;
   filteredMedications: any;
@@ -34,6 +35,7 @@ export class MedicationComponent implements OnInit {
   filteredMedicationTemplates: any;
   filteredOrderedBy: any;
   doctors;
+  uoms;
   orderedByCtrl: FormControl;
   displayDrug;
   medications: any[] = [];
@@ -47,12 +49,12 @@ export class MedicationComponent implements OnInit {
   message: string = '';
   
   calculateQty(index){
-    const control = <FormArray>this.myForm.controls['prescribeList'];
+    const control = <FormArray>this.myForm.controls['medicationLnResource'];
     const cc = control.at(index);
     
     if (cc.get("take").value && cc.get("day").value && cc.get("time").value){
-      (<FormArray>this.myForm.controls['prescribeList']).at(index).patchValue({
-        totalQty: cc.get("take").value * cc.get("day").value * cc.get("time").value});
+      (<FormArray>this.myForm.controls['medicationLnResource']).at(index).patchValue({
+        totalQuantity: cc.get("take").value * cc.get("day").value * cc.get("time").value});
 
       //Locking the stock to prevent over issue
       this.stockLocking.ChargeItemID = cc.get("chargeItemID").value;
@@ -60,10 +62,10 @@ export class MedicationComponent implements OnInit {
       
       if (!cc.get("stockLockingID").value)
       {
-        console.log("to create");
+        //console.log("to create");
         this.MasterDataService.CreateStockLocking(this.stockLocking)
           .subscribe(x => {
-            (<FormArray>this.myForm.controls['prescribeList']).at(index).patchValue({
+            (<FormArray>this.myForm.controls['medicationLnResource']).at(index).patchValue({
               stockLockingID: x.stockLockingID});
           }, err => {
                 this.GDService.openSnackBar(err ,'Info');
@@ -71,11 +73,11 @@ export class MedicationComponent implements OnInit {
       }
       else
       {
-        console.log("to update");
+        //console.log("to update");
         this.stockLocking.StockLockingID = cc.get("stockLockingID").value;
         this.MasterDataService.UpdateStockLockingByID(this.stockLocking)
         .subscribe(x => {
-          (<FormArray>this.myForm.controls['prescribeList']).at(index).patchValue({
+          (<FormArray>this.myForm.controls['medicationLnResource']).at(index).patchValue({
             stockLockingID: x.stockLockingID});
         }, err => {
               this.GDService.openSnackBar(err ,'Info');
@@ -86,18 +88,18 @@ export class MedicationComponent implements OnInit {
  
   }
   calculatePrice(index){
-    const control = <FormArray>this.myForm.controls['prescribeList'];
+    const control = <FormArray>this.myForm.controls['medicationLnResource'];
     const cc = control.at(index);
     
-    if (cc.get("totalQty").value && cc.get("price").value)
-      (<FormArray>this.myForm.controls['prescribeList']).at(index).patchValue({
-        totalPrice: cc.get("totalQty").value * cc.get("price").value
+    if (cc.get("totalQuantity").value && cc.get("originalPrice").value)
+      (<FormArray>this.myForm.controls['medicationLnResource']).at(index).patchValue({
+        billPrice: cc.get("totalQuantity").value * cc.get("originalPrice").value
       });
   }
 
   addMedication(event) {
     // add Medication to the list
-    const control = <FormArray>this.myForm.controls['prescribeList'];
+    const control = <FormArray>this.myForm.controls['medicationLnResource'];
 
     this.MasterDataService.GetQRStockBalanceByID(event.source.value.chargeItemID)
       .subscribe(res => { 
@@ -106,12 +108,11 @@ export class MedicationComponent implements OnInit {
           control.push(this.initMedication(event.source.value.chargeItemID, event.source.value.chargeItemCode + ', ' +event.source.value.chargeItemDescription, 0)); 
       }); 
 
-    
   }
     
   removeMedication(i: number) {
   // remove Medication from the list
-  const control = <FormArray>this.myForm.controls['prescribeList'];
+  const control = <FormArray>this.myForm.controls['medicationLnResource'];
   control.removeAt(i);
   }
 
@@ -131,14 +132,62 @@ export class MedicationComponent implements OnInit {
 
         this.orderedByCtrl = new FormControl({dgUserID: 0, userFullName: ''});
   }
-  save(model: MedicationList) {
-    // call API to save customer
-      console.log(model);
+
+  onSave() {
+    //clear editing cached
+    this.data.medicationLnResource = this.myForm.value.medicationLnResource;
+    
+    if (this.orderedByCtrl.value.dgUserID > 0) 
+      this.data.orderedByID = this.orderedByCtrl.value.dgUserID; 
+
+    this.data.patientID = this.patientID;
+    this.data.visitID = this.visitID;
+    this.data.invoiceHdrID = this.invoiceHdrID;
+    this.data.CreatedByID = 1;
+
+    if (this.data.medicationHdrID){
+      this.MasterDataService.CreateMedicationRecord(this.data)
+        .subscribe(x => {
+            this.GDService.openSnackBar(x.medicationOrderNo + '" Updated Sucessfully!','Info');
+            this.getHistory(); 
+      }, err => {
+            this.GDService.openSnackBar(err ,'Info');
+      } );
+    }
+    else
+      this.MasterDataService.CreateMedicationRecord(this.data)
+        .subscribe(x => {
+          this.GDService.openSnackBar(x.medicationOrderNo + '" Created Sucessfully!','Info');
+          this.getHistory(); 
+      }, err => {
+            this.GDService.openSnackBar(err,'Info');
+      } );
   }
+
+  loadDatabyID(id){
+    this.MasterDataService.GetMedicationByID(id).subscribe(hr => {
+      this.data = hr;
+      if (this.data.orderedByID != null)
+        this.orderedByCtrl = new FormControl({dgUserID: hr.orderedByResource.dgUserID, userFullName: hr.orderedByResource.userFullName});
+
+      for (let modLn of hr.medicationLnResource)
+      {
+        modLn.catalog = modLn.chargeItemResource.catalog;
+        modLn.chargeItemCode = modLn.chargeItemResource.chargeItemCode;
+        modLn.analysis = modLn.chargeItemResource.analysis;
+        modLn.chargeItemDescription = modLn.chargeItemResource.chargeItemDescription;
+      }
+
+      this.returnedResult = hr.medicationLnResource;
+    }, err => {
+      this.GDService.openSnackBar(err,'Info');
+    } );
+  }
+
   ngOnInit() {
     this.myForm = this._fb.group({
       name: ['', [Validators.required, Validators.minLength(5)]],
-      prescribeList: this._fb.array([
+      medicationLnResource: this._fb.array([
               //this.initMedication(),
           ])
       });
@@ -151,6 +200,11 @@ export class MedicationComponent implements OnInit {
             .map(name => this.filterDoctors(name));
       });
 
+      this.MasterDataService.GetInventoryUOM().subscribe(uom => {
+        this.uoms =uom;
+  
+      });
+
       this.medicationCtrl = new FormControl({chargeItemCode: 0, chargeItemDescription: ''});
       this.filteredMedications = this.medicationCtrl.valueChanges
       .debounceTime(400)
@@ -160,6 +214,15 @@ export class MedicationComponent implements OnInit {
              this.medications = res; 
         }); 
        }).delay(500).map(() => this.medications);
+
+       this.getHistory();
+  }
+
+  getHistory(){
+    this.MasterDataService.GetMedicationByVisit(this.visitID).subscribe(hr => {
+      this.historyRecord = hr;
+
+    });
   }
 
   initMedication(chargeItemID: number, drugName: string, availQty: number) {
@@ -173,16 +236,16 @@ export class MedicationComponent implements OnInit {
         take: [''],
         time: [''],
         day: [''],
-        totalQty: [''],
-        uom: [''],
-        price: [''],
-        discPerc: [''],
-        discAmt: [''],
-        totalPrice: [''],
+        totalQuantity: [''],
+        inventoryUOMID: [''],
+        originalPrice: [''],
+        discountPerc: [''],
+        discountAmount: [''],
+        billPrice: [''],
         route: [''],
-        necessary: [''],
-        instructionOne: [''],
-        instructionTwo: [''],
+        whenNecessary: [false],
+        instruction1: [''],
+        instruction2: [''],
         indication: [''],
         availQty: [availQty],
     });
@@ -191,7 +254,7 @@ export class MedicationComponent implements OnInit {
 
 
 update(e) {
-  console.log(e.component.cellValue(e.component.getRowIndexByKey(e.key)));
+  //console.log(e.component.cellValue(e.component.getRowIndexByKey(e.key)));
 }
 insert(e) {
   //console.log(e.component.columnOption("dosage").calculateCellValue(e.data));
@@ -210,12 +273,12 @@ calTotalQTY(e) {
 }
 calTotalPrice(e) { 
   //console.log(e.component.getRowIndexByKey(e.key));
-  if(!e.totalQty || !e.price)
+  if(!e.totalQuantity || !e.originalPrice)
       return null; 
-  console.log(e.component.cellValue(e.component.getRowIndexByKey(e.key), "totalQty"));
-  console.log(e.component.cellValue(e.component.getRowIndexByKey(e.key), "price"));
+  //console.log(e.component.cellValue(e.component.getRowIndexByKey(e.key), "totalQuantity"));
+  //console.log(e.component.cellValue(e.component.getRowIndexByKey(e.key), "originalPrice"));
 
-  return e.totalQty * e.price;
+  return e.totalQuantity * e.originalPrice;
 }
 
 toggleSearch() {
@@ -231,51 +294,12 @@ toggleSearch() {
   });
 
 }
-  uoms = [
-    {value: 'TAB', viewValue: 'TAB'},
-    {value: 'ML', viewValue: 'ML'},
-    {value: 'Box', viewValue: 'Box'},
-    {value: 'Saches', viewValue: 'Saches'},
-  ];
 
   routes = [
     {value: 'ORAL', viewValue: 'ORAL'},
     {value: 'MOUTH', viewValue: 'MOUTH'},
     {value: 'EXTERNAL', viewValue: 'EXTERNAL'},
     {value: 'ASS', viewValue: 'ASS'},
-  ];
-
-  diagnosisRecord = [
-    {
-      diagnosisCode: 'A203',
-      diagnosisDesc: 'Ear, Eye and Throat',
-      Note: 'Patient complaint very painful at the ear, but overall is working well and can certainly sleep very well as night... this is an extreme long text and how it will be display?',
-      created: new Date('1/1/16'),
-      createdBy: 'Doctor Gilbert',
-      version: 2,
-      updated: new Date('1/1/16'),
-      updatedBy: 'Doctor Chin',
-    },
-    {
-      diagnosisCode: 'A803',
-      diagnosisDesc: 'URTI',
-      Note: 'Serious flu since 3 week ago...',
-      created: new Date('1/1/16'),
-      createdBy: 'Doctor Gilbert',
-      version: 1,
-      updated: new Date('1/1/16'),
-      updatedBy: 'Doctor Chin',
-    },
-    {
-      diagnosisCode: 'A203',
-      diagnosisDesc: 'Ear, Eye and Throat',
-      Note: 'Patient complaint very painful at the ear, but overall is working well and can certainly sleep very well as night... this is an extreme long text and how it will be display?',
-      created: new Date('1/1/16'),
-      createdBy: 'Doctor Gilbert',
-      version: 2,
-      updated: new Date('1/1/16'),
-      updatedBy: 'Doctor Chin',
-    },
   ];
 
   medicationTemplates = [
@@ -285,83 +309,7 @@ toggleSearch() {
     ];
 
 
-  medicationRecord = [
-    {
-      id: 'PRESC-0003',
-      medicationCode: 'MED002 - Uphamol 650 TAB 500mg(Paracetamol)',
-      uom: 'PIECE',
-      dosage: '1x2x3',
-      dosageLabel: 'take 1 tables 3 times a days for 7 days via Rectal',
-      route: 'Rectal',
-      take: '1',
-      time: '2',
-      numberOfDay: '5',
-      totalQty: '15',
-      instruction1: 'Take after food',
-      instruction2: 'Take more if required',
-      indication: 'take all in one shoot',
-      price: 'RM1.00',
-      totalPrice: 'RM500.00',
-      discount: 'RM10.00',
-      note: 'This is a dangerous drug, take more to get more dangerous. take less also dangerous.',
-      orderBy: 'Doctor Gilbert Chin',
-      created: new Date('1/1/16'),
-      createdBy: 'Doctor Gilbert',
-      version: 2,
-      updated: new Date('1/1/16'),
-      updatedBy: 'Doctor Chin',
-    },
-    {
-      id: 'PRESC-0004',
-      medicationCode: 'MED003 - Panadol 500mg (PARACEPTAMOL)',
-      uom: 'PIECE',
-      dosage: '2x2x3',
-      dosageLabel: 'take 2 tables 3 times a days for 7 days via Oral',
-      route: 'Oral',
-      take: '2',
-      time: '2',
-      numberOfDay: '7',
-      totalQty: '12',
-      instruction1: 'Take after food',
-      instruction2: '',
-      indication: '',
-      price: 'RM0.50',
-      totalPrice: 'RM50.00',
-      discount: 'RM10.00',
-      note: '',
-      orderBy: 'Doctor Gilbert Chin',
-      created: new Date('1/1/16'),
-      createdBy: 'Doctor Gilbert',
-      version: 2,
-      updated: new Date('1/1/16'),
-      updatedBy: 'Doctor Chin',
-    },
-    {
-      id: 'PRESC-0008',
-      medicationCode: 'MED008 - Syrup',
-      uom: '100ml',
-      dosage: '1x2x3',
-      dosageLabel: 'take 1 tables 3 times a days for 7 days via Oral',
-      route: 'Oral',
-      take: '1',
-      time: '2',
-      numberOfDay: '5',
-      totalQty: '15',
-      instruction1: 'Take after food',
-      instruction2: 'Take more if required',
-      indication: 'take all in one shoot',
-      price: 'RM1.00',
-      totalPrice: 'RM500.00',
-      discount: 'RM10.00',
-      note: 'This is a dangerous drug, take more to get more dangerous. take less also dangerous.',
-      orderBy: 'Doctor Gilbert Chin',
-      created: new Date('1/1/16'),
-      createdBy: 'Doctor Gilbert',
-      version: 2,
-      updated: new Date('1/1/16'),
-      updatedBy: 'Doctor Chin',
-    },
-  ];
+ 
 
   filterMedication(val: string) {
     return val ? this.medications.filter((s) => new RegExp(val, 'gi').test(s)) : this.medications;

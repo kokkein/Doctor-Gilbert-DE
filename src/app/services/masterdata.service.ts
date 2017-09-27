@@ -264,6 +264,26 @@ export class MasterDataService {
         return this.http.get(this.sURL + 'medicalRecord/ProcedureByVisit/' + visitID)
                     .map(res => res.json());
     }
+    GetMedication() {
+        return this.http.get(this.sURL + 'medicalRecord/Medication')
+                    .map(res => res.json());
+    }
+    GetMedicationByID(id) {
+        return this.http.get(this.sURL + 'medicalRecord/Medication/' + id)
+                    .map(res => res.json());
+    }
+    GetInventoryUOM() {
+        return this.http.get(this.sURL + 'InventoryUOM')
+                    .map(res => res.json());
+    }
+    GetInventoryUOMByID(id) {
+        return this.http.get(this.sURL + 'InventoryUOM/' + id)
+                    .map(res => res.json());
+    }
+    GetMedicationByVisit(visitID) {
+        return this.http.get(this.sURL + 'medicalRecord/MedicationByVisit/' + visitID)
+                    .map(res => res.json());
+    }
     GetLaboratoryItem() {
         return this.http.get(this.sURL + 'LaboratoryItem')
                     .map(res => res.json());
@@ -390,6 +410,10 @@ export class MasterDataService {
         return this.http.post(this.sURL + 'MedicalRecord/CreateProcedure', ProcedureHdr)
                     .map(res => res.json());
     }
+    CreateMedicationRecord(MedicationHdr) {
+        return this.http.post(this.sURL + 'MedicalRecord/CreateMedication', MedicationHdr)
+                    .map(res => res.json());
+    }
     CreateVitalSignRecord(VitalSignBy) {
         return this.http.post(this.sURL + 'MedicalRecord/CreateVitalSign', VitalSignBy)
                     .map(res => res.json());
@@ -502,6 +526,10 @@ export class MasterDataService {
     }
     UpdateProcedureRecordByID(Procedure) {
         return this.http.put(this.sURL + 'MedicalRecord/Procedure/' + Procedure.procedureHdrID, Procedure)
+                    .map(res => res.json());
+    }
+    UpdateMedicationRecordByID(Medication) {
+        return this.http.put(this.sURL + 'MedicalRecord/Medication/' + Medication.medicationHdrID, Medication)
                     .map(res => res.json());
     }
     UpdateVitalSignRecordByID(VitalSign) {

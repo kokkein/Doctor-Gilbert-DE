@@ -206,30 +206,31 @@ span {
   small{
     font-size: 90%;
   }
-  .highlighter
-  {
-    font-size: 90%;
-    color: #333;
-    letter-spacing: 0;
-    line-height: 1;
-    padding: 2px 6px;
-    background-color: #f1f1f1;
-    border-radius: 5px;
-  }
 
-  .orderTable {
-    border-collapse: collapse;
-    margin: 0 0 32px 0;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
-    width: 100%;
+    .highlighter
+    {
+        font-size: 90%;
+        color: #333;
+        letter-spacing: 0;
+        line-height: 1;
+        padding: 2px 6px;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+    }
 
-}
+    .orderTable {
+        font-size: 90%;
+        border-collapse: collapse;
+        margin: 0 0 0px 0;
+        border-bottom: 1px solid #ddd;
+        text-align: center;
+        width: 100%;
+    }
 
     .orderTable >
     th, td, thead {
+        font-size: 90%;
         padding: 8px;
-        text-align: left;
         border-bottom: 1px solid #ddd;
     }
 

@@ -77,6 +77,7 @@ import { InventoryPriceStructureComponent } from './masterData/inventory-price-s
 import { Auth0UserProfileComponent } from './auth0-user-profile/auth0-user-profile.component';
 import { BillingComponent } from './billing/billing.component';
 import { ChargeItemComponent } from './charge-item/charge-item.component';
+import { SelfServiceComponent } from './self-service/self-service.component';
 
 const appRoutes: Routes = [
 { path: '', component: LandingComponent},
@@ -154,7 +155,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     MedicationComponent,
     TimelineComponent, 
     DiagnosisComponent, DialogResultRadiologySearch, DialogResultLaboratorySearch, DialogResultProcedureSearch, DialogResultMedicationSearch,
-    VitalSignsComponent, DialogResultExampleDialog, AppointmentComponent, DepartmentComponent, InsuranceComponent, PayorComponent, MOHVisitTypeComponent, PurposeOfVisitComponent, MasterDataComponent, InventoryBrandComponent, InventoryGenericComponent, InventoryAtcComponent, InventoryCategoryComponent, InventorySubcategoryComponent, InventoryMedicationclassComponent, InventoryPregnancycategoryComponent, SpecialityComponent, DiagnosisMasterComponent, LandingComponent, ProcedureComponent, PriceStructureComponent, InventoryPriceStructureComponent, Auth0UserProfileComponent, BillingComponent, ChargeItemComponent
+    VitalSignsComponent, DialogResultExampleDialog, AppointmentComponent, DepartmentComponent, InsuranceComponent, PayorComponent, MOHVisitTypeComponent, PurposeOfVisitComponent, MasterDataComponent, InventoryBrandComponent, InventoryGenericComponent, InventoryAtcComponent, InventoryCategoryComponent, InventorySubcategoryComponent, InventoryMedicationclassComponent, InventoryPregnancycategoryComponent, SpecialityComponent, DiagnosisMasterComponent, LandingComponent, ProcedureComponent, PriceStructureComponent, InventoryPriceStructureComponent, Auth0UserProfileComponent, BillingComponent, ChargeItemComponent, SelfServiceComponent
   ],
   imports: [
     BrowserModule,
