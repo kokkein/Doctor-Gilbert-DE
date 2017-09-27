@@ -46,6 +46,9 @@ export class AppComponent {
   toggleAppointment(){
     this.router.navigate(['/appointment']);
   }
+  toggleEpisode(){
+    this.router.navigate(['/visit-overview']);
+  }
 
   toggleFullscreen() {
     let elem = this._element.nativeElement.querySelector('.demo-content');
