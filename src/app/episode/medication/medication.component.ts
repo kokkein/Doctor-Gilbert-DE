@@ -113,7 +113,7 @@ export class MedicationComponent implements OnInit {
   removeMedication(i: number) {
   // remove Medication from the list
   const control = <FormArray>this.myForm.controls['medicationLnResource'];
-  control.removeAt(i);
+    control.removeAt(i);
   }
 
   displayMedicationFn(value: any): string {
@@ -170,15 +170,19 @@ export class MedicationComponent implements OnInit {
       if (this.data.orderedByID != null)
         this.orderedByCtrl = new FormControl({dgUserID: hr.orderedByResource.dgUserID, userFullName: hr.orderedByResource.userFullName});
 
-      for (let modLn of hr.medicationLnResource)
-      {
-        modLn.catalog = modLn.chargeItemResource.catalog;
-        modLn.chargeItemCode = modLn.chargeItemResource.chargeItemCode;
-        modLn.analysis = modLn.chargeItemResource.analysis;
-        modLn.chargeItemDescription = modLn.chargeItemResource.chargeItemDescription;
+      const control = <FormArray>this.myForm.controls['medicationLnResource'];
+      var count = control.controls.length;
+
+      for (var i = control.controls.length; i >= 0; i--){ 
+        control.removeAt(i);
       }
 
-      this.returnedResult = hr.medicationLnResource;
+      for (let modLn of hr.medicationLnResource)
+      { 
+        control.push(this.editMedication(modLn));
+      }
+
+      //this.returnedResult = hr.medicationLnResource;
     }, err => {
       this.GDService.openSnackBar(err,'Info');
     } );
@@ -225,6 +229,33 @@ export class MedicationComponent implements OnInit {
     });
   }
 
+  editMedication(medicationDetail: any) {
+    return this._fb.group({
+        chargeItemID: [medicationDetail.chargeItemResource.chargeItemID],  // required field
+        stockLockingID: [''],
+        drugCode:[medicationDetail.chargeItemResource.chargeItemCode],
+        drugName: [medicationDetail.chargeItemResource.chargeItemDescription],
+        dosage: [medicationDetail.dosage],
+        take: [medicationDetail.take],
+        time: [medicationDetail.time],
+        day: [medicationDetail.day],
+        totalQuantity: [medicationDetail.totalQuantity],
+        inventoryUOMID: [medicationDetail.inventoryUOMID],
+        originalPrice: [''],
+        discountPerc: [medicationDetail.discountPerc],
+        discountAmount: [medicationDetail.discountAmount],
+        billPrice: [medicationDetail.billPrice],
+        route: [medicationDetail.route],
+        whenNecessary: [medicationDetail.whenNecessary],
+        instruction1: [medicationDetail.instruction1],
+        instruction2: [medicationDetail.instruction2],
+        indication: [medicationDetail.indication],
+        availQty: [0],
+        //important reference when user edit record.
+        medicationLnID: [medicationDetail.medicationLnID],
+        billingRef: [medicationDetail.billingRef],
+    });
+  }
   initMedication(chargeItemID: number, drugName: string, availQty: number) {
     // initialize our Medication
     return this._fb.group({
@@ -238,18 +269,20 @@ export class MedicationComponent implements OnInit {
         day: [''],
         totalQuantity: [''],
         inventoryUOMID: [''],
-        originalPrice: [''],
-        discountPerc: [''],
-        discountAmount: [''],
-        billPrice: [''],
+        originalPrice: [1],
+        discountPerc: [0],
+        discountAmount: [0],
+        billPrice: [0],
         route: [''],
         whenNecessary: [false],
         instruction1: [''],
         instruction2: [''],
         indication: [''],
         availQty: [availQty],
+        medicationLnID: [''],
+        billingRef: [''],
     });
-}
+  }
 
 
 

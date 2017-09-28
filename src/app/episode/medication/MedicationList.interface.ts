@@ -24,5 +24,7 @@ export interface Prescription {
     instruction2: string;
     indication: string;
     availQty: number;
+    medicationLnID: number;
+    billingRef: string;
 
 }
