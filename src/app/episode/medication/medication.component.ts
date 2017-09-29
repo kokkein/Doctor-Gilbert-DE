@@ -279,8 +279,8 @@ export class MedicationComponent implements OnInit {
         instruction2: [''],
         indication: [''],
         availQty: [availQty],
-        medicationLnID: [''],
-        billingRef: [''],
+        medicationLnID: [0],
+        billingRef: ['00000000-0000-0000-0000-000000000000'],
     });
   }
 
