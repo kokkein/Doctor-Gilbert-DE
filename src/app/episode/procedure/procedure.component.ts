@@ -17,6 +17,7 @@ export class ProcedureComponent implements OnInit {
   @Input() visitID: number;
   @Input() invoiceHdrID: number;
   
+  disableSave: boolean=false;
   returnedResult: any = {};
   data: any = {procedureLnResource:{}};
 
@@ -43,7 +44,11 @@ export class ProcedureComponent implements OnInit {
     this.orderedByCtrl = new FormControl({dgUserID: 0, userFullName: ''});
     this.referredByCtrl = new FormControl({dgUserID: 0, userFullName: ''}); 
   }
-  
+  onNew() {
+    this.disableSave = false; 
+    this.orderedByCtrl = new FormControl({dgUserID: 0, userFullName: ''});
+    this.referredByCtrl = new FormControl({dgUserID: 0, userFullName: ''}); 
+  }
     onSave() {
       //clear editing cached
       this.data.procedureLnResource = this.returnedResult;
@@ -96,6 +101,7 @@ export class ProcedureComponent implements OnInit {
       }
 
       this.returnedResult = hr.procedureLnResource;
+      this.disableSave = false;
     }, err => {
       this.GDService.openSnackBar(err,'Info');
     } );
@@ -116,10 +122,11 @@ export class ProcedureComponent implements OnInit {
         });
 
         this.getHistory();
-
+        this.disableSave = false;
   }
 
   getHistory(){
+      this.disableSave = true;
       this.MasterDataService.GetProcedureByVisit(this.visitID).subscribe(hr => {
         this.historyRecord = hr;
       });

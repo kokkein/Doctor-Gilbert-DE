@@ -1,10 +1,9 @@
 <div class="toolbar">
   <div>
-      <button md-raised-button (click)="onSave()">Save</button>
-      <button md-raised-button>New</button>
+      <button md-raised-button [disabled]="disableSave" (click)="onSave()">Save</button>
+      <button md-raised-button (click)="onNew()">New</button>
   </div>
-  <!--{{myForm.value|json}}-->
-{{data|json}}
+  <!--{{myForm.value|json}}--> 
   <md-form-field class="input-full-width">
       <md-chip-list mdPrefix #chipList1>
           <md-chip *ngFor="let medication of medicationList" [selectable]="selectable"

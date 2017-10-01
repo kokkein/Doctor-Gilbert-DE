@@ -23,6 +23,10 @@ export class VisitOverviewComponent implements OnInit {
     });
   }
 
+  onNew() {
+ 
+    this.router.navigate(['/visit']);
+  }
   onRowSelect(event) {
  
     this.router.navigate(['/episode/', event.selectedRowKeys[0].visitID]);

@@ -11,14 +11,9 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
   navItems = [
-    {name: 'Landing', route: 'landing'},
-    {name: 'Appointment', route: 'appointment'},
-    {name: 'Episode', route: 'episode'},
-    {name: 'Patient', route: 'patient'},
-    {name: 'Visit', route: 'visit'},
-    {name: 'Billing', route: 'billing'},
-    {name: 'Medical Calculator', route: 'card'},
-    {name: 'Master Data', route: 'master-data'}
+    {name: 'Home', route: 'landing'}, 
+    {name: 'Patient', route: 'patient'}, 
+    {name: 'Medical Calculator', route: 'card'} 
   ];
 
   selectedOption: string;

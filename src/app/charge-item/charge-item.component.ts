@@ -91,14 +91,19 @@ export class ChargeItemComponent implements OnInit {
     this.router.navigate(['/charge-item/', event.selectedRowKeys[0].chargeItemID]);
   }
   retrieveData(){
-      this.MasterDataService.GetInventoryByID(this.data.chargeItemID)
+      this.MasterDataService.GetChargeItemByID(this.data.chargeItemID)
       .subscribe(m => {
         this.data = m;
-        this.inventoryBrandCtrl = new FormControl({inventoryBrandID: m.inventoryBrandResource.inventoryBrandID, inventoryBrandName: m.inventoryBrandResource.inventoryBrandName});
-        this.inventoryGenericCtrl = new FormControl({inventoryGenericID: m.inventoryGenericResource.inventoryGenericID, inventoryGenericName: m.inventoryGenericResource.inventoryGenericName});
-        this.inventoryATCClassificationCtrl = new FormControl({inventoryATCClassificationID: m.inventoryATCClassificationResource.inventoryATCClassificationID, inventoryATCClassificationName: m.inventoryATCClassificationResource.inventoryATCClassificationName});
-        this.inventoryCategoryCtrl = new FormControl({inventoryCategoryID: m.inventoryCategoryResource.inventoryCategoryID, inventoryCategoryName: m.inventoryCategoryResource.inventoryCategoryName});
-        this.inventorySubCategoryCtrl = new FormControl({inventorySubCategoryID: m.inventorySubCategoryResource.inventorySubCategoryID, inventorySubCategoryName: m.inventorySubCategoryResource.inventorySubCategoryName});
+        if (!m.inventoryBrandResource.inventoryBrandID)
+          this.inventoryBrandCtrl = new FormControl({inventoryBrandID: m.inventoryBrandResource.inventoryBrandID, inventoryBrandName: m.inventoryBrandResource.inventoryBrandName});
+        if (!m.inventoryGenericResource.inventoryGenericID)
+          this.inventoryGenericCtrl = new FormControl({inventoryGenericID: m.inventoryGenericResource.inventoryGenericID, inventoryGenericName: m.inventoryGenericResource.inventoryGenericName});
+        if (!m.inventoryATCClassificationResource.inventoryATCClassificationID)
+          this.inventoryATCClassificationCtrl = new FormControl({inventoryATCClassificationID: m.inventoryATCClassificationResource.inventoryATCClassificationID, inventoryATCClassificationName: m.inventoryATCClassificationResource.inventoryATCClassificationName});
+        if (!m.inventoryCategoryResource.inventoryCategoryID)
+          this.inventoryCategoryCtrl = new FormControl({inventoryCategoryID: m.inventoryCategoryResource.inventoryCategoryID, inventoryCategoryName: m.inventoryCategoryResource.inventoryCategoryName});
+        if (!m.inventorySubCategoryResource.inventorySubCategoryID)
+          this.inventorySubCategoryCtrl = new FormControl({inventorySubCategoryID: m.inventorySubCategoryResource.inventorySubCategoryID, inventorySubCategoryName: m.inventorySubCategoryResource.inventorySubCategoryName});
 
       }, err => {
         if (err.status == 404)

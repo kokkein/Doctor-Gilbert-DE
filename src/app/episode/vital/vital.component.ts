@@ -19,6 +19,7 @@ export class VitalComponent implements OnInit {
   @Input() visitID: number;
   @Input() invoiceHdrID: number;
 
+  disableSave: boolean=false;
   weatherData:any; 
   data: any = {};
  
@@ -26,9 +27,9 @@ export class VitalComponent implements OnInit {
 
   historyRecord;  
 
-  constructor(private GDService: GDService, private MasterDataService: MasterDataService, private _element: ElementRef, public dialog: MdDialog, private router: Router) { 
-
-  }
+    constructor(private GDService: GDService, private MasterDataService: MasterDataService, private _element: ElementRef, public dialog: MdDialog, private router: Router) { 
+    
+    }
     customizeTooltip(arg: any) {
         var items = arg.valueText.split("\n"),
             color = arg.point.getColor();
@@ -55,49 +56,54 @@ export class VitalComponent implements OnInit {
       } else { 
           point.select();
       }
-  }
+    }
+    onNew() {
+        this.disableSave = false; 
+        this.data = {};
+    }
     onSave() { 
-
         this.data.patientID = this.patientID;
         this.data.visitID = this.visitID; 
         this.data.CreatedByID = 1;
     
         if (this.data.vitalSignID){
-          this.MasterDataService.CreateVitalSignRecord(this.data)
+            this.MasterDataService.CreateVitalSignRecord(this.data)
             .subscribe(x => {
                 this.GDService.openSnackBar('Updated Sucessfully!','Info');
                 this.getHistory();
-          }, err => {
+            }, err => {
                 this.GDService.openSnackBar(err ,'Info');
-          } );
+            } );
         }
         else
-          this.MasterDataService.CreateVitalSignRecord(this.data)
+            this.MasterDataService.CreateVitalSignRecord(this.data)
             .subscribe(x => {
-              this.GDService.openSnackBar('Created Sucessfully!','Info');
-              this.getHistory();
-          }, err => {
+                this.GDService.openSnackBar('Created Sucessfully!','Info');
+                this.getHistory();
+            }, err => {
                 this.GDService.openSnackBar(err,'Info');
-          } );
+            } );
     }
-
-    loadDatabyID(id){
-      this.MasterDataService.GetVitalSignByID(id).subscribe(hr => {
-        this.data = hr;
     
-      }, err => {
-        this.GDService.openSnackBar(err,'Info');
-      } );
+    loadDatabyID(id){
+        this.MasterDataService.GetVitalSignByID(id).subscribe(hr => {
+            this.data = hr;
+            this.disableSave = false; 
+        }, err => {
+            this.GDService.openSnackBar(err,'Info');
+        } );
     }
     
     ngOnInit() {
         this.getHistory();
+        this.disableSave = false; 
     }
     
     getHistory(){
+        this.disableSave = true; 
         this.MasterDataService.GetVitalSignByVisit(this.visitID).subscribe(hr => {
-          this.historyRecord = hr;
+            this.historyRecord = hr;
         });
     }
-
+    
 }

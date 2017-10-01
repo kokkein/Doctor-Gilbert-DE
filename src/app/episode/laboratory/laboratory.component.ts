@@ -17,6 +17,7 @@ export class LaboratoryComponent implements OnInit {
   @Input() visitID: number
   @Input() invoiceHdrID: number;
 
+  disableSave: boolean=false;
   returnedResult: any = {};
   data: any = {laboratoryLnResource:{}};
 
@@ -50,7 +51,15 @@ export class LaboratoryComponent implements OnInit {
     this.replyToCtrl = new FormControl({dgUserID: 0, userFullName: ''});
     this.reportedByCtrl = new FormControl({dgUserID: 0, userFullName: ''}); 
   }
-  
+  onNew() {
+    this.disableSave = false;
+    this.data={laboratoryLnResource:{}};
+    this.returnedResult ={};
+    this.orderedByCtrl = new FormControl({dgUserID: 0, userFullName: ''});
+    this.referredByCtrl = new FormControl({dgUserID: 0, userFullName: ''});
+    this.replyToCtrl = new FormControl({dgUserID: 0, userFullName: ''});
+    this.reportedByCtrl = new FormControl({dgUserID: 0, userFullName: ''}); 
+  }
     onSave() {
       //clear editing cached
       this.data.laboratoryLnResource = this.returnedResult;
@@ -111,6 +120,7 @@ export class LaboratoryComponent implements OnInit {
       }
 
       this.returnedResult = hr.laboratoryLnResource;
+      this.disableSave = false;
     }, err => {
       this.GDService.openSnackBar(err,'Info');
     } );
@@ -141,13 +151,15 @@ export class LaboratoryComponent implements OnInit {
           this.laboratoryUnit = laboratoryUnit;
         });
         this.getHistory();
+        this.disableSave = false;
 
   }
 
   getHistory(){
-      this.MasterDataService.GetLaboratoryByVisit(this.visitID).subscribe(hr => {
-        this.historyRecord = hr;
-      });
+    this.disableSave = true;
+    this.MasterDataService.GetLaboratoryByVisit(this.visitID).subscribe(hr => {
+      this.historyRecord = hr;
+    });
   }
 
   toggleSearch() {

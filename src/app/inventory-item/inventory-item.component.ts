@@ -90,7 +90,7 @@ export class InventoryItemComponent implements OnInit {
   }
 
   retrieveData(){
-      this.MasterDataService.GetInventoryByID(this.data.inventoryID)
+      this.MasterDataService.GetChargeItemByID(this.data.inventoryID)
       .subscribe(m => {
         this.data = m;
         this.inventoryBrandCtrl = new FormControl({inventoryBrandID: m.inventoryBrandResource.inventoryBrandID, inventoryBrandName: m.inventoryBrandResource.inventoryBrandName});

@@ -124,8 +124,8 @@ export class MasterDataService {
         return this.http.get(this.sURL + 'Inventory')
                     .map(res => res.json());
     }
-    GetInventoryByID(id) {
-        return this.http.get(this.sURL + 'Inventory/' + id)
+    GetChargeItemByID(id) {
+        return this.http.get(this.sURL + 'ChargeItem/' + id)
                     .map(res => res.json());
     }
     GetMedicationBySearch(keyword) {

@@ -2,8 +2,8 @@
 <section>
     <div class="toolbar">
       <div>
-        <button md-raised-button (click)="onSave()">Save</button>
-        <button md-raised-button>New</button>
+        <button md-raised-button [disabled]="disableSave" (click)="onSave()">Save</button>
+        <button md-raised-button (click)="onNew()">New</button>
       </div>
     </div> 
     <md-card>

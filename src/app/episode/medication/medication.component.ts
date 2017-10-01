@@ -25,6 +25,7 @@ export class MedicationComponent implements OnInit {
   @Input() visitID: number;
   @Input() invoiceHdrID: number;
 
+  disableSave: boolean=false;
   historyRecord:any;
   returnedResult: any = {};
   data: any = {medicationLnResource:{}};
@@ -133,6 +134,14 @@ export class MedicationComponent implements OnInit {
         this.orderedByCtrl = new FormControl({dgUserID: 0, userFullName: ''});
   }
 
+  onNew() {
+    this.disableSave = false;
+    this.data={medicationLnResource:{}};
+    this.returnedResult ={};
+    this.medicationCtrl = new FormControl({chargeItemCode: 0, chargeItemDescription: ''});
+    this.orderedByCtrl = new FormControl({dgUserID: 0, userFullName: ''});
+    this.clearForm();
+  }
   onSave() {
     //clear editing cached
     this.data.medicationLnResource = this.myForm.value.medicationLnResource;
@@ -165,27 +174,35 @@ export class MedicationComponent implements OnInit {
   }
 
   loadDatabyID(id){
+    
     this.MasterDataService.GetMedicationByID(id).subscribe(hr => {
       this.data = hr;
       if (this.data.orderedByID != null)
         this.orderedByCtrl = new FormControl({dgUserID: hr.orderedByResource.dgUserID, userFullName: hr.orderedByResource.userFullName});
 
+      this.clearForm();
       const control = <FormArray>this.myForm.controls['medicationLnResource'];
-      var count = control.controls.length;
-
-      for (var i = control.controls.length; i >= 0; i--){ 
-        control.removeAt(i);
-      }
 
       for (let modLn of hr.medicationLnResource)
       { 
         control.push(this.editMedication(modLn));
+        this.medicationList.push({ name: modLn.chargeItemResource.chargeItemDescription });
       }
 
-      //this.returnedResult = hr.medicationLnResource;
+      this.disableSave = false;
     }, err => {
       this.GDService.openSnackBar(err,'Info');
     } );
+  }
+
+  clearForm(){
+    const control = <FormArray>this.myForm.controls['medicationLnResource'];
+    var count = control.controls.length;
+
+    for (var i = control.controls.length; i >= 0; i--){ 
+      control.removeAt(i);
+      this.medicationList.splice(i, 1);
+    }
   }
 
   ngOnInit() {
@@ -206,7 +223,6 @@ export class MedicationComponent implements OnInit {
 
       this.MasterDataService.GetInventoryUOM().subscribe(uom => {
         this.uoms =uom;
-  
       });
 
       this.medicationCtrl = new FormControl({chargeItemCode: 0, chargeItemDescription: ''});
@@ -220,12 +236,13 @@ export class MedicationComponent implements OnInit {
        }).delay(500).map(() => this.medications);
 
        this.getHistory();
+       this.disableSave = false;
   }
 
   getHistory(){
+    this.disableSave = true;
     this.MasterDataService.GetMedicationByVisit(this.visitID).subscribe(hr => {
       this.historyRecord = hr;
-
     });
   }
 

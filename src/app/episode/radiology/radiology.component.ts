@@ -19,6 +19,7 @@ export class RadiologyComponent implements OnInit {
   @Input() visitID: number;
   @Input() invoiceHdrID: number;
 
+  disableSave: boolean=false;
   returnedResult: any = {};
   data: any = {radiologyLnResource:{}};
 
@@ -62,6 +63,10 @@ export class RadiologyComponent implements OnInit {
     this.radiologistCtrl = new FormControl({dgUserID: 0, userFullName: ''});
   }
 
+  onNew() {
+    this.disableSave = false;
+    this.resetForm();
+  }
   onSave() {
     //clear editing cached
     this.data.radiologyLnResource = this.returnedResult;
@@ -85,8 +90,7 @@ export class RadiologyComponent implements OnInit {
       this.MasterDataService.CreateRadiologyRecord(this.data)
         .subscribe(x => {
             this.GDService.openSnackBar(x.radiologyOrderNo + '" Updated Sucessfully!','Info');
-            this.getHistory();
-            this.resetForm();
+            this.getHistory(); 
       }, err => {
             this.GDService.openSnackBar(err ,'Info');
       } );
@@ -95,8 +99,7 @@ export class RadiologyComponent implements OnInit {
       this.MasterDataService.CreateRadiologyRecord(this.data)
         .subscribe(x => {
           this.GDService.openSnackBar(x.radiologyOrderNo + '" Created Sucessfully!','Info');
-          this.getHistory();
-          this.resetForm();
+          this.getHistory(); 
       }, err => {
             this.GDService.openSnackBar(err,'Info');
       } );
@@ -117,7 +120,6 @@ export class RadiologyComponent implements OnInit {
         this.radiologistCtrl = new FormControl({dgUserID: hr.radiologistResource.dgUserID, userFullName: hr.radiologistResource.userFullName});
 
 
-
       for (let modLn of hr.radiologyLnResource)
       {
         modLn.catalog = modLn.chargeItemResource.catalog;
@@ -127,6 +129,7 @@ export class RadiologyComponent implements OnInit {
       }
 
       this.returnedResult = hr.radiologyLnResource;
+      this.disableSave = false;
     }, err => {
       this.GDService.openSnackBar(err,'Info');
     } );
@@ -161,13 +164,13 @@ export class RadiologyComponent implements OnInit {
           this.modalities = modality;
         });
         this.getHistory();
-
+        this.disableSave = false;
   }
 
   getHistory(){
+    this.disableSave = true;
       this.MasterDataService.GetRadiologyByVisit(this.visitID).subscribe(hr => {
         this.historyRecord = hr;
-
       });
   }
 
