@@ -94,15 +94,16 @@ export class ChargeItemComponent implements OnInit {
       this.MasterDataService.GetChargeItemByID(this.data.chargeItemID)
       .subscribe(m => {
         this.data = m;
-        if (!m.inventoryBrandResource.inventoryBrandID)
+
+        if (m.inventoryBrandResource != null)
           this.inventoryBrandCtrl = new FormControl({inventoryBrandID: m.inventoryBrandResource.inventoryBrandID, inventoryBrandName: m.inventoryBrandResource.inventoryBrandName});
-        if (!m.inventoryGenericResource.inventoryGenericID)
+        if (m.inventoryGenericResource != null)
           this.inventoryGenericCtrl = new FormControl({inventoryGenericID: m.inventoryGenericResource.inventoryGenericID, inventoryGenericName: m.inventoryGenericResource.inventoryGenericName});
-        if (!m.inventoryATCClassificationResource.inventoryATCClassificationID)
+        if (m.inventoryATCClassificationResource != null)
           this.inventoryATCClassificationCtrl = new FormControl({inventoryATCClassificationID: m.inventoryATCClassificationResource.inventoryATCClassificationID, inventoryATCClassificationName: m.inventoryATCClassificationResource.inventoryATCClassificationName});
-        if (!m.inventoryCategoryResource.inventoryCategoryID)
+        if (m.inventoryCategoryResource != null)
           this.inventoryCategoryCtrl = new FormControl({inventoryCategoryID: m.inventoryCategoryResource.inventoryCategoryID, inventoryCategoryName: m.inventoryCategoryResource.inventoryCategoryName});
-        if (!m.inventorySubCategoryResource.inventorySubCategoryID)
+        if (m.inventorySubCategoryResource != null)
           this.inventorySubCategoryCtrl = new FormControl({inventorySubCategoryID: m.inventorySubCategoryResource.inventorySubCategoryID, inventorySubCategoryName: m.inventorySubCategoryResource.inventorySubCategoryName});
 
       }, err => {

@@ -85,19 +85,18 @@
                 <strong><h4 md-line><i class="material-icons">timer</i> {{historyList.created | date:'medium'}} - <strong>{{historyList.procedureOrderNo}}</strong></h4></strong>
               </mat-panel-title>
             </md-expansion-panel-header>
-                <md-list>
-                  <md-list-item>
-                    <p md-line>
+
+                    <p>
                       <span> <small>Ordered By: </small><small class="highlighter">{{historyList.orderedByResource?.userFullName}}</small> </span>
                       <span> <small>Referred By: </small><small class="highlighter">{{historyList.referredByResource?.userFullName}}</small> </span>
                     </p>
-                    <p md-line>
+                    <p>
                       <span> <small>Priority: </small><small class="highlighter">{{historyList.priority}}</small> </span>
                     </p>
-                    <p md-line>
+                    <p>
                       <span> <small>Medical Note: </small><small class="highlighter">{{historyList.remark}}</small> </span>
                     </p> 
-                    <p md-line>
+                    <p>
                         <span> 
                         <table class="orderTable">
                             <thead>
@@ -120,9 +119,7 @@
                             </tbody>
                         </table>
                       </span>
-                    </p> 
-                  </md-list-item>
-                </md-list>
+                    </p>  
                 <md-action-row>
                     <span>Current Version: <small class="highlighter">{{historyList.version}}</small></span>  
                     <span>, Updated: <small class="highlighter">{{historyList.created | date:'medium'}}</small> </span>

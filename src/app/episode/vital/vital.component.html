@@ -86,7 +86,7 @@
     </md-card-header>
     <md-card-content>
   <dx-chart
-  id="chart" (onPointClick)="pointClick($event)" [dataSource]="historyRecord" style="width:1200px;display:block" defaultPane="bottomPane" title="Vital Signs History">
+  id="chart" (onPointClick)="pointClick($event)" [dataSource]="historyRecord" style="width:1200px;height:500px;display:block" defaultPane="bottomPane" title="Vital Signs History">
   <dxi-series pane="topPane" color="#b0daff" type="rangeBar" rangeValue1Field="systolic" rangeValue2Field="diastolic" name="Blood Pressure Ranges">
   </dxi-series>
 
@@ -111,11 +111,8 @@
   </dxi-series>
 
   <dxo-common-series-settings argumentField="created">
-    <dxo-label>
-      <dxo-format
-          type="shortdate" >
-      </dxo-format>
-  </dxo-label>
+    <!--<dxo-label [customizeText]="customizeText">
+    </dxo-label>-->
   </dxo-common-series-settings>
   <dxi-pane name="topPane"></dxi-pane>
   <dxi-pane name="bottomPane"></dxi-pane>

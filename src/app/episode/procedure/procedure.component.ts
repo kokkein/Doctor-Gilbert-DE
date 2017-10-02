@@ -49,38 +49,38 @@ export class ProcedureComponent implements OnInit {
     this.orderedByCtrl = new FormControl({dgUserID: 0, userFullName: ''});
     this.referredByCtrl = new FormControl({dgUserID: 0, userFullName: ''}); 
   }
-    onSave() {
-      //clear editing cached
-      this.data.procedureLnResource = this.returnedResult;
+  onSave() {
+    //clear editing cached
+    this.data.procedureLnResource = this.returnedResult;
 
-      if (this.orderedByCtrl.value.dgUserID > 0) 
-        this.data.orderedByID = this.orderedByCtrl.value.dgUserID;
-      if (this.referredByCtrl.value.dgUserID > 0) 
-        this.data.referredByID = this.referredByCtrl.value.dgUserID; 
+    if (this.orderedByCtrl.value.dgUserID > 0) 
+      this.data.orderedByID = this.orderedByCtrl.value.dgUserID;
+    if (this.referredByCtrl.value.dgUserID > 0) 
+      this.data.referredByID = this.referredByCtrl.value.dgUserID; 
 
-      this.data.patientID = this.patientID;
-      this.data.visitID = this.visitID;
-      this.data.invoiceHdrID = this.invoiceHdrID;
-      this.data.CreatedByID = 1;
+    this.data.patientID = this.patientID;
+    this.data.visitID = this.visitID;
+    this.data.invoiceHdrID = this.invoiceHdrID;
+    this.data.CreatedByID = 1;
 
-      if (this.data.procedureHdrID){
-        this.MasterDataService.CreateProcedureRecord(this.data)
-          .subscribe(x => {
-              this.GDService.openSnackBar(x.procedureOrderNo + '" Updated Sucessfully!','Info');
-              this.getHistory();
-        }, err => {
-              this.GDService.openSnackBar(err ,'Info');
-        } );
-      }
-      else
-        this.MasterDataService.CreateProcedureRecord(this.data)
-          .subscribe(x => {
-            this.GDService.openSnackBar(x.procedureOrderNo + '" Created Sucessfully!','Info');
+    if (this.data.procedureHdrID){
+      this.MasterDataService.CreateProcedureRecord(this.data)
+        .subscribe(x => {
+            this.GDService.openSnackBar(x.procedureOrderNo + '" Updated Sucessfully!','Info');
             this.getHistory();
-        }, err => {
-              this.GDService.openSnackBar(err,'Info');
-        } );
+      }, err => {
+            this.GDService.openSnackBar(err ,'Info');
+      } );
     }
+    else
+      this.MasterDataService.CreateProcedureRecord(this.data)
+        .subscribe(x => {
+          this.GDService.openSnackBar(x.procedureOrderNo + '" Created Sucessfully!','Info');
+          this.getHistory();
+      }, err => {
+            this.GDService.openSnackBar(err,'Info');
+      } );
+  }
 
   loadDatabyID(id){
     this.MasterDataService.GetProcedureByID(id).subscribe(hr => {

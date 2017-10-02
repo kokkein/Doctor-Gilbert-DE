@@ -233,15 +233,14 @@
             <strong><h4 md-line><i class="material-icons">timer</i> {{historyList.created | date:'medium'}} - <strong>{{historyList.medicationOrderNo}}</strong></h4></strong>
           </mat-panel-title>
         </md-expansion-panel-header>
-            <md-list>
-              <md-list-item>
-                <p md-line>
+
+                <p>
                     <span> <small>Ordered By: </small><small class="highlighter">{{historyList.orderedByResource?.userFullName}}</small> </span>
                 </p>
-                <p md-line>
+                <p>
                   <span> <small>Medical Note: </small><small class="highlighter">{{historyList.remark}}</small> </span>
                 </p> 
-                <p md-line>
+                <p >
                     <span> 
                     <table class="orderTable">
                         <thead>
@@ -296,8 +295,6 @@
                     </table>
                   </span>
                 </p> 
-              </md-list-item>
-            </md-list>
             <md-action-row>
                 <span>Current Version: <small class="highlighter">{{historyList.version}}</small></span>  
                 <span>, Updated: <small class="highlighter">{{historyList.created | date:'medium'}}</small> </span>

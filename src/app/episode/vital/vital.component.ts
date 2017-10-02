@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { DxDataGridComponent } from "devextreme-angular";
 import { MdSnackBar } from '@angular/material';
 import { DxChartModule } from 'devextreme-angular';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-vital',
@@ -57,6 +58,10 @@ export class VitalComponent implements OnInit {
           point.select();
       }
     }
+    customizeText(arg) {
+        console.log(arg);
+        return moment(arg.argumentText).format('YYYY-MM-DD');
+    }
     onNew() {
         this.disableSave = false; 
         this.data = {};
@@ -103,6 +108,11 @@ export class VitalComponent implements OnInit {
         this.disableSave = true; 
         this.MasterDataService.GetVitalSignByVisit(this.visitID).subscribe(hr => {
             this.historyRecord = hr;
+            //for (let hrs of this.historyRecord)
+            //{ 
+            //  hrs.created = moment(hrs).format('YYYY-MM-DD HH:mm');
+            //}
+            
         });
     }
     

@@ -249,7 +249,7 @@ export class MedicationComponent implements OnInit {
   editMedication(medicationDetail: any) {
     return this._fb.group({
         chargeItemID: [medicationDetail.chargeItemResource.chargeItemID],  // required field
-        stockLockingID: [''],
+        stockLockingID: [null],
         drugCode:[medicationDetail.chargeItemResource.chargeItemCode],
         drugName: [medicationDetail.chargeItemResource.chargeItemDescription],
         dosage: [medicationDetail.dosage],
@@ -258,7 +258,7 @@ export class MedicationComponent implements OnInit {
         day: [medicationDetail.day],
         totalQuantity: [medicationDetail.totalQuantity],
         inventoryUOMID: [medicationDetail.inventoryUOMID],
-        originalPrice: [''],
+        originalPrice: [medicationDetail.originalPrice],
         discountPerc: [medicationDetail.discountPerc],
         discountAmount: [medicationDetail.discountAmount],
         billPrice: [medicationDetail.billPrice],
