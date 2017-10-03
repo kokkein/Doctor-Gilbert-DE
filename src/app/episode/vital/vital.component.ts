@@ -46,7 +46,7 @@ export class VitalComponent implements OnInit {
     }
     calculateBMI(){
         if (this.data.weight > 0 && this.data.height > 0 )
-            this.data.bMI = this.data.weight / ((this.data.height/100) * 2)
+            this.data.bMI = (this.data.weight / ((this.data.height/100) * 2)).toFixed(2);
     }
     pointClick(e: any) {
       console.log(e);
@@ -59,8 +59,9 @@ export class VitalComponent implements OnInit {
       }
     }
     customizeText(arg) {
-        console.log(arg);
-        return moment(arg.argumentText).format('YYYY-MM-DD');
+        //console.log(arg);
+       // var bmi = arg.valueText;
+       // return bmi.toFixed(2);
     }
     onNew() {
         this.disableSave = false; 
@@ -108,10 +109,9 @@ export class VitalComponent implements OnInit {
         this.disableSave = true; 
         this.MasterDataService.GetVitalSignByVisit(this.visitID).subscribe(hr => {
             this.historyRecord = hr;
-            //for (let hrs of this.historyRecord)
-            //{ 
-            //  hrs.created = moment(hrs).format('YYYY-MM-DD HH:mm');
-            //}
+            this.historyRecord.forEach(element => {
+                element.created = moment(element.created).format('DD-MM-YYYY HH:mm')
+            });
             
         });
     }

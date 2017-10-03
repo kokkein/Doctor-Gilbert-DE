@@ -28,32 +28,32 @@
           </div>
           <div class="container">
             <div> 
-              <md-select  class="input-full-width" placeholder="Diagnosis Type" [(ngModel)]="diagnosisTypes" name="diagnosisType">
+              <md-select  class="input-full-width" placeholder="Diagnosis Type" [(ngModel)]="data.diagnosisType" name="DiagnosisType">
                 <md-option *ngFor="let dt of diagnosisTypes" [value]="dt.diagnosisTypeID">
                   {{dt.diagnosisTypeDesc}}
                 </md-option>
               </md-select>
             </div>
             <div>
-              <md-checkbox  >Contact Diagnosis</md-checkbox>
+              <md-checkbox  [(ngModel)]="data.contactDiagnosis" name="contactDiagnosis">Contact Diagnosis</md-checkbox>
             </div>
             <div>
-              <md-checkbox  >Main Diagnosis</md-checkbox>
+              <md-checkbox  [(ngModel)]="data.mainDiagnosis" name="mainDiagnosis">Main Diagnosis</md-checkbox>
             </div>
             <div>
-              <md-checkbox  >Secondary Diagnosis</md-checkbox>
+              <md-checkbox  [(ngModel)]="data.secondaryDiagnosis" name="secondaryDiagnosis">Secondary Diagnosis</md-checkbox>
             </div>
           </div>
           <div class="container">
             <div>
-              <md-checkbox  >External Cause</md-checkbox>
+              <md-checkbox  [(ngModel)]="data.externalCauses" name="externalCauses">External Cause</md-checkbox>
             </div>
             <div>
-              <md-checkbox  >Chronic</md-checkbox>
+              <md-checkbox  [(ngModel)]="data.chronic" name="chronic">Chronic</md-checkbox>
             </div>
             <div>
               <md-form-field class="input-full-width">
-                <input mdInput placeholder="Since">
+                <input [(ngModel)]="data.since" name="since" mdInput placeholder="Since">
               </md-form-field>
             </div>
             <div>
@@ -62,7 +62,7 @@
           <div class="container">
               <div>
                   <md-form-field class="input-full-width">
-                      <textarea mdInput placeholder="Medical Note"></textarea>
+                      <textarea [(ngModel)]="data.remark" name="remark" mdInput placeholder="Medical Note"></textarea>
                     </md-form-field>
               </div>
           </div>
@@ -71,37 +71,68 @@
       </md-card-content>
     </md-card>
 
-<md-list>
-  <h3 md-subheader>Medical History</h3>
-  <md-list-item *ngFor="let dia of diagnosisRecord" >
-    <h4 md-line><strong>{{dia.diagnosisCode}} - {{dia.diagnosisDesc}}</strong></h4>
-      <button md-icon-button (click)="open()">
-        <i class="material-icons">mode_edit</i>
-      </button>
-      <button md-icon-button (click)="open()">
-        <i class="material-icons">delete</i>
-      </button>
-    <p md-line>
-      <span> {{dia.Note}} </span>
-    </p>
-    <p md-line class="pRight"> 
-      <small>
-        <span><b>Current Version: </b><i>{{dia.version}}</i></span>
-      </small>
-    </p>
-    <p md-line class="pRight">
-      <small>      
-        <span><b>Updated: </b><i>{{dia.updated | date:'medium'}}</i> </span>
-        <span>, <b>By: </b><i>{{dia.updatedBy}}</i></span>
-      </small>
-    </p>
-    <p md-line class="pRight">
-      <small>
-        <span><b>Created: </b><i>{{dia.created | date:'medium'}}</i> </span>
-        <span>, <b>By: </b><i>{{dia.createdBy}}</i></span>
-      </small>
-    </p>
-
-  </md-list-item>
-</md-list>
-</section>
+    <p>
+      <md-accordion>
+        <md-expansion-panel *ngFor="let historyList of historyRecord">
+            <md-expansion-panel-header>
+              <mat-panel-description></mat-panel-description>
+              <mat-panel-title>
+                <strong><h4 md-line><i class="material-icons">timer</i> {{historyList.created | date:'medium'}} - <strong>{{historyList.diagnosisEntryNo}}</strong></h4></strong>
+              </mat-panel-title>
+            </md-expansion-panel-header>
+                    <p>
+                      <span> <small>Diagnosis: </small><small class="highlighter">{{historyList.diagnosisResource.diagnosisCode}} - {{historyList.diagnosisResource.diagnosisDescription}}</small> </span>
+                    </p> 
+                    <p>
+                      <span> <small>Medical Note: </small><small class="highlighter">{{historyList.remark}}</small> </span>
+                    </p> 
+                    <p>
+                      <span> 
+                      <table class="orderTable">
+                          <thead>
+                          <tr>
+                            <th>Contact Diagnosis</th>
+                            <th>Main Diagnosis</th>
+                            <th>Secondary Diagnosis</th>
+                            <th>External Cause</th>
+                            <th>Chronic</th>
+                            <th>Since</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr>
+                          <td>{{historyList.contactDiagnosis}}</td>
+                          <td>{{historyList.mainDiagnosis}}</td>
+                          <td>{{historyList.secondaryDiagnosis}}</td>
+                          <td>{{historyList.externalCauses}}</td>
+                          <td>{{historyList.chronic}}</td>
+                          <td>{{historyList.since}}</td>
+                          </tr>
+                          </tbody>
+                      </table>
+                    </span>
+                  </p>  
+                <md-action-row>
+                    <span>Current Version: <small class="highlighter">{{historyList.version}}</small></span>  
+                    <span>, Updated: <small class="highlighter">{{historyList.created | date:'medium'}}</small> </span>
+                    <span>, By: <small class="highlighter">{{historyList.createdByResource.userFullName}}</small></span>
+                    <span>, Created: <small class="highlighter">{{historyList.created | date:'medium'}}</small> </span>
+                    <span>, By: <small class="highlighter">{{historyList.createdByResource.userFullName}}</small></span>
+                    <span> </span>
+                    <button md-raised-button (click)="loadDatabyID(historyList.diagnosisLnID)"><i class="material-icons">mode_edit</i>Edit</button>
+                    <button md-raised-button (click)="loadDatabyID(historyList.diagnosisLnID)"><i class="material-icons">delete</i>Delete</button>
+                  </md-action-row>
+        </md-expansion-panel>
+      </md-accordion>
+  </section>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 

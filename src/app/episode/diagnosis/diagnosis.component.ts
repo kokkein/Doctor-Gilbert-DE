@@ -43,7 +43,7 @@ export class DiagnosisComponent implements OnInit {
   onSave() {
     //clear editing cached
 
-    if (this.diagnosisCtrl.value.dgUserID > 0) 
+    if (this.diagnosisCtrl.value.diagnosisID > 0) 
       this.data.diagnosisID = this.diagnosisCtrl.value.diagnosisID;
 
     this.data.patientID = this.patientID;
@@ -51,30 +51,30 @@ export class DiagnosisComponent implements OnInit {
     this.data.invoiceHdrID = this.invoiceHdrID;
     this.data.CreatedByID = 1;
 
-    if (this.data.procedureHdrID){
-      this.MasterDataService.CreateProcedureRecord(this.data)
+    if (this.data.diagnosisLnID){
+      this.MasterDataService.UpdateDiagnosisRecordByID(this.data)
         .subscribe(x => {
-            this.GDService.openSnackBar(x.procedureOrderNo + '" Updated Sucessfully!','Info');
+            this.GDService.openSnackBar(x.diagnosisEntryNo + '" Updated Sucessfully!','Info');
             this.getHistory();
       }, err => {
             this.GDService.openSnackBar(err ,'Info');
       } );
     }
     else
-      this.MasterDataService.CreateProcedureRecord(this.data)
+      this.MasterDataService.CreateDiagnosisLn(this.data)
         .subscribe(x => {
-          this.GDService.openSnackBar(x.procedureOrderNo + '" Created Sucessfully!','Info');
+          this.GDService.openSnackBar(x.diagnosisEntryNo + '" Created Sucessfully!','Info');
           this.getHistory();
       }, err => {
             this.GDService.openSnackBar(err,'Info');
       } );
   }
   loadDatabyID(id){
-    this.MasterDataService.GetProcedureByID(id).subscribe(hr => {
+    this.MasterDataService.GetDiagnosisLnByID(id).subscribe(hr => {
       this.data = hr;
 
       if (this.data.diagnosisCtrl != null)
-        this.diagnosisCtrl = new FormControl({diagnosisID: hr.orderedByResource.dgUserID, diagnosisCode: hr.orderedByResource.userFullName});
+        this.diagnosisCtrl = new FormControl({diagnosisID: hr.diagnosisResource.diagnosisID, diagnosisCode: hr.diagnosisResource.diagnosisCode});
 
       this.disableSave = false;
     }, err => {
@@ -98,23 +98,10 @@ export class DiagnosisComponent implements OnInit {
   }
   getHistory(){
     this.disableSave = true;
-    this.MasterDataService.GetProcedureByVisit(this.visitID).subscribe(hr => {
+    this.MasterDataService.GetDiagnosisLnByVisit(this.visitID).subscribe(hr => {
       this.historyRecord = hr;
     });
   }
-
-  diagnosisRecord = [
-    {
-      diagnosisCode: 'A203',
-      diagnosisDesc: 'Ear, Eye and Throat',
-      Note: 'Patient complaint very painful at the ear, but overall is working well and can certainly sleep very well as night... this is an extreme long text and how it will be display?',
-      created: new Date('1/1/16'),
-      createdBy: 'Doctor Gilbert',
-      version: 2,
-      updated: new Date('1/1/16'),
-      updatedBy: 'Doctor Chin',
-    },
-  ];
 
   diagnosisTypes = [
     {
@@ -127,12 +114,12 @@ export class DiagnosisComponent implements OnInit {
     },
     {
       diagnosisTypeID: 3,
-      diagnosisTypeDesc: 'Provisional',
+      diagnosisTypeDesc: 'Provisionals',
     },
   ];
 
   displayDiagnosisFn(value: any): string {
-    return value && typeof value === 'object' ? value.diagnosisCode : value;
+    return value && typeof value === 'object' ? value.diagnosisDescription : value;
   }
   filterDiagnosis(val: string) {
     return val ? this.diagnosis.filter((s) => new RegExp(val, 'gi').test(s.diagnosisCode))

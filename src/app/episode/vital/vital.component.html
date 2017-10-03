@@ -106,13 +106,11 @@
   </dxi-series>
 
   <dxi-series type="spline" valueField="bmi" name="BMI">
-      <dxo-label [visible]="true" [customizeText]="precipitationCustomizeText">
+      <dxo-label [visible]="true" [customizeText]="customizeText">
       </dxo-label>
   </dxi-series>
 
   <dxo-common-series-settings argumentField="created">
-    <!--<dxo-label [customizeText]="customizeText">
-    </dxo-label>-->
   </dxo-common-series-settings>
   <dxi-pane name="topPane"></dxi-pane>
   <dxi-pane name="bottomPane"></dxi-pane>
@@ -136,61 +134,7 @@
     <dxo-format type="largeNumber" [precision]="1"></dxo-format>
   </dxo-tooltip>
 </dx-chart>
-<!--
-  <dx-chart
-  id="chart"
-  [dataSource]="weatherData"
-  style="width:1200px;display:block"
-  defaultPane="bottomPane" 
-  width="1200"
-  title="Vital Signs History">
-  <dxi-series
-      pane="topPane"
-      color="#b0daff"
-      type="rangeArea"
-      rangeValue1Field="minT"
-      rangeValue2Field="maxT"
-      name="Blood Pressure Ranges">
-  </dxi-series>
-  <dxi-series
-      pane="topPane"
-      valueField="avgT"
-      name="Average Blood Pressure">
-      <dxo-label
-          [visible]="true"
-          [customizeText]="temperatureCustomizeText">
-      </dxo-label>
-  </dxi-series>
-  <dxi-series
-      type="bar"
-      valueField="prec"
-      name="prec, mm">
-      <dxo-label
-          [visible]="true"
-          [customizeText]="precipitationCustomizeText">
-      </dxo-label>
-  </dxi-series>
-  <dxo-common-series-settings argumentField="month"></dxo-common-series-settings>
-  <dxi-pane name="topPane"></dxi-pane>
-  <dxi-pane name="bottomPane"></dxi-pane>
-  <dxi-value-axis pane="bottomPane">
-      <dxo-grid [visible]="true"></dxo-grid>
-      <dxo-title text="Blood Pressure, mm"></dxo-title>
-  </dxi-value-axis>
-  <dxi-value-axis
-      pane="topPane"
-      [min]="0"
-      [max]="30">
-      <dxo-grid [visible]="true"></dxo-grid>
-      <dxo-title text="Blood Pressure"></dxo-title>
-  </dxi-value-axis>
-  <dxo-legend
-      verticalAlignment="bottom"
-      horizontalAlignment="center">
-  </dxo-legend>
-  <dxo-export [enabled]="true"></dxo-export>
-</dx-chart>
--->
+
 </md-card-content>
 </md-card>
 </section>

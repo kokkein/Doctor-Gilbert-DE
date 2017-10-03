@@ -280,6 +280,10 @@ export class MasterDataService {
         return this.http.get(this.sURL + 'medicalRecord/Medication/' + id)
                     .map(res => res.json());
     }
+    GetDiagnosisLnByID(id) {
+        return this.http.get(this.sURL + 'medicalRecord/Diagnosis/' + id)
+                    .map(res => res.json());
+    }
     GetInventoryUOM() {
         return this.http.get(this.sURL + 'InventoryUOM')
                     .map(res => res.json());
@@ -290,6 +294,10 @@ export class MasterDataService {
     }
     GetMedicationByVisit(visitID) {
         return this.http.get(this.sURL + 'medicalRecord/MedicationByVisit/' + visitID)
+                    .map(res => res.json());
+    }
+    GetDiagnosisLnByVisit(visitID) {
+        return this.http.get(this.sURL + 'medicalRecord/DiagnosisByVisit/' + visitID)
                     .map(res => res.json());
     }
     GetLaboratoryItem() {
@@ -430,6 +438,10 @@ export class MasterDataService {
         return this.http.post(this.sURL + 'Transaction/StockLocking', StockLocking)
                     .map(res => res.json());
     }
+    CreateDiagnosisLn(Diagnosis) {
+        return this.http.post(this.sURL + 'MedicalRecord/CreateDiagnosis', Diagnosis)
+                    .map(res => res.json());
+    }
 
 //Update Data
     UpdateMOHVisitTypeByID(MOHVisitType) {
@@ -542,6 +554,10 @@ export class MasterDataService {
     }
     UpdateVitalSignRecordByID(VitalSign) {
         return this.http.put(this.sURL + 'MedicalRecord/VitalSign/' + VitalSign.vitalSignID, VitalSign)
+                    .map(res => res.json());
+    }
+    UpdateDiagnosisRecordByID(Diagnosis) {
+        return this.http.put(this.sURL + 'MedicalRecord/Diagnosis/' + Diagnosis.diagnosisLnID, Diagnosis)
                     .map(res => res.json());
     }
     UpdateStockLockingByID(StockLocking) {
