@@ -29,11 +29,11 @@ export class DiagnosisComponent implements OnInit {
     filteredData: Observable<any[]>; // async pipe needs to be an Observable
     myContent: any[] = [];
     diagnosisTypeData: any;
-    historyRecord;
+    historyRecord; 
 
   constructor(private GDService: GDService, private MasterDataService: MasterDataService, private _element: ElementRef, public dialog: MdDialog, private router: Router) { 
       
-        this.diagnosisCtrl = new FormControl({diagnosisID: 0, diagnosisCode: ''});
+        this.diagnosisCtrl = new FormControl({diagnosisID: 0, diagnosisDescription: ''});
         
   }
   onNew() {
@@ -73,8 +73,7 @@ export class DiagnosisComponent implements OnInit {
     this.MasterDataService.GetDiagnosisLnByID(id).subscribe(hr => {
       this.data = hr;
 
-      if (this.data.diagnosisCtrl != null)
-        this.diagnosisCtrl = new FormControl({diagnosisID: hr.diagnosisResource.diagnosisID, diagnosisCode: hr.diagnosisResource.diagnosisCode});
+      this.diagnosisCtrl = new FormControl({diagnosisID: hr.diagnosisResource.diagnosisID, diagnosisDescription: hr.diagnosisResource.diagnosisDescription});
 
       this.disableSave = false;
     }, err => {
@@ -82,7 +81,7 @@ export class DiagnosisComponent implements OnInit {
     } );
   }
   ngOnInit() {
-    this.diagnosisCtrl = new FormControl({diagnosisID: 0, diagnosisCode: ''});
+    this.diagnosisCtrl = new FormControl({diagnosisID: 0, diagnosisDescription: ''});
       this.filteredDiagnosis = this.diagnosisCtrl.valueChanges
       .debounceTime(400)
       .do(value => {
@@ -105,16 +104,16 @@ export class DiagnosisComponent implements OnInit {
 
   diagnosisTypes = [
     {
-      diagnosisTypeID: 1,
+      diagnosisTypeID: 'Provisional',
       diagnosisTypeDesc: 'Provisional',
     },
     {
-      diagnosisTypeID: 2,
+      diagnosisTypeID: 'Differential',
       diagnosisTypeDesc: 'Differential',
     },
     {
-      diagnosisTypeID: 3,
-      diagnosisTypeDesc: 'Provisionals',
+      diagnosisTypeID: 'Confirmed',
+      diagnosisTypeDesc: 'Confirmed',
     },
   ];
 
