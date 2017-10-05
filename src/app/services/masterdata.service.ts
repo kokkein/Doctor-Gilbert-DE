@@ -9,7 +9,8 @@ import { AuthHttp, AuthConfig } from 'angular2-jwt';
 @Injectable()
 export class MasterDataService {
     
-    sURL = "http://localhost:5000/api/"
+    //sURL = "http://localhost:5000/api/"
+    sURL = "http://default-environment.g6gspafbuv.us-east-2.elasticbeanstalk.com/api/"
     constructor(private http: Http, private authHttp: AuthHttp) {}
 
     GetCountry() {
